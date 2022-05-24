@@ -4,7 +4,7 @@ function table.contains(t, val)
   end
   return false
 end
-print("Loaded table.contains()")
+Debug("Loaded table.contains()")
 
 function V(val, ...)
   if type(val) == "function" then
@@ -14,29 +14,35 @@ function V(val, ...)
   end
 end
 
-print("Loaded V()")
+Debug("Loaded V()")
 
 Essentials.idPrefix = ""
 
 function Essentials.SetIDPrefix(prefix)
   Essentials.idPrefix = prefix
 end
-print("Loaded Essentials.SetIDPrefix()")
+Debug("Loaded Essentials.SetIDPrefix()")
 
 local preprocessors = {}
 
 function Essentials.AddCellLoadingPreprocessor(func)
   table.insert(preprocessors, func)
 end
-print("Loaded Essentials.AddCellLoadingPreprocessor()")
+Debug("Loaded Essentials.AddCellLoadingPreprocessor()")
 
 local nextsub = 118
+
+local nextid = 65535
 
 function Essentials.LoadCell(cell)
   -- Options translation
   local options = {
-    id = Essentials.idPrefix .. tostring(cell.id),
+    id = Essentials.idPrefix .. tostring(cell.id or nextid),
   }
+
+  nextid = nextid + 1
+
+  Debug("Loaded cell " .. tostring(options.id) .. " from " .. tostring(Essentials.currentMod))
 
   local types = cell.types or {}
 
@@ -59,6 +65,10 @@ function Essentials.LoadCell(cell)
   local isunbreakable = table.contains(types, "reinforced")
   local isdiverter = table.contains(types, "diverter")
   
+  if isdiverter then
+    options.nextCell = cell.bendPath
+  end
+
   -- Shortcut types
   local isghost = table.contains(types, "ghost")
   local ismold = table.contains(types, "mold")
@@ -70,8 +80,10 @@ function Essentials.LoadCell(cell)
   end
 
   if isacid then
-    options.isAcidic = cell.isAcidic or function() return true end
+    options.isAcidic = cell.isAcidic or function(...) return true end
   end
+
+  local isacidic = options.isAcidic
 
   if istransparent then
     options.isTransparent = cell.isTransparent or function() return true end
@@ -104,7 +116,7 @@ function Essentials.LoadCell(cell)
 
   local weight = cell.weight or 0
 
-  local dv = cell.defaultVars
+  local dv = cell.defaultVars or (#(cell.properties or {}))
   if type(dv) == "number" then
     local t = {}
     for i=1,dv do
@@ -163,7 +175,7 @@ function Essentials.LoadCell(cell)
         particles = V(cell.particles, c, x, y, vars, t, force),
         sound = V(cell.sound, c, x, y, vars, t, force),
         execute = function()
-          cell.onDeath(c, x, y, vars, dir, side, force)  
+          cell.onDeath(c, x, y, vars, dir, side, force, t)  
         end,
       })
       return force - mass
@@ -177,10 +189,18 @@ function Essentials.LoadCell(cell)
         particles = V(cell.particles, c, x, y, vars, t, force),
         sound = V(cell.sound, c, x, y, vars, t, force),
         execute = function()
-          cell.onDeath(c, x, y, vars, dir, side, force)  
+          if cell.onDeath then cell.onDeath(c, x, y, vars, dir, side, force, t) end  
         end,
       })
       return force - mass
+    end
+
+    if isacid and isacidic then
+      if isacidic(c, dir, x, y, vars) then
+        if cell.onKill then
+          cell.onKill(c, x, y, vars, dir, side, force, t)
+        end
+      end
     end
 
     return force - mass
@@ -215,27 +235,24 @@ function Essentials.LoadCell(cell)
     s = function(b)
       chosen.id = options.id
       MakePropertyMenu(V(cell.properties, b), b)
+      chosen.data = table.copy(DefaultVars(options.id))
       if os ~= nil then os(b) end
     end
 
     local p = cell.whenPlaced
 
-    cell.whenPlaced = function(c, x, y, vars)
-      local off = V(cell.varsOffset or 0, c, x, y, vars)
+    cell.whenPlaced = function(c, x, y, was)
+      local off = V(cell.varsOffset or 0, c, x, y, was)
 
       for i=1,propertiesopen do
         c.vars[i + off] = chosen.data[i]
       end
 
-      if p ~= nil then p(c, x, y, vars) end
+      if p ~= nil then p(c, x, y, was) end
     end
   end
 
   options.onSelect = s
-
-  if isdiverter then
-    options.nextCell = cell.bendPath
-  end
 
   if type(cell.overrides) == "table" then
     for key, value in pairs(options.overrides) do
@@ -280,7 +297,7 @@ function Essentials.LoadCell(cell)
     cat.Add(id, cell.categoryIndex)
   end
 end
-print("Loaded Essentials.LoadCell()")
+Debug("Loaded Essentials.LoadCell()")
 
 function Essentials.LoadRawCellReturn(t)
   if not t then return end -- Maybe the used Essentials.LoadCell()
@@ -293,7 +310,7 @@ function Essentials.LoadRawCellReturn(t)
     Essentials.LoadCell(t)
   end
 end
-print("Loaded Essentials.LoadRawCellReturn()")
+Debug("Loaded Essentials.LoadRawCellReturn()")
 
 function DoTrash(cell, vars, ptype, config)
 	if ptype == "push" or ptype == "nudge" then
@@ -312,4 +329,4 @@ function DoTrash(cell, vars, ptype, config)
 
 	return true
 end
-print("Loaded DoTrash()")
+Debug("Loaded DoTrash()")

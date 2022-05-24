@@ -5,3 +5,4 @@ function Essentials.BindEvent(event, callback)
 
   table.insert(Essentials.events[event], callback)
 end
+Debug("Loaded Essentials.BindEvent()")

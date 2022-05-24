@@ -2,6 +2,8 @@ local loaded = {}
 
 Essentials.modTexturePath = nil
 
+Essentials.currentMod = nil
+
 function Essentials.LoadMods()
   local mods = love.filesystem.getDirectoryItems("Mods")
 	for _, mod in ipairs(mods) do
@@ -10,7 +12,7 @@ function Essentials.LoadMods()
 		end
 	end
 end
-print("Loaded Essentials.LoadMods()")
+Debug("Loaded Essentials.LoadMods()")
 
 function Essentials.LoadFolder(path, callback)
   --assert(type(callback) == "function" or type(callback) == "nil", "Attempt to load source folder with invalid callback")
@@ -28,18 +30,25 @@ function Essentials.LoadFolder(path, callback)
     end
   end
 end
-print("Loaded Essentials.LoadFolder()")
+Debug("Loaded Essentials.LoadFolder()")
+
+function FromSource(file)
+  return unpack{require("Mods/" .. Essentials.currentMod .. "/src/" .. file)}
+end
+Debug("Loaded Essentials.FromSource()")
 
 function Essentials.LoadMod(mod)
   if loaded[mod] then
-    print("Attempt to load duplicate mod: " .. mod)
+    Debug("Attempt to load duplicate mod: " .. mod)
     return
   end
+
+  Essentials.currentMod = mod
 
   Essentials.modTexturePath = "Mods/" .. mod .. "/textures/"
   
   loaded[mod] = true
-  print("Loaded " .. mod)
+  Debug("Loaded " .. mod)
   
   if love.filesystem.getInfo("Mods/" .. mod, "directory") then
     require("Mods/" .. mod .. "/main")
@@ -54,8 +63,10 @@ function Essentials.LoadMod(mod)
   end
 
   Essentials.modTexturePath = nil
+  Essentials.idPrefix = ""
+  Essentials.currentMod = nil
 end
-print("Loaded Essentials.LoadMod()")
+Debug("Loaded Essentials.LoadMod()")
 
 function Depend(...)
   local t = {...}
@@ -66,4 +77,4 @@ function Depend(...)
     end
   end
 end
-print("Loaded Depend()")
+Debug("Loaded Depend()")
