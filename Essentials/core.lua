@@ -27,6 +27,16 @@ On("cell-set", function(cell, x, y, was)
   --love.window.setTitle(tostring(cell))
   FixCell(cell, x, y)
 end)
+Debug("Added cell setting event")
+
+local oldRotateCell = RotateCell
+
+function RotateCell(x, y, rot, dir, amount)
+  oldRotateCell(x, y, rot, dir, amount)
+  local c = GetCell(x, y)
+  FixCell(c, x, y)
+end
+Debug("Injected into RotateCell()")
 
 Essentials.posmap = {}
 
@@ -59,14 +69,15 @@ function FixCell(cell, x, y)
   end
   return cell
 end
+Debug("Loaded FixCell()")
 
 local oldGetCell = GetCell
 
 function GetCell(x,y)
 	return FixCell(oldGetCell(x, y))
 end
-Debug("> Loading custom event managers...")
-require("Essentials.events")
+Debug("Injected into GetCell()")
+
 Debug("> Loading cell makers...")
 require("Essentials.cells")
 Debug("> Loading mod loader code...")

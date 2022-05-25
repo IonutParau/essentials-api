@@ -9,7 +9,7 @@ function MEnergy.GetNumerical(x, y)
 end
 
 function MEnergy.GetConditional(x, y)
-  return (GetCell(x, y).con or 0)
+  return (GetCell(x, y).con)
 end
 
 MEnergy.listeners = {}

@@ -35,21 +35,4 @@ function Synapse.Broadcast(...)
   end
 end
 
-Essentials.LoadCell({
-  id = "Fuck you",
-  name = "Fast mover",
-  desc = "I 69'd Blendi's mom",
-  bias = 4,
-  types = {"mover"},
-  update = function(x, y, cell)
-    for i=1,4 do
-      cell:push(cell.rot)
-    end
-  end,
-  texture = "textures/mover.png",
-  rawPath = true,
-  category = "Movers",
-  subcategory = "Pushers",
-})
-
 return Synapse
