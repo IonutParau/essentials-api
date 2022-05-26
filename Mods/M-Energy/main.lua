@@ -60,7 +60,7 @@ function MEnergy.EmitConditional(x, y, dir, depth)
   end
 end
 
-local menergy = CreateCategory("MEnergy", "Cells provided by the universal energy management mod", 3, {}, "Mods/M-Energy/textures/life.png")
+local menergy = CreateCategory("MEnergy", "Cells provided by the universal energy management mod", 3, {})
 Toolbar.GetCategory("Miscellaneous").Add(menergy)
 
 return MEnergy

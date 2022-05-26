@@ -16,6 +16,21 @@ end
 
 Debug("Loaded V()")
 
+function D(...)
+  local t = {...}
+  return function(cell)
+    local rt = {}
+
+    for i = 1, #t do
+      local ind = t[i]
+      rt[i] = (cell.vars[ind] or DefaultVars(cell.id)[ind])
+    end
+
+    return unpack(rt)
+  end
+end
+Debug("Loaded D()")
+
 Essentials.idPrefix = ""
 
 function Essentials.SetIDPrefix(prefix)
@@ -131,7 +146,7 @@ function Essentials.LoadCell(cell)
     local mass = V(weight, c, dir, x, y, vars, side, force, t)
     
     if ismover or ispuller or isgrabber then
-      vars.undocells[x+y*width] = vars.undocells[x+y*width] or table.copy(cell)
+      vars.undocells[x+y*width] = vars.undocells[x+y*width] or table.copy(c)
     end
     
     if ismover and (t == "push") then
@@ -209,9 +224,12 @@ function Essentials.LoadCell(cell)
   if isenemy or istrash then
     options.isDestroyer = cell.isDestroyer or function() return true end
   end
-
-  options.update = function(x, y, c)
-    cell.update(x, y, FixCell(c, x, y))
+  if cell.update then
+    options.update = function(x, y, c)
+      c.updated = true
+      c.vars = c.vars or DefaultVars(c.id)
+      cell.update(x, y, FixCell(c, x, y))
+    end
   end
   options.updatemode = cell.updatetype or "normal"
   options.updateindex = (cell.subtick or nextsub)
@@ -233,6 +251,10 @@ function Essentials.LoadCell(cell)
     local os = s
 
     s = function(b)
+      if not b then
+        chosen.id = options.id
+        return
+      end
       chosen.id = options.id
       MakePropertyMenu(V(cell.properties, b), b)
       chosen.data = table.copy(DefaultVars(options.id))

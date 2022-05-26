@@ -39,6 +39,16 @@ end
 Debug("Injected into RotateCell()")
 
 Essentials.posmap = {}
+Essentials.customFixes = {}
+
+function Essentials.AddCustomFix(fix, func)
+  Essentials.customFixes[fix] = func
+end
+
+function Essentials.RemoveCustomFix(fix, func)
+  Essentials.customFixes[fix] = nil
+  collectgarbage("collect")
+end
 
 function FixCell(cell, x, y)
   if cell.poskey == nil then
@@ -46,6 +56,9 @@ function FixCell(cell, x, y)
     fixID = fixID + 1
   end
   posMap[cell.poskey] = {x = x, y = y, dir = cell.rot}
+  for k, v in pairs(Essentials.customFixes) do
+    cell[k] = v
+  end
   cell.pos = function(self)
     return posMap[self.poskey]
   end

@@ -14,9 +14,10 @@ OnRenderCell(function(cell, x, y, ip)
       cx,cy,crot = math.floor(x*cam.zoom-cam.x+cam.zoom*.5+400*winxm),math.floor(y*cam.zoom-cam.y+cam.zoom*.5+300*winym),cell.rot*math.pi*.5
     end
     local r,g,b,a = love.graphics.getColor()
-    love.graphics.setColor(1,1,1,1)
-    love.graphics.printf(cell.vars[1],cx-.075*cam.zoom,cy+.225*cam.zoom,20,"right",0,cam.zoom/40,cam.zoom/40)
-    love.graphics.setColor(r, g, b, a)
+    local n = cell.vars[1]
+		love.graphics.printf(tostring(n),cx-.22*cam.zoom,cy-.1*cam.zoom,20,"center",0,cam.zoom/40,cam.zoom/40)
+		love.graphics.setColor(r,g,b,a)
+		love.graphics.printf(tostring(n),cx-.23*cam.zoom,cy-.11*cam.zoom,20,"center",0,cam.zoom/40,cam.zoom/40)
   elseif cell.id == "ME numVoltMeter" then
     local cx,cy,crot
     local lerp = itime/delay
@@ -26,17 +27,19 @@ OnRenderCell(function(cell, x, y, ip)
       cx,cy,crot = math.floor(x*cam.zoom-cam.x+cam.zoom*.5+400*winxm),math.floor(y*cam.zoom-cam.y+cam.zoom*.5+300*winym),cell.rot*math.pi*.5
     end
     local r,g,b,a = love.graphics.getColor()
-    love.graphics.setColor(1,1,1,1)
-    love.graphics.printf(MEnergy.GetNumerical(x,y),cx-.075*cam.zoom,cy+.225*cam.zoom,20,"right",0,cam.zoom/40,cam.zoom/40)
-    love.graphics.setColor(r, g, b, a)
+		love.graphics.setColor(0,0,0,1)
+    local n = MEnergy.GetNumerical(x, y)
+		love.graphics.printf(tostring(n),cx-.22*cam.zoom,cy-.1*cam.zoom,20,"center",0,cam.zoom/40,cam.zoom/40)
+		love.graphics.setColor(r,g,b,a)
+		love.graphics.printf(tostring(n),cx-.23*cam.zoom,cy-.11*cam.zoom,20,"center",0,cam.zoom/40,cam.zoom/40)
   end
 end)
 
 return {
   {
     id = "ME numConstantGen",
-    texture = "life.png",
-    name = "Constant Numerical Generator",
+    texture = "numerical/generator.png",
+    name = "Numerical Generator",
     desc = "Creates numerical signals in all 4 directions",
     category = "Miscellaneous",
     subcategory = "MEnergy",
@@ -57,7 +60,7 @@ return {
   },
   {
     id = "ME numWire",
-    texture = "life.png",
+    texture = "numerical/wire.png",
     name = "Numerical Wire",
     desc = "Spreads numerical signals in all 4 directions",
     category = "Miscellaneous",
@@ -65,7 +68,7 @@ return {
   },
   {
     id = "ME numVoltMeter",
-    texture = "life.png",
+    texture = "numerical/voltimeter.png",
     name = "Numerical VoltMeter",
     desc = "Continously displays its Numerical value",
     category = "Miscellaneous",

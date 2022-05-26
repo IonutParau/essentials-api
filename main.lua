@@ -4853,7 +4853,7 @@ function PushCell(x,y,dir,vars)
 	until force <= 0 or vars.ended
 	if force <= 0 then
 		for k,v in pairs(vars.undocells) do
-			SetCell(k%width,math.floor(k/width),v)
+			SetCell(k%width,math.floor(k/width),table.copy(v))
 		end
 		return false,vars.optimizegen
 	end
