@@ -1,6 +1,6 @@
 Essentials = {}
 
-Essentials.version = "1.-1.0"
+Essentials.version = "1.-1.1"
 
 local debugMode = false
 

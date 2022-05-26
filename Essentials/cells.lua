@@ -143,6 +143,12 @@ function Essentials.LoadCell(cell)
   end
 
   options.push = cell.push or function(c, dir, x, y, vars, side, force, t)
+    if type(cell.canMove) == "function" then
+      local cm = cell.canMove(c, dir, x, y, vars, side, force, t)
+
+      if not cm then return false end
+    end
+
     local mass = V(weight, c, dir, x, y, vars, side, force, t)
     
     if ismover or ispuller or isgrabber then
