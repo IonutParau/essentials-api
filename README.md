@@ -1,5 +1,5 @@
 # Essentials API
-A CelLua API laser-focused on ⚡Efficiency⚡, 🧠Ease-of-Use🧠 and ✂️Shortcuts✂️
+A ⭐revolutionary⭐ CelLua API laser-focused on ⚡Efficiency⚡, 🧠Ease-of-Use🧠 and ✂️Shortcuts✂️
 
 # How to install a mod?
 Open the .love file as a zip archive and, if there is no Mods folder, create it.
