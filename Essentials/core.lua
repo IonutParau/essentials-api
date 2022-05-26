@@ -67,6 +67,19 @@ function FixCell(cell, x, y)
   cell.graspRight = function(self, dir, vars)
     return unpack{RGraspCell(self:pos().x, self:pos().y, dir, vars)}
   end
+  cell.nudge = function(self, dir, vars)
+    return unpack{NudgeCell(self:pos().x, self:pos().y, dir, vars)}
+  end
+  cell.advance = function(self, dir, vars)
+    local cx = self:pos().x
+    local cy = self:pos().y
+
+    if PushCell(x, y, dir, vars) then
+      return unpack{PullCell(cx, cy, dir, {unpack(vars), force=(vars.force or 1)})}
+    else
+      return unpack{PullCell(cx, cy, dir, vars)}
+    end
+  end
   return cell
 end
 Debug("Loaded FixCell()")
