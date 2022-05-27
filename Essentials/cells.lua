@@ -320,13 +320,12 @@ function Essentials.LoadCell(cell)
     end)
   end
 
-  -- Category insertion
-  local cat = Toolbar.GetCategory(cell.category)
-  if cell.subcategory then
-    local sub = cat.GetCategory(cell.subcategory)
-    sub.Add(id, cell.categoryIndex)
-  else
-    cat.Add(id, cell.categoryIndex)
+  if cell.category ~= nil then
+    local cats = Essentials.FetchCategories(cell.category)
+
+    for _, cat in ipairs(cats) do
+      cat.Add(options.id)
+    end
   end
 end
 
@@ -345,6 +344,49 @@ function Essentials.LoadRawCellReturn(t)
 end
 
 Debug("Loaded Essentials.LoadRawCellReturn()")
+
+function SplitText(text, s)
+  local txts = { "" }
+
+  for i = 1, #text do
+    local c = text:sub(i, i)
+
+    if c == s then table.insert(txts, "") else txts[#txts] = txts[#txts] .. c end
+  end
+
+  return txts
+end
+
+Debug("Loaded SplitText()")
+
+---@return table
+---@param category string|table
+function Essentials.FetchCategories(category)
+  if type(category) == "string" then
+    category = { category }
+  end
+
+  local trueCategories = {}
+
+  for _, c in ipairs(category) do
+    local cc = SplitText(c, ":")
+
+    for _, ccc in ipairs(cc) do
+      local cccs = SplitText(ccc, "/")
+
+      local cat = Toolbar.GetCategory(cccs[1])
+      if cccs[2] then
+        table.insert(trueCategories, table.copy(cat.GetCategory(cccs[2])))
+      else
+        table.insert(trueCategories, cat)
+      end
+    end
+  end
+
+  return trueCategories
+end
+
+Debug("Loaded Essentials.FetchCategories()")
 
 function DoTrash(cell, vars, ptype, config)
   if ptype == "push" or ptype == "nudge" then

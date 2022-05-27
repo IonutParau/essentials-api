@@ -8,8 +8,7 @@ return {
   onDeath = function(cell, x, y, vars, dir, side, force, pushtype)
     MDestruction.explode(x, y, cell.vars[1], MDestruction.bombTypes.acidic)
   end,
-  category = "Destroyers",
-  subcategory = "Explosives",
+  category = "Destroyers/Explosives",
   texture = "bombs/acidic.png",
   update = function() end,
 }

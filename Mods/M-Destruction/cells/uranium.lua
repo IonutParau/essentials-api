@@ -13,8 +13,7 @@ return {
   properties = { "Intensity" },
   name = "Uranium",
   desc = "A radioactive cell. Spreads based off of given intensity.",
-  category = "Miscellaneous",
-  subcategory = "Infectious",
+  category = "Miscellaneous/Infectious",
   update = function(x, y, cell)
     local i = cell.vars[1] or 500
 

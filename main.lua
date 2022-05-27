@@ -880,8 +880,8 @@ end
 NewButton(0, 0, 9001, 54, "menubar", "menubar", nil, nil, function() end, nil, function() return not puzzle end, "bottom", nil, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 })
 lastselects = {}
 NewButton(6, 6, 40, 40, "eraser", "lastselecttab", "Last Selections", nil, function() openedtab = openedtab == -2 and -1 or -2;
-openedsubtab = -1;
-propertiesopen = 0
+	openedsubtab = -1;
+	propertiesopen = 0
 end, false, function() return not puzzle end, "bottomright", hudrotation)
 for i = 1, 10 do
 	table.insert(lastselects, NewButton(16, i * 20 + 34, 20, 20, "eraser", "lastselect" .. i, cellinfo["eraser"].name, cellinfo["eraser"].desc, function() propertiesopen = 0; SetSelectedCell("eraser"); openedsubtab = -1 end, false, function() return not puzzle and openedtab == -2 end, "bottomright"))
@@ -961,14 +961,14 @@ local function CreateCellBar()
 	for i = 0, #lists do
 		local list = lists[i]
 		NewButton(i * 50 + 6, 6, 40, 40, list.icon, "list" .. i, list.name, list.desc, function() openedtab = openedtab == i and -1 or i;
-		openedsubtab = -1;
-		propertiesopen = 0
+			openedsubtab = -1;
+			propertiesopen = 0
 		end, false, list.name == "Cheats" and function() return not puzzle and dodebug end or function() return not puzzle end, "bottomleft", hudrotation)
 		for j = 1, #list.cells do
 			local cell = list.cells[j]
 			if type(cell) == "table" then
 				NewButton(i * 50 + 16, j * 20 + 34, 20, 20, cell[1], "list" .. i .. "sublist" .. j, cell.name, nil, function() openedsubtab = openedsubtab == j and -1 or j;
-				propertiesopen = 0
+					propertiesopen = 0
 				end, false, function() return not puzzle and openedtab == i end, "bottomleft", hudrotation)
 				for k = 1, #cell do
 					local subcell = cell[k]
@@ -977,14 +977,14 @@ local function CreateCellBar()
 					local y = math.floor((k - 1) / m)
 					cellinfo[subcell] = cellinfo[subcell] or { name = "Placeholder A", desc = "Cell info was not set for this id." }
 					if not cellinfo[subcell].idadded then cellinfo[subcell].desc = cellinfo[subcell].desc .. "\nID: " .. subcell
-					cellinfo[subcell].idadded = true
+						cellinfo[subcell].idadded = true
 					end
 					local b = NewButton(i * 50 + 16 + x * 20, j * 20 + 34 + y * 20, 20, 20, tex[subcell] and subcell or "X", "list" .. i .. "sublist" .. j .. "cell" .. subcell, cellinfo[subcell].name, cellinfo[subcell].desc, function(b) propertiesopen = 0; SetSelectedCell(subcell, b) end, false, function() return not puzzle and openedtab == i and openedsubtab == j end, "bottomleft", hudrotation)
 				end
 			else
 				cellinfo[cell] = cellinfo[cell] or { name = "Placeholder A", desc = "Cell info was not set for this id." }
 				if not cellinfo[cell].idadded then cellinfo[cell].desc = cellinfo[cell].desc .. "\nID: " .. cell
-				cellinfo[cell].idadded = true
+					cellinfo[cell].idadded = true
 				end
 				NewButton(i * 50 + 16, j * 20 + 34, 20, 20, tex[cell] and cell or "X", "list" .. i .. "cell" .. cell, cellinfo[cell].name, cellinfo[cell].desc, function(b) propertiesopen = 0; SetSelectedCell(cell, b); openedsubtab = -1 end, false, function() return not puzzle and openedtab == i end, "bottomleft", hudrotation)
 			end
@@ -1858,7 +1858,7 @@ function base84(origvalue)
 	local neg = false
 	if origvalue == 0 then return 0
 	elseif origvalue < 0 then origvalue = -origvalue;
-	neg = true
+		neg = true
 	end
 	while true do
 		iter = iter + 1
@@ -3014,7 +3014,7 @@ NewButton(70, 120, 40, 40, 10, "rotateccw", "Rotate CCW (Q)", nil, RotateCCW, fa
 NewButton(120, 120, 40, 40, 15, "fliph", "Flip Horizontally (Ctrl+Q)", nil, FlipH, false, mbleandnopuz, "topleft")
 NewButton(170, 120, 40, 40, 15, "flipv", "Flip Vertically (Ctrl+E)", nil, FlipV, false, mbleandnopuz, "topleft", math.pi * .5)
 NewButton(20, 170, 40, 40, "paste", "paste", "Paste (Ctrl+V)", nil, function() pasting = copied[0] and not pasting;
-buttons.paste.color = pasting and { .5, 1, .5, 1 } or { 1, 1, 1, .5 }
+	buttons.paste.color = pasting and { .5, 1, .5, 1 } or { 1, 1, 1, .5 }
 end, false, function() return copied[0] and mobile and not puzzle and not mainmenu end, "topleft")
 NewButton(20, 20, 40, 40, 2, "playbtn", "Unpause (Space)", nil, function() TogglePause(not paused) end, false, mble, "topright")
 NewButton(70, 20, 40, 40, 17, "stepbtn", "Step (F)", nil, function() for i = 1, tpu do DoTick(i == 1) end TogglePause(true) end, false, mble, "topright")
@@ -3031,9 +3031,10 @@ NewButton(0, 100, 40, 40, 3, "savelvl", "Save level", "Saves to clipboard. Forma
 NewButton(50, 100, 40, 40, "mode", "loadlvl", "Load & Edit Level", "Fetches from clipboard.\nLoads V3 and K1-K3 codes.", function() LoadWorld(); puzzle = false end, false, strictbactive, "center")
 NewButton(100, 100, 40, 40, "puzzle", "puzzleloadlvl", "Load Level as Puzzle", "Fetches from clipboard.\nLoads V3 and K1-K3 codes.", function() LoadWorld(); puzzle = true; SetSelectedCell("eraser") end, false, strictbactive, "center")
 NewButton(150, 100, 40, 40, "delete", "tomainmenu", "Back to Main Menu", nil, function() mainmenu = 1;
-puzzle = true;
-inmenu = false;
-PlaySound(sound.beep) end, false, bactive, "center", nil, { 1, .5, .5, .5 }, { 1, .5, .5, 1 }, { .5, .25, .25, 1 })
+	puzzle = true;
+	inmenu = false;
+	PlaySound(sound.beep)
+end, false, bactive, "center", nil, { 1, .5, .5, .5 }, { 1, .5, .5, 1 }, { .5, .25, .25, 1 })
 NewButton(0, -105, 300, 10, "pix", "delayslider", nil, nil, function() delay = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150) / 3) * .01 end, true, bactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
 NewButton(0, -83, 300, 10, "pix", "tpuslider", nil, nil, function() tpu = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150 + 33.3333333) / 33.3333333) end, true, bactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
 NewButton(0, -61, 300, 10, "pix", "volumeslider", nil, nil, function() volume = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150) / 3) * .01 music:setVolume(volume) music2:setVolume(volume) music3:setVolume(volume) end, true, optionbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
@@ -3041,21 +3042,21 @@ NewButton(0, -39, 300, 10, "pix", "svolumeslider", nil, nil, function() svolume 
 NewButton(0, -17, 300, 10, "pix", "borderslider", nil, nil, function() if not puzzle then border = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150 + 300 / (#bordercells - 1)) / (300 / (#bordercells - 1))) end end, true, stricterbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
 NewButton(0, 5, 300, 10, "pix", "uiscaleslider", nil, nil, function() newuiscale = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 250) / 2) * .01 end, true, optionbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
 NewButton(0, 25, 20, 20, "debug", "debugbtn", "Debug mode", nil, function(b) dodebug = not dodebug
-b.icon = dodebug and "checkon" or "debug"
+	b.icon = dodebug and "checkon" or "debug"
 end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
 NewButton(-25, 25, 20, 20, "subtick", "subtickbtn", "Subticking", nil, function(b) subticking = not subticking
-b.icon = subticking and "checkon" or "subtick"
+	b.icon = subticking and "checkon" or "subtick"
 end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
 NewButton(25, 25, 20, 20, "checkon", "fancybtn", "Fancy Graphics", nil, function(b) fancy = not fancy
-b.icon = fancy and "checkon" or "fancy"
+	b.icon = fancy and "checkon" or "fancy"
 end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
 NewButton(-50, 25, 20, 20, "checkon", "mobilebtn", "Extended UI", nil, function(b) mobile = not mobile;
-b.icon = mobile and "checkon" or "bigui";
-buttons.setinitial.x, buttons.setinitial.y, buttons.resetlvl.y = mobile and 70 or 20, mobile and 70 or 20, mobile and 70 or 20
+	b.icon = mobile and "checkon" or "bigui";
+	buttons.setinitial.x, buttons.setinitial.y, buttons.resetlvl.y = mobile and 70 or 20, mobile and 70 or 20, mobile and 70 or 20
 end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
 NewButton(50, 25, 20, 20, "music", "musicbtn", "Change Music", nil, function() if music:tell() > 0 then music:stop() music2:play() elseif music2:tell() > 0 then music2:stop() music3:play() else music:play() music3:stop() end end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
 NewButton(-75, 25, 20, 20, "checkon", "popups", "Show Pop-up Info", nil, function(b) showinfo = not showinfo
-b.icon = showinfo and "checkon" or "popups"
+	b.icon = showinfo and "checkon" or "popups"
 end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
 NewButton(-75, 62, 50, 25, "pix", "widthbtn", nil, nil, function() if not puzzle then typing = 1 end end, false, stricterbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
 NewButton(75, 62, 50, 25, "pix", "heightbtn", nil, nil, function() if not puzzle then typing = 2 end end, false, stricterbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
@@ -3063,21 +3064,25 @@ NewButton(-80, 80, 60, 60, 2, "nextlvlwin", "Next Level", nil, function() NextLe
 NewButton(0, 80, 60, 60, 11, "replaylvlwin", "Replay Solution", nil, RefreshWorld, false, wactive, "center")
 NewButton(80, 80, 60, 60, 9, "resetlvlwin", "Reset Level", nil, function() level = level and level - 1; NextLevel() PlaySound(sound.beep) winscreen = false end, false, wactive, "center")
 NewButton(-120, 100, 60, 60, "puzzle", "puzzlescreen", "Puzzles", nil, function() mainmenu = 2;
-delay = .2;
-tpu = 1;
-PlaySound(sound.beep) end, false, mmenu1, "center")
+	delay = .2;
+	tpu = 1;
+	PlaySound(sound.beep)
+end, false, mmenu1, "center")
 NewButton(-40, 100, 60, 60, 105, "optionsbtn", "Options", nil, function() mainmenu = 3; PlaySound(sound.beep) end, false, mmenu1, "center")
 NewButton(40, 100, 60, 60, 17, "modbtn", "Import mod", nil, function() mainmenu = 4; PlaySound(sound.beep) end, false, mmenu1, "center", math.pi / 2)
 NewButton(120, 100, 60, 60, 2, "startgamebtn", "Sandbox", nil, function() mainmenu = false;
-newwidth = 100;
-newheight = 100;
-border = 2;
-delay = .2;
-tpu = 1;
-title, subtitle = "", "";
-ClearWorld(); puzzle = false;
-level = nil
-ResetCam() PlaySound(sound.beep) end, false, mmenu1, "center")
+	newwidth = 100;
+	newheight = 100;
+	border = 2;
+	delay = .2;
+	tpu = 1;
+	title, subtitle = "", "";
+	ClearWorld();
+	puzzle = false;
+	level = nil
+	ResetCam()
+	PlaySound(sound.beep)
+end, false, mmenu1, "center")
 NewButton(20, 20, 40, 40, "delete", "backtomain", "Go Back", nil, function() mainmenu = 1 PlaySound(sound.beep) end, false, exitbtn, "topleft")
 local xamnt = math.ceil(math.sqrt(#levels)) + 1 -- +1 so the layout will stay more rectangular to fit the screen better
 local xoff = 25 * (xamnt - 1)
@@ -7597,11 +7602,13 @@ subticks = {
 	function() return RunOn(function(c) return not c.updated and c.id == 230 and c.rot == 1 end, function(x, y, c) DoCoinExtractor(x, y, c) end, "rightdown", 230) end,
 	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 123 or c.id == 242 or c.id == 243 end, function(x, y, c) DoInfectious(x, y, c) end, "rightup", 123) end,
 	function() freezecam = false;
-	playerpos = {};
-	local success = RunOn(function(c) return not c.updated and ConvertId(c.id) == 239 end, function(x, y, c) DoPlayer(x, y, c) end, held == 0 and "upleft" or held == 2 and "upright" or held == 3 and "rightdown" or "rightup", 239);
-	for i = 1, #playerpos do cam.tarx = cam.tarx + cam.tarzoom * playerpos[i][1] / #playerpos
-	cam.tary = cam.tary + cam.tarzoom * playerpos[i][2] / #playerpos
-	end return success end,
+		playerpos = {};
+		local success = RunOn(function(c) return not c.updated and ConvertId(c.id) == 239 end, function(x, y, c) DoPlayer(x, y, c) end, held == 0 and "upleft" or held == 2 and "upright" or held == 3 and "rightdown" or "rightup", 239);
+		for i = 1, #playerpos do cam.tarx = cam.tarx + cam.tarzoom * playerpos[i][1] / #playerpos
+			cam.tary = cam.tary + cam.tarzoom * playerpos[i][2] / #playerpos
+		end
+		return success
+	end,
 	CheckEnemies,
 }
 
@@ -7725,7 +7732,7 @@ function love.update(dt)
 			for cx = x - math.ceil(chosen.size * .5) + (chosen.shape == "Square" and 1 or 0), x + math.floor(chosen.size * .5) do
 				if (chosen.shape == "Square" or math.distSqr(cx - x, cy - y) <= chosen.size * chosen.size / 4) and (chosen.mode ~= "Or" or GetCell(cx, cy).id == 0) and (chosen.mode ~= "And" or GetCell(cx, cy).id ~= 0) then
 					if chosen.randrot then hudrot = chosen.rot
-					chosen.rot = math.random(0, 3)
+						chosen.rot = math.random(0, 3)
 					end
 					if IsBackground(chosen.id) then
 						SetPlaceable(cx, cy, chosen.id)
@@ -8005,9 +8012,9 @@ function love.draw()
 		if b.isenabled() then
 			if b == hoveredbutton then
 				if love.mouse.isDown(1) then
-					love.graphics.setColor(b.clickcolor)
+					love.graphics.setColor(b.clickcolor or 0)
 				else
-					love.graphics.setColor(b.hovercolor)
+					love.graphics.setColor(b.hovercolor or 0)
 				end
 			else
 				love.graphics.setColor(b.color)

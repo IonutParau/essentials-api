@@ -3,6 +3,5 @@ return {
     texture = "conditional/wire.png",
     name = "Conditional Wire",
     desc = "Spreads conditional signals in all 4 directions",
-    category = "Miscellaneous",
-    subcategory = "MEnergy",
+    category = "Miscellaneous/MEnergy",
 }

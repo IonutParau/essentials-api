@@ -12,7 +12,6 @@ return {
     end
 
   end,
-  category = "Miscellaneous",
-  subcategory = "MEnergy",
+  category = "Miscellaneous/MEnergy",
   texture = "conditional/pix_off.png",
 }
