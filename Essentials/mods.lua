@@ -59,7 +59,7 @@ function Essentials.LoadMod(mod)
     local toload
 
     local config
-    if love.filesystem.getInfo("Mods/" .. mod .. "config.lua") then
+    if love.filesystem.getInfo("Mods/" .. mod .. "/config.lua", "file") then
       config = require("Mods/" .. mod .. "/config")
 
       toload = config.overrideSources
@@ -68,6 +68,7 @@ function Essentials.LoadMod(mod)
         Essentials.modTexturePath = config.texturePath
       end
     end
+    config = config or {}
 
     local srcFolder = config.srcPath or "src"
     local cellsFolder = config.cellsPath or "cells"
@@ -86,8 +87,18 @@ function Essentials.LoadMod(mod)
     end
 
     if not config.noCells then
-      if love.filesystem.getInfo("Mods/" .. mod .. "/" .. cellsFolder, "directory") then
-        Essentials.LoadFolder("Mods/" .. mod .. "/" .. cellsFolder, function(p) Essentials.LoadRawCellReturn(require(p:sub(1, #p - 4))) end)
+      if not cells.overrideCells then
+        if love.filesystem.getInfo("Mods/" .. mod .. "/" .. cellsFolder, "directory") then
+          Essentials.LoadFolder("Mods/" .. mod .. "/" .. cellsFolder, function(p) Essentials.LoadRawCellReturn(require(p:sub(1, #p - 4))) end)
+        end
+      else
+        for _, v in ipairs(cells.overrideCells) do
+          if love.filesystem.getInfo("Mods/" .. mod .. "/" .. cellsFolder .. "/" .. v, "directory") then
+            Essentials.LoadFolder("Mods/" .. mod .. "/" .. cellsFolder .. "/" .. v, function(p) Essentials.LoadRawCellReturn(require(p:sub(1, #p - 4))) end)
+          else
+            require("Mods/" .. mod .. "/" .. cellsFolder .. "/" .. v:sub(1, #v - 4))
+          end
+        end
       end
     end
   end

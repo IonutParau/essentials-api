@@ -4,6 +4,7 @@ function table.contains(t, val)
   end
   return false
 end
+
 Debug("Loaded table.contains()")
 
 function V(val, ...)
@@ -17,7 +18,7 @@ end
 Debug("Loaded V()")
 
 function D(...)
-  local t = {...}
+  local t = { ... }
   return function(cell)
     local rt = {}
 
@@ -29,6 +30,7 @@ function D(...)
     return unpack(rt)
   end
 end
+
 Debug("Loaded D()")
 
 Essentials.idPrefix = ""
@@ -36,6 +38,7 @@ Essentials.idPrefix = ""
 function Essentials.SetIDPrefix(prefix)
   Essentials.idPrefix = prefix
 end
+
 Debug("Loaded Essentials.SetIDPrefix()")
 
 local preprocessors = {}
@@ -43,6 +46,7 @@ local preprocessors = {}
 function Essentials.AddCellLoadingPreprocessor(func)
   table.insert(preprocessors, func)
 end
+
 Debug("Loaded Essentials.AddCellLoadingPreprocessor()")
 
 local nextsub = 118
@@ -62,7 +66,7 @@ function Essentials.LoadCell(cell)
   local types = cell.types or {}
 
   if type(types) ~= "table" then
-    types = {types}
+    types = { types }
   end
 
   if cell.background then
@@ -79,7 +83,7 @@ function Essentials.LoadCell(cell)
   local ismarker = table.contains(types, "marker")
   local isunbreakable = table.contains(types, "reinforced")
   local isdiverter = table.contains(types, "diverter")
-  
+
   if isdiverter then
     options.nextCell = cell.bendPath
   end
@@ -134,7 +138,7 @@ function Essentials.LoadCell(cell)
   local dv = cell.defaultVars or (#(cell.properties or {}))
   if type(dv) == "number" then
     local t = {}
-    for i=1,dv do
+    for i = 1, dv do
       table.insert(t, 0)
     end
     options.defaultVars = t
@@ -150,17 +154,17 @@ function Essentials.LoadCell(cell)
     end
 
     local mass = V(weight, c, dir, x, y, vars, side, force, t)
-    
+
     if ismover or ispuller or isgrabber then
-      vars.undocells[x+y*width] = vars.undocells[x+y*width] or table.copy(c)
+      vars.undocells[x + y * width] = vars.undocells[x + y * width] or table.copy(c)
     end
-    
+
     if ismover and (t == "push") then
       if side == 2 then
         return force + V(bias, c, dir, x, y, vars, side, force, t) - mass
       end
       if side == 0 then
-        cell.updated = cell.updated or not vars.noupdate
+        c.updated = c.updated or not vars.noupdate
         return force - V(bias, c, dir, x, y, vars, side, force, t) - mass
       end
       return force
@@ -171,7 +175,7 @@ function Essentials.LoadCell(cell)
         return force + V(bias, c, dir, x, y, vars, side, force, t) - mass
       end
       if side == 0 then
-        cell.updated = cell.updated or not vars.noupdate
+        c.updated = c.updated or not vars.noupdate
         return force - V(bias, c, dir, x, y, vars, side, force, t) - mass
       end
       return force
@@ -182,7 +186,7 @@ function Essentials.LoadCell(cell)
         return force + V(bias, c, dir, x, y, vars, side, force, t) - mass
       end
       if side == 0 then
-        cell.updated = cell.updated or not vars.noupdate
+        c.updated = c.updated or not vars.noupdate
         return force - V(bias, c, dir, x, y, vars, side, force, t) - mass
       end
       return force
@@ -196,7 +200,7 @@ function Essentials.LoadCell(cell)
         particles = V(cell.particles, c, x, y, vars, t, force),
         sound = V(cell.sound, c, x, y, vars, t, force),
         execute = function()
-          cell.onDeath(c, x, y, vars, dir, side, force, t)  
+          cell.onDeath(c, x, y, vars, dir, side, force, t)
         end,
       })
       return force - mass
@@ -210,7 +214,7 @@ function Essentials.LoadCell(cell)
         particles = V(cell.particles, c, x, y, vars, t, force),
         sound = V(cell.sound, c, x, y, vars, t, force),
         execute = function()
-          if cell.onDeath then cell.onDeath(c, x, y, vars, dir, side, force, t) end  
+          if cell.onDeath then cell.onDeath(c, x, y, vars, dir, side, force, t) end
         end,
       })
       return force - mass
@@ -272,7 +276,7 @@ function Essentials.LoadCell(cell)
     cell.whenPlaced = function(c, x, y, was)
       local off = V(cell.varsOffset or 0, c, x, y, was)
 
-      for i=1,propertiesopen do
+      for i = 1, propertiesopen do
         c.vars[i + off] = chosen.data[i]
       end
 
@@ -325,11 +329,12 @@ function Essentials.LoadCell(cell)
     cat.Add(id, cell.categoryIndex)
   end
 end
+
 Debug("Loaded Essentials.LoadCell()")
 
 function Essentials.LoadRawCellReturn(t)
   if not t then return end -- Maybe the used Essentials.LoadCell()
-  
+
   if type(t[1]) == "table" then
     for _, c in ipairs(t) do
       Essentials.LoadCell(c)
@@ -338,23 +343,25 @@ function Essentials.LoadRawCellReturn(t)
     Essentials.LoadCell(t)
   end
 end
+
 Debug("Loaded Essentials.LoadRawCellReturn()")
 
 function DoTrash(cell, vars, ptype, config)
-	if ptype == "push" or ptype == "nudge" then
-	  if fancy then
-			cell.eatencells = cell.eatencells or {}
-			table.insert(cell.eatencells, table.copy(vars.lastcell))
-		end
-		vars.lastcell.id = 0
-		if not config.silent then
-			PlaySound(config.sound or sound.destroy)
-		end
+  if ptype == "push" or ptype == "nudge" then
+    if fancy then
+      cell.eatencells = cell.eatencells or {}
+      table.insert(cell.eatencells, table.copy(vars.lastcell))
+    end
+    vars.lastcell.id = 0
+    if not config.silent then
+      PlaySound(config.sound or sound.destroy)
+    end
     if config.execute then config.execute() end
-	end
+  end
 
-	vars.ended = true
+  vars.ended = true
 
-	return true
+  return true
 end
+
 Debug("Loaded DoTrash()")
