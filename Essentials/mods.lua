@@ -6,12 +6,13 @@ Essentials.currentMod = nil
 
 function Essentials.LoadMods()
   local mods = love.filesystem.getDirectoryItems("Mods")
-	for _, mod in ipairs(mods) do
-		if love.filesystem.getInfo("Mods/" .. mod, "directory") then
-			Essentials.LoadMod(mod)
-		end
-	end
+  for _, mod in ipairs(mods) do
+    if love.filesystem.getInfo("Mods/" .. mod, "directory") then
+      Essentials.LoadMod(mod)
+    end
+  end
 end
+
 Debug("Loaded Essentials.LoadMods()")
 
 function Essentials.LoadFolder(path, callback)
@@ -20,21 +21,25 @@ function Essentials.LoadFolder(path, callback)
 
   for _, item in ipairs(items) do
     if love.filesystem.getInfo(path .. "/" .. item, "directory") then
-      Essentials.LoadFolder(path .. "/" .. item, callback)
+      if item:sub(1) ~= "_" then
+        Essentials.LoadFolder(path .. "/" .. item, callback)
+      end
     else
       if callback then
-        if item:sub(-#".manual.lua") ~= ".manual.lua" or item:sub(1) == "_" then
+        if item:sub(- #".manual.lua") ~= ".manual.lua" or item:sub(1) == "_" then
           callback(path .. "/" .. item)
         end
       end
     end
   end
 end
+
 Debug("Loaded Essentials.LoadFolder()")
 
 function FromSource(file)
-  return unpack{require("Mods/" .. Essentials.currentMod .. "/src/" .. file)}
+  return unpack { require("Mods/" .. Essentials.currentMod .. "/src/" .. file) }
 end
+
 Debug("Loaded Essentials.FromSource()")
 
 function Essentials.LoadMod(mod)
@@ -46,19 +51,44 @@ function Essentials.LoadMod(mod)
   Essentials.currentMod = mod
 
   Essentials.modTexturePath = "Mods/" .. mod .. "/textures/"
-  
+
   loaded[mod] = true
   Debug("Loaded " .. mod)
-  
-  if love.filesystem.getInfo("Mods/" .. mod, "directory") then
-    require("Mods/" .. mod .. "/main")
 
-    if love.filesystem.getInfo("Mods/" .. mod .. "/src", "directory") then
-      Essentials.LoadFolder("Mods/" .. mod .. "/src", function(p) require(p:sub(1, #p-4)) end)
+  if love.filesystem.getInfo("Mods/" .. mod, "directory") then
+    local toload
+
+    local config
+    if love.filesystem.getInfo("Mods/" .. mod .. "config.lua") then
+      config = require("Mods/" .. mod .. "/config")
+
+      toload = config.overrideSources
+
+      if config.texturePath then
+        Essentials.modTexturePath = config.texturePath
+      end
     end
 
-    if love.filesystem.getInfo("Mods/" .. mod .. "/cells", "directory") then
-      Essentials.LoadFolder("Mods/" .. mod .. "/cells", function(p) Essentials.LoadRawCellReturn(require(p:sub(1, #p-4))) end)
+    local srcFolder = config.srcPath or "src"
+    local cellsFolder = config.cellsPath or "cells"
+
+    require("Mods/" .. mod .. "/main")
+    if not toload then
+      if not config.noSrc then
+        if love.filesystem.getInfo("Mods/" .. mod .. "/" .. srcFolder, "directory") then
+          Essentials.LoadFolder("Mods/" .. mod .. "/" .. srcFolder, function(p) require(p:sub(1, #p - 4)) end)
+        end
+      end
+    else
+      for _, f in ipairs(toload) do
+        Essentials.LoadFolder("Mods/" .. mod .. "/src/" .. f, function(p) require(p:sub(1, #p - 4)) end)
+      end
+    end
+
+    if not config.noCells then
+      if love.filesystem.getInfo("Mods/" .. mod .. "/" .. cellsFolder, "directory") then
+        Essentials.LoadFolder("Mods/" .. mod .. "/" .. cellsFolder, function(p) Essentials.LoadRawCellReturn(require(p:sub(1, #p - 4))) end)
+      end
     end
   end
 
@@ -66,10 +96,11 @@ function Essentials.LoadMod(mod)
   Essentials.idPrefix = ""
   Essentials.currentMod = nil
 end
+
 Debug("Loaded Essentials.LoadMod()")
 
 function Depend(...)
-  local t = {...}
+  local t = { ... }
 
   for _, mod in ipairs(t) do
     if loaded[mod] ~= true then
@@ -77,4 +108,5 @@ function Depend(...)
     end
   end
 end
+
 Debug("Loaded Depend()")
