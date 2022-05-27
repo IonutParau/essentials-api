@@ -58,8 +58,8 @@ function Essentials.LoadMod(mod)
   if love.filesystem.getInfo("Mods/" .. mod, "directory") then
     local toload
 
-    local config
-    if love.filesystem.getInfo("Mods/" .. mod .. "config.lua") then
+    local config = {}
+    if love.filesystem.getInfo("Mods/" .. mod .. "/config.lua") then
       config = require("Mods/" .. mod .. "/config")
 
       toload = config.overrideSources
