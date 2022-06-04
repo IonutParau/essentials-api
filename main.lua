@@ -3116,7 +3116,7 @@ function IsUnbreakable(cell, dir, x, y, vars)
 	local rot = cell.rot
 	local side = ToSide(rot, dir)
 	if type(ModData.unbreakable[id]) == "function" then
-		return ModData.unbreakable[id](id, dir, x, y, vars, side)
+		return ModData.unbreakable[id](cell, dir, x, y, vars, side)
 	end
 	return id == 1 or id == 41 or (id == 69 or id == 213) and side ~= 0 and side ~= 2 or id == 140 and side ~= 2 and side ~= 1 or id == 157 and side ~= 2 or id == 158 and side ~= 3 and side ~= 2 and side ~= 1 or id == 159 and side % 1 ~= 0
 			or id == 12 or id == 51 or id == 141 or id == 205 or id == 176 or id == 126 or id == 150 or id == 151 or id == 152 or id == 162 or id == 229 or id == 163 or id == 165 or id == 221 or id == 224 or id == 225 or id == 226 and (side == 0 or side == 2) or id == 300 and side == 0

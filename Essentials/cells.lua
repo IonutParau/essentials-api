@@ -131,7 +131,7 @@ function Essentials.LoadCell(cell)
 
   options.convertID = cell.chunkID
 
-  options.hasVars = ((cell.defaultVars ~= nil) or cell.hasVars)
+  --options.hasVars = ((cell.defaultVars ~= nil) or cell.hasVars)
 
   local weight = cell.weight or 0
 
@@ -237,19 +237,20 @@ function Essentials.LoadCell(cell)
   if cell.update then
     options.update = function(x, y, c)
       c.updated = true
-      c.vars = c.vars or DefaultVars(c.id)
       cell.update(x, y, FixCell(c, x, y))
     end
   end
   options.updatemode = cell.updatetype or "normal"
   options.updateindex = (cell.subtick or nextsub)
 
-  if options.updatemode == "static" then
-    nextsub = nextsub + 1
-  elseif options.updatemode == "normal" then
-    nextsub = nextsub + 4
-  elseif type(options.updatemode) == "table" then
-    nextsub = nextsub + #(options.updatemode)
+  if options.updateindex < nextsub then
+    if options.updatemode == "static" then
+      nextsub = nextsub + 1
+    elseif options.updatemode == "normal" then
+      nextsub = nextsub + 4
+    elseif type(options.updatemode) == "table" then
+      nextsub = nextsub + #(options.updatemode)
+    end
   end
 
   options.onRotate = cell.whenRotated
