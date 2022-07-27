@@ -109,7 +109,12 @@ Debug("Injected into GetCell()")
 
 Debug("> Loading cell makers...")
 require("Essentials.cells")
+
+Debug("> Loading mod animation systen")
+require("Essentials.anim")
+
 Debug("> Loading mod loader code...")
 require("Essentials.mods")
+
 Debug("> Loading mods...")
 Essentials.LoadMods()

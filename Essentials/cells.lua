@@ -53,6 +53,10 @@ local nextsub = 118
 
 local nextid = 65535
 
+---@alias cellID string|number
+---@alias Essentials.CellInfo {id: number|string, types?: table<string>, background?: boolean, bendPath?: function, bias?: number|function, isMarker?: function, isAcidic?: function, isTransparent?: function, isReinforced?: function, generateInto?: string, whenFlipped?: function, chunkID?: string|number, weight?: number|function, defaultVars?: table<number|string|boolean>, properties?: table<string>, push?: function, canMove?: function, nextLifeID?: cellID, nextLifeRot?: number, silent?: boolean, particles?: love.ParticleSystem, sound?: love.SoundData, onDeath?: function, onKill?: function, isDestroyer?: function, update?: function, interval?: number, updatetype?: "static"|"normal"|table, subtick?: number, whenRotated?: function, whenClicked?: function, whenSelected?: function, varsOffset?: number, overrides?: table<function|string|number|boolean>, texture: string, name: string, desc: string, rawPath?: boolean, whenRendered?: function, category: string|table<string>, savePropertiesByName?: boolean|function}
+
+---@param cell Essentials.CellInfo
 function Essentials.LoadCell(cell)
   -- Options translation
   local options = {
@@ -235,9 +239,18 @@ function Essentials.LoadCell(cell)
     options.isDestroyer = cell.isDestroyer or function() return true end
   end
   if cell.update then
+    local int = cell.interval or 1
     options.update = function(x, y, c)
-      c.updated = true
-      cell.update(x, y, FixCell(c, x, y))
+      if not c.vars['essenLoc_i'] then
+        c.vars['essenLoc_i'] = 0
+      end
+      c.vars['essenLoc_i'] = c.vars['essenLoc_i'] + 1
+      local decided = V(int, x, y, c)
+      while c.vars['essenLoc_i'] > decided do
+        c.vars['essenLoc_i'] = c.vars['essenLoc_i'] - decided
+        c.updated = true
+        cell.update(x, y, FixCell(c, x, y))
+      end
     end
   end
   options.updatemode = cell.updatetype or "normal"
@@ -262,11 +275,27 @@ function Essentials.LoadCell(cell)
     local os = s
 
     s = function(b)
-      if not b then
-        chosen.id = options.id
-        return
-      end
+      local id = options.id
       chosen.id = options.id
+      if id ~= chosen.id then
+        buttons.lastselecttab.icon = tex[id] and id or "X"
+        for i = 10, 2, -1 do
+          lastselects[i].onclick = lastselects[i - 1].onclick
+          lastselects[i].icon = lastselects[i - 1].icon
+          lastselects[i].name = lastselects[i - 1].name
+          lastselects[i].desc = lastselects[i - 1].desc
+        end
+        lastselects[1].onclick = function() propertiesopen = 0; SetSelectedCell(id, lastselects[1]) end
+        lastselects[1].icon = tex[id] and id or "X"
+        if cellinfo[id] then
+          lastselects[1].name = cellinfo[id].name
+          lastselects[1].desc = cellinfo[id].desc
+        else
+          lastselects[1].name = "Placeholder B"
+          lastselects[1].desc = "This ID (" .. id .. ") doesn't exist in the version of CelLua you are using."
+        end
+      end
+      if not b then return end
       MakePropertyMenu(V(cell.properties, b), b)
       chosen.data = table.copy(DefaultVars(options.id))
       if os ~= nil then os(b) end
@@ -278,7 +307,11 @@ function Essentials.LoadCell(cell)
       local off = V(cell.varsOffset or 0, c, x, y, was)
 
       for i = 1, propertiesopen do
-        c.vars[i + off] = chosen.data[i]
+        if V(cell.savePropertiesByName, c, x, y, was) then
+          c.vars[propertynames[i]] = chosen.data[i]
+        else
+          c.vars[i + off] = chosen.data[i]
+        end
       end
 
       if p ~= nil then p(c, x, y, was) end
