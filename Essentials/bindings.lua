@@ -16,3 +16,8 @@ Essentials.SetIDPrefix = Quartz.SetIDPrefix
 Essentials.resetQuartzConfig = Quartz.reset
 
 Essentials.AddCustomFix = Quartz.AddCustomFix
+
+Essentials.NewAnimation = Quartz.NewAnimation
+Essentials.BindAnimation = Quartz.BindAnimation
+Essentials.StepAnimations = Quartz.StepAnimations
+Essentials.SetupAnimations = Quartz.SetupAnimations
