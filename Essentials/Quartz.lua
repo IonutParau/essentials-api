@@ -371,7 +371,7 @@ function Quartz.LoadCell(cell)
 
   --Event-based stuff
   if cell.whenPlaced ~= nil then
-    OnCellPlace(function(c, x, y, was)
+    Quartz.On("cell-place", function(c, x, y, was)
       if c.id == id then
         cell.whenPlaced(c, x, y, was)
       end
@@ -379,7 +379,7 @@ function Quartz.LoadCell(cell)
   end
 
   if cell.whenRendered ~= nil then
-    OnRenderCell(function(c, x, y, ip)
+    Quartz.On("render-cell", function(c, x, y, ip)
       if c.id == id then
         cell.whenRendered(c, x, y, ip)
       end
@@ -596,3 +596,47 @@ end
 
 FixCell = Quartz.FixCell
 AddCustomFix = Quartz.FixCell
+
+local events = {}
+
+-- Uses the _G method so your IDE doesn't scream at you
+---@return "Essentials"|"Modchine"|"Moddable"|"Unknown/Vanilla"
+function Quartz.GetCurrentAPI()
+  if _G["Essentials"] then return "Essentials" end
+  if _G["Modchine"] then return "Modchine" end
+  if _G["Moddable"] then return "Moddable" end
+
+  return "Unknown/Vanilla"
+end
+
+Quartz.IsEssentials = Quartz.GetCurrentAPI() == "Essentials"
+Quartz.IsModdable = Quartz.GetCurrentAPI() == "Moddable"
+Quartz.IsModchine = Quartz.GetCurrentAPI() == "Modchine"
+Quartz.IsVanilla = Quartz.GetCurrentAPI() == "Unknown/Vanilla"
+
+function Quartz.On(event, callback)
+  if not events[event] then events[event] = {} end
+
+  table.insert(events[event], callback)
+end
+
+function Quartz.Trigger(event, ...)
+  if not events[event] then return end
+
+  for _, callback in ipairs(events[event]) do
+    callback(...)
+  end
+end
+
+function Quartz.SetupDefaultTriggers()
+  if Quartz.IsEssentials or Quartz.IsModchine then
+    local triggers = { "update", "render", "render-cell", "render-grid", "tick", "subtick", "set-initial", "grid-reset",
+      "grid-clear", "cell-place", "cell-set", "keypressed" }
+
+    for _, trigger in ipairs(triggers) do
+      _G["On"](trigger, function(...) Quartz.Trigger(trigger, ...) end)
+    end
+  end
+end
+
+Quartz.SetupDefaultTriggers()
