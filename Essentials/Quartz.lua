@@ -83,6 +83,69 @@ function Quartz.LoadAsCellsFolder(path)
   Quartz.LoadFolder(path, function(p) require(p:sub(1, #p - 4)) end)
 end
 
+---@type {setup: boolean, anims: table<Quartz.Animation>}
+local animations = { setup = false, anims = {}, }
+
+---@alias Quartz.Animation {boundTo: string|nil, sequence: table<string>, interval: number|function, condition: function, current: number, default: table}
+
+---@param sequence table<string>
+---@param interval number|function
+---@param condition function
+---@return Quartz.Animation
+function Quartz.NewAnimation(sequence, interval, condition)
+  return {
+    boundTo = nil,
+    sequence = sequence,
+    interval = interval,
+    condition = condition,
+    current = 1,
+  }
+end
+
+---@param id string|nil
+---@param animation Quartz.Animation
+function Quartz.BindAnimation(id, animation)
+  if animation.boundTo then error("Animation already bound to " .. tostring(animation.boundTo)) end
+
+  animation.boundTo = id
+  animation.default = {
+    tex = tex[id],
+    size = texsize[id],
+  }
+  table.insert(animations.anims, animation)
+end
+
+function Quartz.StepAnimations()
+  for _, anim in ipairs(animations.anims) do
+    if anim.condition() then
+      anim.current = anim.current + (1 / V(anim.interval, animations.anims))
+
+      if anim.current > #animations.anims then anim.current = anim.current - #animations.anims end
+
+      local img = anim.sequence[math.floor(anim.current)]
+
+      tex[anim.boundTo] = img
+      texsize[anim.boundTo] = {
+        w = img:getWidth(),
+        h = img:getHeight(),
+        w2 = img:getWidth() / 2,
+        h2 = img:getHeight() / 2,
+      }
+    else
+      tex[anim.boundTo] = anim.default.tex
+      texsize[anim.boundTo] = anim.default.texsize
+    end
+  end
+end
+
+function Quartz.SetupAnimations()
+  if animations.setup then return end
+  animations.setup = true
+  Quartz.On("tick", function()
+    Quartz.StepAnimations()
+  end)
+end
+
 local nextsub = 118
 
 local nextid = 65535
@@ -413,6 +476,8 @@ function Quartz.LowLevelCreateCell(name, desc, texture, options)
   if Quartz.IsEssentials or Quartz.IsModchine then
     return CreateCell(name, desc, texture, options)
   end
+
+  return options.id
 end
 
 function Quartz.LoadRawCellReturn(t)

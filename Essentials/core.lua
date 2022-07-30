@@ -25,9 +25,6 @@ Debug("Loaded Quartz API")
 Debug("> Loading Quartz legacy bindings...")
 require("Essentials.bindings")
 
-Debug("> Loading mod animation systen")
-require("Essentials.anim")
-
 Debug("> Loading mod loader code...")
 require("Essentials.mods")
 
