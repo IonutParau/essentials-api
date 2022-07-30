@@ -52,6 +52,8 @@ function Essentials.LoadMod(mod)
 
   Essentials.modTexturePath = "Mods/" .. mod .. "/textures/"
 
+  Quartz.SetTextureHeader(Essentials.modTexturePath)
+
   loaded[mod] = true
   Debug("Loaded " .. mod)
 
@@ -89,12 +91,14 @@ function Essentials.LoadMod(mod)
     if not config.noCells then
       if not cells.overrideCells then
         if love.filesystem.getInfo("Mods/" .. mod .. "/" .. cellsFolder, "directory") then
-          Essentials.LoadFolder("Mods/" .. mod .. "/" .. cellsFolder, function(p) Essentials.LoadRawCellReturn(require(p:sub(1, #p - 4))) end)
+          Essentials.LoadFolder("Mods/" .. mod .. "/" .. cellsFolder,
+            function(p) Essentials.LoadRawCellReturn(require(p:sub(1, #p - 4))) end)
         end
       else
         for _, v in ipairs(cells.overrideCells) do
           if love.filesystem.getInfo("Mods/" .. mod .. "/" .. cellsFolder .. "/" .. v, "directory") then
-            Essentials.LoadFolder("Mods/" .. mod .. "/" .. cellsFolder .. "/" .. v, function(p) Essentials.LoadRawCellReturn(require(p:sub(1, #p - 4))) end)
+            Essentials.LoadFolder("Mods/" .. mod .. "/" .. cellsFolder .. "/" .. v,
+              function(p) Essentials.LoadRawCellReturn(require(p:sub(1, #p - 4))) end)
           else
             require("Mods/" .. mod .. "/" .. cellsFolder .. "/" .. v:sub(1, #v - 4))
           end
@@ -106,6 +110,8 @@ function Essentials.LoadMod(mod)
   Essentials.modTexturePath = nil
   Essentials.idPrefix = ""
   Essentials.currentMod = nil
+
+  Essentials.resetQuartzConfig()
 end
 
 Debug("Loaded Essentials.LoadMod()")

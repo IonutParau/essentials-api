@@ -1,11 +1,14 @@
+if type(Quartz) == "table" then return Quartz end
+
+Quartz = {}
+Quartz.version = "0.0.1"
+
 function table.contains(t, val)
   for k, v in pairs(t) do
     if v == val then return true end
   end
   return false
 end
-
-Debug("Loaded table.contains()")
 
 function V(val, ...)
   if type(val) == "function" then
@@ -14,8 +17,6 @@ function V(val, ...)
     return val
   end
 end
-
-Debug("Loaded V()")
 
 function D(...)
   local t = { ... }
@@ -31,41 +32,72 @@ function D(...)
   end
 end
 
-Debug("Loaded D()")
+Quartz.idPrefix = ""
+Quartz.textureHeader = ""
 
-Essentials.idPrefix = ""
-
-function Essentials.SetIDPrefix(prefix)
-  Essentials.idPrefix = prefix
+function Quartz.SetIDPrefix(prefix)
+  Quartz.idPrefix = prefix
 end
 
-Debug("Loaded Essentials.SetIDPrefix()")
+function Quartz.SetTextureHeader(textureHeader)
+  Quartz.textureHeader = textureHeader
+end
 
 local preprocessors = {}
 
-function Essentials.AddCellLoadingPreprocessor(func)
+function Quartz.reset()
+  Quartz.idPrefix = ""
+  Quartz.textureHeader = ""
+
+  preprocessors = {}
+end
+
+function Quartz.AddCellLoadingPreprocessor(func)
   table.insert(preprocessors, func)
 end
 
-Debug("Loaded Essentials.AddCellLoadingPreprocessor()")
+function Quartz.LoadFolder(path, callback)
+  --assert(type(callback) == "function" or type(callback) == "nil", "Attempt to load source folder with invalid callback")
+  local items = love.filesystem.getDirectoryItems(path)
+
+  for _, item in ipairs(items) do
+    if love.filesystem.getInfo(path .. "/" .. item, "directory") then
+      if item:sub(1) ~= "_" then
+        Quartz.LoadFolder(path .. "/" .. item, callback)
+      end
+    else
+      if callback then
+        if item:sub(- #".manual.lua") ~= ".manual.lua" or item:sub(1) == "_" then
+          callback(path .. "/" .. item)
+        end
+      end
+    end
+  end
+end
+
+function Quartz.LoadAsSrcFolder(path)
+  Quartz.LoadFolder(path, function(p) require(p:sub(1, #p - 4)) end)
+end
+
+function Quartz.LoadAsCellsFolder(path)
+  Quartz.LoadFolder(path, function(p) require(p:sub(1, #p - 4)) end)
+end
 
 local nextsub = 118
 
 local nextid = 65535
 
 ---@alias cellID string|number
----@alias Essentials.CellInfo {id: number|string, types?: table<string>, background?: boolean, bendPath?: function, bias?: number|function, isMarker?: function, isAcidic?: function, isTransparent?: function, isReinforced?: function, generateInto?: string, whenFlipped?: function, chunkID?: string|number, weight?: number|function, defaultVars?: table<number|string|boolean>, properties?: table<string>, push?: function, canMove?: function, nextLifeID?: cellID, nextLifeRot?: number, silent?: boolean, particles?: love.ParticleSystem, sound?: love.SoundData, onDeath?: function, onKill?: function, isDestroyer?: function, update?: function, interval?: number, updatetype?: "static"|"normal"|table, subtick?: number, whenRotated?: function, whenClicked?: function, whenSelected?: function, varsOffset?: number, overrides?: table<function|string|number|boolean>, texture: string, name: string, desc: string, rawPath?: boolean, whenRendered?: function, category: string|table<string>, savePropertiesByName?: boolean|function}
+---@alias Quartz.CellInfo {id: number|string, types?: table<string>, background?: boolean, bendPath?: function, bias?: number|function, isMarker?: function, isAcidic?: function, isTransparent?: function, isReinforced?: function, generateInto?: string, whenFlipped?: function, chunkID?: string|number, weight?: number|function, defaultVars?: table<number|string|boolean>, properties?: table<string>, push?: function, canMove?: function, nextLifeID?: cellID, nextLifeRot?: number, silent?: boolean, particles?: love.ParticleSystem, sound?: love.SoundData, onDeath?: function, onKill?: function, isDestroyer?: function, update?: function, interval?: number, updatetype?: "static"|"normal"|table, subtick?: number, whenRotated?: function, whenClicked?: function, whenSelected?: function, varsOffset?: number, overrides?: table<function|string|number|boolean>, texture: string, name: string, desc: string, rawPath?: boolean, whenRendered?: function, category: string|table<string>, savePropertiesByName?: boolean|function}
 
----@param cell Essentials.CellInfo
-function Essentials.LoadCell(cell)
+---@param cell Quartz.CellInfo
+function Quartz.LoadCell(cell)
   -- Options translation
   local options = {
-    id = Essentials.idPrefix .. tostring(cell.id or nextid),
+    id = Quartz.idPrefix .. tostring(cell.id or nextid),
   }
 
   nextid = nextid + 1
-
-  Debug("Loaded cell " .. tostring(options.id) .. " from " .. tostring(Essentials.currentMod))
 
   local types = cell.types or {}
 
@@ -211,7 +243,7 @@ function Essentials.LoadCell(cell)
     end
 
     if istrash and IsDestroyer(c, dir, x, y, vars) then
-      DoTrash(c, vars, t, {
+      Quartz.DoTrash(c, vars, t, {
         id = V(cell.nextLifeID, c, x, y, vars, t, force),
         rot = V(cell.nextLifeRot, c, x, y, vars, t, force),
         silent = V(cell.silent, c, x, y, vars, t, force),
@@ -249,7 +281,7 @@ function Essentials.LoadCell(cell)
       while c.vars['essenLoc_i'] > decided do
         c.vars['essenLoc_i'] = c.vars['essenLoc_i'] - decided
         c.updated = true
-        cell.update(x, y, FixCell(c, x, y))
+        cell.update(x, y, Quartz.FixCell(c, x, y))
       end
     end
   end
@@ -276,7 +308,6 @@ function Essentials.LoadCell(cell)
 
     s = function(b)
       local id = options.id
-      chosen.id = options.id
       if id ~= chosen.id then
         buttons.lastselecttab.icon = tex[id] and id or "X"
         for i = 10, 2, -1 do
@@ -295,6 +326,7 @@ function Essentials.LoadCell(cell)
           lastselects[1].desc = "This ID (" .. id .. ") doesn't exist in the version of CelLua you are using."
         end
       end
+      chosen.id = options.id
       if not b then return end
       MakePropertyMenu(V(cell.properties, b), b)
       chosen.data = table.copy(DefaultVars(options.id))
@@ -307,7 +339,7 @@ function Essentials.LoadCell(cell)
       local off = V(cell.varsOffset or 0, c, x, y, was)
 
       for i = 1, propertiesopen do
-        if V(cell.savePropertiesByName, c, x, y, was) then
+        if V(cell.savePropertiesByName, c, x, y, was, propertynames[i]) then
           c.vars[propertynames[i]] = chosen.data[i]
         else
           c.vars[i + off] = chosen.data[i]
@@ -326,7 +358,7 @@ function Essentials.LoadCell(cell)
     end
   end
 
-  local t = Essentials.modTexturePath .. (cell.texture or "default.png")
+  local t = Quartz.textureHeader .. (cell.texture or "default.png")
   if cell.rawPath then
     t = cell.texture or "texture/push.png"
   end
@@ -335,12 +367,12 @@ function Essentials.LoadCell(cell)
     preprocessor(cell, options) -- Edit options to change stuff
   end
 
-  local id = CreateCell(cell.name or "Untitled", cell.desc or "No description available", t, options)
+  local id = CreateCell(cell.name or "Untitled", cell.desc or "No description available", t, options) or cell.id
 
   --Event-based stuff
   if cell.whenPlaced ~= nil then
     OnCellPlace(function(c, x, y, was)
-      if c.id == cell.id then
+      if c.id == id then
         cell.whenPlaced(c, x, y, was)
       end
     end)
@@ -348,14 +380,14 @@ function Essentials.LoadCell(cell)
 
   if cell.whenRendered ~= nil then
     OnRenderCell(function(c, x, y, ip)
-      if c.id == cell.id then
+      if c.id == id then
         cell.whenRendered(c, x, y, ip)
       end
     end)
   end
 
   if cell.category ~= nil then
-    local cats = Essentials.FetchCategories(cell.category)
+    local cats = Quartz.FetchCategories(cell.category)
 
     for _, cat in ipairs(cats) do
       cat.Add(options.id)
@@ -363,21 +395,17 @@ function Essentials.LoadCell(cell)
   end
 end
 
-Debug("Loaded Essentials.LoadCell()")
-
-function Essentials.LoadRawCellReturn(t)
-  if not t then return end -- Maybe the used Essentials.LoadCell()
+function Quartz.LoadRawCellReturn(t)
+  if not t then return end -- Maybe the used Quartz.LoadCell()
 
   if type(t[1]) == "table" then
     for _, c in ipairs(t) do
-      Essentials.LoadCell(c)
+      Quartz.LoadCell(c)
     end
   else
-    Essentials.LoadCell(t)
+    Quartz.LoadCell(t)
   end
 end
-
-Debug("Loaded Essentials.LoadRawCellReturn()")
 
 function SplitText(text, s)
   local txts = { "" }
@@ -391,11 +419,9 @@ function SplitText(text, s)
   return txts
 end
 
-Debug("Loaded SplitText()")
-
 ---@return table
 ---@param category string|table
-function Essentials.FetchCategories(category)
+function Quartz.FetchCategories(category)
   if type(category) == "string" then
     category = { category }
   end
@@ -420,9 +446,7 @@ function Essentials.FetchCategories(category)
   return trueCategories
 end
 
-Debug("Loaded Essentials.FetchCategories()")
-
-function DoTrash(cell, vars, ptype, config)
+function Quartz.DoTrash(cell, vars, ptype, config)
   if ptype == "push" or ptype == "nudge" then
     if fancy then
       cell.eatencells = cell.eatencells or {}
@@ -440,4 +464,135 @@ function DoTrash(cell, vars, ptype, config)
   return true
 end
 
-Debug("Loaded DoTrash()")
+function Quartz.DoBaseEnemy(cell, cx, cy, vars, ptype, config)
+  config = config or {}
+
+  if cell.protected or vars.lastcell.protected then return true end
+
+  if ptype == "push" or ptype == "nudge" then
+    cell.id = config.id or 0
+    cell.rot = config.rot or cell.rot
+    cell.lastvars = config.lastvars or cell.lastvars
+    if not config.weak then
+      vars.lastcell.id = 0
+      if fancy then
+        GetCell(cx, cy).eatencells = { table.copy(cell) }
+      end
+    end
+    local runParticles = config.particles or enemyparticles
+    if fancy then runParticles:setPosition(cx * 20 - 10, cy * 20 - 10) runParticles:emit(50) end
+    if not config.silent then
+      PlaySound(config.sound or sound.destroy)
+    end
+    if type(config.execute) == "function" then config.execute() end
+  else
+    vars.ended = true
+  end
+
+  return true
+end
+
+function Quartz.DoBaseTrash(cell, vars, ptype, sound, silent)
+  if ptype == "push" or ptype == "nudge" then
+    if fancy then
+      cell.eatencells = cell.eatencells or {}
+      table.insert(cell.eatencells, table.copy(vars.lastcell))
+    end
+    vars.lastcell.id = 0
+    if not silent then
+      PlaySound(sound or sound.destroy)
+    end
+  end
+
+  vars.ended = true
+
+  return true
+end
+
+DoBaseEnemy = Quartz.DoBaseEnemy
+DoTrash = Quartz.DoTrash
+DoBaseTrash = Quartz.DoBaseTrash
+
+local fixID = 0
+
+local posMap = {}
+
+On("cell-set", function(cell, x, y, was)
+  --love.window.setTitle(tostring(cell))
+  Quartz.FixCell(cell, x, y)
+end)
+
+local oldRotateCell = RotateCell
+
+function RotateCell(x, y, rot, dir, amount)
+  oldRotateCell(x, y, rot, dir, amount)
+  local c = GetCell(x, y)
+  Quartz.FixCell(c, x, y)
+end
+
+Quartz.posmap = {}
+Quartz.customFixes = {}
+
+function Quartz.AddCustomFix(fix, func)
+  Quartz.customFixes[fix] = func
+end
+
+function Quartz.RemoveCustomFix(fix, func)
+  Quartz.customFixes[fix] = nil
+  collectgarbage("collect")
+end
+
+function Quartz.FixCell(cell, x, y)
+  if cell.poskey == nil then
+    cell.poskey = fixID
+    fixID = fixID + 1
+  end
+  posMap[cell.poskey] = { x = x, y = y, dir = cell.rot }
+  for k, v in pairs(Quartz.customFixes) do
+    cell[k] = v
+  end
+  cell.pos = function(self)
+    return posMap[self.poskey]
+  end
+  cell.dir = function(self)
+    return self:pos().dir
+  end
+  cell.push = function(self, dir, vars)
+    return unpack { PushCell(self:pos().x, self:pos().y, dir, vars) }
+  end
+  cell.pull = function(self, dir, vars)
+    return unpack { PullCell(self:pos().x, self:pos().y, dir, vars) }
+  end
+  cell.grasp = function(self, dir, vars)
+    return unpack { GraspCell(self:pos().x, self:pos().y, dir, vars) }
+  end
+  cell.graspLeft = function(self, dir, vars)
+    return unpack { LGraspCell(self:pos().x, self:pos().y, dir, vars) }
+  end
+  cell.graspRight = function(self, dir, vars)
+    return unpack { RGraspCell(self:pos().x, self:pos().y, dir, vars) }
+  end
+  cell.nudge = function(self, dir, vars)
+    return unpack { NudgeCell(self:pos().x, self:pos().y, dir, vars) }
+  end
+  cell.advance = function(self, dir, vars)
+    local cx = self:pos().x
+    local cy = self:pos().y
+
+    if PushCell(x, y, dir, vars) then
+      return unpack { PullCell(cx, cy, dir, { unpack(vars), force = (vars.force or 1) }) }
+    else
+      return unpack { PullCell(cx, cy, dir, vars) }
+    end
+  end
+  return cell
+end
+
+local oldGetCell = GetCell
+
+function GetCell(x, y)
+  return Quartz.FixCell(oldGetCell(x, y))
+end
+
+FixCell = Quartz.FixCell
+AddCustomFix = Quartz.FixCell
