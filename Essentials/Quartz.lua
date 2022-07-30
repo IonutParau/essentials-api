@@ -151,7 +151,7 @@ local nextsub = 118
 local nextid = 65535
 
 ---@alias cellID string|number
----@alias Quartz.CellInfo {id: number|string, types?: table<string>, background?: boolean, bendPath?: function, bias?: number|function, isMarker?: function, isAcidic?: function, isTransparent?: function, isReinforced?: function, generateInto?: string, whenFlipped?: function, chunkID?: string|number, weight?: number|function, defaultVars?: table<number|string|boolean>, properties?: table<string>, push?: function, canMove?: function, nextLifeID?: cellID, nextLifeRot?: number, silent?: boolean, particles?: love.ParticleSystem, sound?: love.SoundData, onDeath?: function, onKill?: function, isDestroyer?: function, update?: function, interval?: number, updatetype?: "static"|"normal"|table, subtick?: number, whenRotated?: function, whenClicked?: function, whenSelected?: function, varsOffset?: number, overrides?: table<function|string|number|boolean>, texture: string, name: string, desc: string, rawPath?: boolean, whenRendered?: function, category: string|table<string>, savePropertiesByName?: boolean|function}
+---@alias Quartz.CellInfo {id: number|string, types?: table<string>, background?: boolean, bendPath?: function, bias?: number|function, isMarker?: function, isAcidic?: function, isTransparent?: function, isReinforced?: function, generateInto?: string, whenFlipped?: function, chunkID?: string|number, weight?: number|function, defaultVars?: table<number|string|boolean>, properties?: table<string>, push?: function, canMove?: function, nextLifeID?: cellID, nextLifeRot?: number, silent?: boolean, particles?: love.ParticleSystem, sound?: love.SoundData, onDeath?: function, onKill?: function, isDestroyer?: function, update?: function, interval?: number, updatetype?: "static"|"normal"|table, subtick?: number, whenRotated?: function, whenClicked?: function, whenSelected?: function, varsOffset?: number, overrides?: table<function|string|number|boolean>, texture: string, name: string, desc: string, rawPath?: boolean, whenRendered?: function, category: string|table<string>, savePropertiesByName?: boolean|function, animation?: Quartz.Animation}
 
 ---@param cell Quartz.CellInfo
 function Quartz.LoadCell(cell)
@@ -452,6 +452,10 @@ function Quartz.LoadCell(cell)
         cell.whenRendered(c, x, y, ip)
       end
     end)
+  end
+
+  if cell.animation then
+    Quartz.BindAnimation(id, cell.animation)
   end
 
   if cell.category ~= nil then
