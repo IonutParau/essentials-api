@@ -268,20 +268,24 @@ function Quartz.LoadCell(cell)
   end
 
   if isenemy or istrash then
+    if isenemy then
+      options.type = "enemy"
+    end
     options.isDestroyer = cell.isDestroyer or function() return true end
   end
   if cell.update then
     local int = cell.interval or 1
     options.update = function(x, y, c)
-      if not c.vars['essenLoc_i'] then
-        c.vars['essenLoc_i'] = 0
+      if not c.vars['qLoc_i'] then
+        c.vars['qLoc_i'] = 0
       end
-      c.vars['essenLoc_i'] = c.vars['essenLoc_i'] + 1
+      c.vars['qLoc_i'] = c.vars['qLoc_i'] + 1
+      c = Quartz.FixCell(c, x, y)
       local decided = V(int, x, y, c)
-      while c.vars['essenLoc_i'] > decided do
-        c.vars['essenLoc_i'] = c.vars['essenLoc_i'] - decided
+      while c.vars['qLoc_i'] > decided do
+        c.vars['qLoc_i'] = c.vars['qLoc_i'] - decided
         c.updated = true
-        cell.update(x, y, Quartz.FixCell(c, x, y))
+        cell.update(c:pos().x, c:pos().y, c)
       end
     end
   end
@@ -367,7 +371,8 @@ function Quartz.LoadCell(cell)
     preprocessor(cell, options) -- Edit options to change stuff
   end
 
-  local id = CreateCell(cell.name or "Untitled", cell.desc or "No description available", t, options) or cell.id
+  local id = Quartz.LowLevelCreateCell(cell.name or "Untitled", cell.desc or "No description available", t, options) or
+      cell.id
 
   --Event-based stuff
   if cell.whenPlaced ~= nil then
@@ -392,6 +397,21 @@ function Quartz.LoadCell(cell)
     for _, cat in ipairs(cats) do
       cat.Add(options.id)
     end
+  end
+end
+
+---@alias Quartz.LowLevelOptions {id: string, convertId?: number|string, hasVars?: boolean, defaultVars?: table, type?: string, isUnbreakable?: function, isNonexistant?: function, isDestroyer?: function, isAcidic?: function, isTransparent?: function, toGenerate?: function, stopsOptimization?: function, onRotate?: function, onRotate?: function, onFlip?: function, flip?: function, push?: function, onClick?: function, onSelect?: function, nextCell?: function}
+
+---@param name string
+---@param desc string
+---@param texture string
+---@param options Quartz.LowLevelOptions
+---@return string
+function Quartz.LowLevelCreateCell(name, desc, texture, options)
+  if type(options.id) ~= "string" then error("Invalid ID thrown into Quartz") end
+
+  if Quartz.IsEssentials or Quartz.IsModchine then
+    return CreateCell(name, desc, texture, options)
   end
 end
 
@@ -640,3 +660,9 @@ function Quartz.SetupDefaultTriggers()
 end
 
 Quartz.SetupDefaultTriggers()
+
+function Quartz.AddWinCondition(validator)
+  if Quartz.IsEssentials or Quartz.IsModchine then
+    _G["AddWinCondition"](validator)
+  end
+end
