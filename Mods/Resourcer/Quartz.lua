@@ -118,26 +118,26 @@ end
 function Quartz.StepAnimations(dt)
   for _, anim in ipairs(animations.anims) do
     if anim.condition() then
-      local lastindex = math.floor(anim.current)
       local d = (1 / V(anim.interval, animations.anims)) * (dt * delay)
 
       anim.current = anim.current + d
+      print(anim.current)
 
       while anim.current > (#anim.sequence + 1) do anim.current = anim.current - #anim.sequence end
 
       local index = math.floor(anim.current)
 
-      if index ~= lastindex then
-        local img = love.graphics.newImage(anim.sequence[index])
+      print(index)
 
-        tex[anim.boundTo] = img
-        texsize[anim.boundTo] = {
-          w = img:getWidth(),
-          h = img:getHeight(),
-          w2 = img:getWidth() / 2,
-          h2 = img:getHeight() / 2,
-        }
-      end
+      local img = love.graphics.newImage(anim.sequence[index])
+
+      tex[anim.boundTo] = img
+      texsize[anim.boundTo] = {
+        w = img:getWidth(),
+        h = img:getHeight(),
+        w2 = img:getWidth() / 2,
+        h2 = img:getHeight() / 2,
+      }
     else
       tex[anim.boundTo] = anim.default.tex
       texsize[anim.boundTo] = anim.default.texsize

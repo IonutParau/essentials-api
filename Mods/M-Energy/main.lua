@@ -31,10 +31,10 @@ function MEnergy.EmitNumerical(x, y, amount, dir, depth)
     end
     if cell.id == "ME numWire" then
       depth = depth + 1 -- No stackoverflow for u
-      MEnergy.EmitNumerical(x+1,y,amount,0,depth)
-      MEnergy.EmitNumerical(x,y+1,amount,1,depth)
-      MEnergy.EmitNumerical(x-1,y,amount,2,depth)
-      MEnergy.EmitNumerical(x,y-1,amount,3,depth)
+      MEnergy.EmitNumerical(x + 1, y, amount, 0, depth)
+      MEnergy.EmitNumerical(x, y + 1, amount, 1, depth)
+      MEnergy.EmitNumerical(x - 1, y, amount, 2, depth)
+      MEnergy.EmitNumerical(x, y - 1, amount, 3, depth)
     end
   end
 end
@@ -52,15 +52,15 @@ function MEnergy.EmitConditional(x, y, dir, depth)
     end
     if cell.id == "ME conWire" then
       depth = depth + 1 -- No stackoverflow for u
-      MEnergy.EmitConditional(x+1,y,0,depth)
-      MEnergy.EmitConditional(x,y+1,1,depth)
-      MEnergy.EmitConditional(x-1,y,2,depth)
-      MEnergy.EmitConditional(x,y-1,3,depth)
+      MEnergy.EmitConditional(x + 1, y, 0, depth)
+      MEnergy.EmitConditional(x, y + 1, 1, depth)
+      MEnergy.EmitConditional(x - 1, y, 2, depth)
+      MEnergy.EmitConditional(x, y - 1, 3, depth)
     end
   end
 end
 
 local menergy = CreateCategory("MEnergy", "Cells provided by the universal energy management mod", 3, {})
-Toolbar.GetCategory("Miscellaneous").Add(menergy)
+Quartz.GetCategory("Miscellaneous").Add(menergy)
 
 return MEnergy

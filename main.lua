@@ -77,7 +77,8 @@ function table.merge(t1, t2)
 end
 
 local function rainbow(a) --the most important function /s
-	return { (math.sin(-love.timer.getTime())) + 0.75, (math.sin(-love.timer.getTime() + math.pi * 2 / 3)) + 0.75, (math.sin(-love.timer.getTime() + math.pi * 4 / 3)) + 0.75, a }
+	return { (math.sin(-love.timer.getTime())) + 0.75, (math.sin(-love.timer.getTime() + math.pi * 2 / 3)) + 0.75,
+		(math.sin(-love.timer.getTime() + math.pi * 4 / 3)) + 0.75, a }
 end
 
 function getempty()
@@ -105,10 +106,12 @@ function NewTex(val, key)
 
 	if key then
 		tex[key] = love.graphics.newImage(p)
-		texsize[key] = { w = tex[key]:getWidth(), h = tex[key]:getHeight(), w2 = tex[key]:getWidth() * .5, h2 = tex[key]:getHeight() * .5 }
+		texsize[key] = { w = tex[key]:getWidth(), h = tex[key]:getHeight(), w2 = tex[key]:getWidth() * .5,
+			h2 = tex[key]:getHeight() * .5 }
 	else
 		table.insert(tex, love.graphics.newImage(p))
-		texsize[#tex] = { w = tex[#tex]:getWidth(), h = tex[#tex]:getHeight(), w2 = tex[#tex]:getWidth() * .5, h2 = tex[#tex]:getHeight() * .5 }
+		texsize[#tex] = { w = tex[#tex]:getWidth(), h = tex[#tex]:getHeight(), w2 = tex[#tex]:getWidth() * .5,
+			h2 = tex[#tex]:getHeight() * .5 }
 	end
 end
 
@@ -529,9 +532,12 @@ cellinfo = {
 	[15] = { name = "Mirror", desc = "Swaps the two cells it's arrows point to." },
 	[16] = { name = "Diverter", desc = "Diverts whatever comes into it through the arrow." },
 	[17] = { name = "Redirector", desc = "Sets the rotation of neighboring cells to it's own rotation." },
-	[18] = { name = "CW Gear", desc = "Grabs and rotates surrounding cells around itself clockwise. Gets jammed by immovables and other Gears." },
-	[19] = { name = "CCW Gear", desc = "Grabs and rotates surrounding cells around itself counter-clockwise. Gets jammed by immovables and other Gears." },
-	[20] = { name = "Ungeneratable", desc = "Causes generators to generate nothing but force instead of another Ungeneratable." },
+	[18] = { name = "CW Gear",
+		desc = "Grabs and rotates surrounding cells around itself clockwise. Gets jammed by immovables and other Gears." },
+	[19] = { name = "CCW Gear",
+		desc = "Grabs and rotates surrounding cells around itself counter-clockwise. Gets jammed by immovables and other Gears." },
+	[20] = { name = "Ungeneratable",
+		desc = "Causes generators to generate nothing but force instead of another Ungeneratable." },
 	[21] = { name = "Repulsor", desc = "Applies a pushing force in 4 directions." },
 	[22] = { name = "Weight", desc = "Prevents 1 unit of force from being applied." },
 	[23] = { name = "Cross Generator", desc = "Two generators combined." },
@@ -543,27 +549,37 @@ cellinfo = {
 	[29] = { name = "Impulsor", desc = "Pulls cells towards it in 4 directions." },
 	[30] = { name = "Flipper", desc = "Flips cells on an axis based on it's rotation." },
 	[31] = { name = "Bidiverter", desc = "Two Diverters combined." },
-	[32] = { name = "OR Gate", desc = "Conditional generator; generates when the condition\n(A or B) is true. Inputs are on it's sides." },
-	[33] = { name = "AND Gate", desc = "Conditional generator; generates when the condition\n(A and B) is true. Inputs are on it's sides." },
-	[34] = { name = "XOR Gate", desc = "Conditional generator; generates when the condition\n(A != B) is true. Inputs are on it's sides." },
-	[35] = { name = "NOR Gate", desc = "Conditional generator; generates when the condition\n(!A and !B) is true. Inputs are on it's sides." },
-	[36] = { name = "NAND Gate", desc = "Conditional generator; generates when the condition\n(!A or !B) true. Inputs are on it's sides." },
-	[37] = { name = "XNOR Gate", desc = "Conditional generator; generates when the condition\n(A == B) true. Inputs are on it's sides." },
+	[32] = { name = "OR Gate",
+		desc = "Conditional generator; generates when the condition\n(A or B) is true. Inputs are on it's sides." },
+	[33] = { name = "AND Gate",
+		desc = "Conditional generator; generates when the condition\n(A and B) is true. Inputs are on it's sides." },
+	[34] = { name = "XOR Gate",
+		desc = "Conditional generator; generates when the condition\n(A != B) is true. Inputs are on it's sides." },
+	[35] = { name = "NOR Gate",
+		desc = "Conditional generator; generates when the condition\n(!A and !B) is true. Inputs are on it's sides." },
+	[36] = { name = "NAND Gate",
+		desc = "Conditional generator; generates when the condition\n(!A or !B) true. Inputs are on it's sides." },
+	[37] = { name = "XNOR Gate",
+		desc = "Conditional generator; generates when the condition\n(A == B) true. Inputs are on it's sides." },
 	[38] = { name = "Straight Diverter", desc = "Diverter with no bend." },
 	[39] = { name = "Cross Diverter", desc = "Two Straight diverters combined." },
 	[40] = { name = "Twist Generator", desc = "Flips the cell that it generates, across the same axis as the arrow." },
 	[41] = { name = "Ghost", desc = "Immovable and can not be generated." },
 	[42] = { name = "Bias", desc = "Adds to any force going it's direction and subtracts from any force going against it." },
-	[43] = { name = "Shield", desc = "Prevents the cells surrounding it from interacting with enemies or being affected by dangerous forces like infection or transformation." },
+	[43] = { name = "Shield",
+		desc = "Prevents the cells surrounding it from interacting with enemies or being affected by dangerous forces like infection or transformation." },
 	[44] = { name = "Intaker", desc = "Pulls cells that are in front of it towards it. The front acts like a trash cell." },
 	[45] = { name = "Replicator", desc = "Clones the cell in front of it." },
 	[46] = { name = "Cross Replicator", desc = "Two Replicators combined." },
-	[47] = { name = "Fungal", desc = "When this cell is pushed, the cell that pushed it will be converted into another Fungal cell." },
+	[47] = { name = "Fungal",
+		desc = "When this cell is pushed, the cell that pushed it will be converted into another Fungal cell." },
 	[48] = { name = "Forker", desc = "Like a Diverter that clones the cell." },
 	[49] = { name = "Triforker", desc = "Forker with three outputs." },
 	[50] = { name = "Super Repulsor", desc = "Pushes cells across infinite distance with infinite force." },
-	[51] = { name = "Demolisher", desc = "Similar to a trash cell, but when a cell is pushed in, the demolisher destroys it's neighbors." },
-	[52] = { name = "Opposition", desc = "Can only be pushed, pulled, or grasped towards certain directions, indicated by the arrows." },
+	[51] = { name = "Demolisher",
+		desc = "Similar to a trash cell, but when a cell is pushed in, the demolisher destroys it's neighbors." },
+	[52] = { name = "Opposition",
+		desc = "Can only be pushed, pulled, or grasped towards certain directions, indicated by the arrows." },
 	[53] = { name = "Cross Opposition", desc = "Two oppositions combined." },
 	[54] = { name = "Slider Opposition", desc = "Opposition that only restricts two sides, while the others are pushable." },
 	[55] = { name = "Super Generator", desc = "A generate that generates the entire row of cells behind it." },
@@ -616,7 +632,8 @@ cellinfo = {
 	[102] = { name = "CCW Divider", desc = "CCW Forker that doesn't rotate cells." },
 	[103] = { name = "Conditional", desc = "The weight of this cell depends on it's rotation.\n(0-3, increases clockwise)" },
 	[104] = { name = "Anti-Weight", desc = "Adds 1 unit of force to applied forces." },
-	[105] = { name = "Transmitter", desc = "When rotated, flipped, or given an effect such as protection, it applies the effects to it's neighbors aswell." },
+	[105] = { name = "Transmitter",
+		desc = "When rotated, flipped, or given an effect such as protection, it applies the effects to it's neighbors aswell." },
 	[106] = { name = "Shifter", desc = "Pulls cells in from the back and pushes them out the front." },
 	[107] = { name = "Cross Shifter", desc = "Two Shifters combined." },
 	[108] = { name = "CW Minigear", desc = "CW Gear that only affects 4 cells." },
@@ -624,9 +641,11 @@ cellinfo = {
 	[110] = { name = "CW Cloner", desc = "CW Generator that does not rotate the generated cell." },
 	[111] = { name = "CCW Cloner", desc = "CCW Generator that does not rotate the generated cell." },
 	[112] = { name = "Locker", desc = "Prevents the cells adjacent to it from being rotated or flipped." },
-	[113] = { name = "Redirect Generator", desc = "Generator that rotates the generated cell so it faces the same way as itself." },
+	[113] = { name = "Redirect Generator",
+		desc = "Generator that rotates the generated cell so it faces the same way as itself." },
 	[114] = { name = "Nudger", desc = "Moves forward, but does not push cells." },
-	[115] = { name = "Slicer", desc = "Moves forward; upon hitting a cell, it will attempt to push the cell out of the way in a direction perpendicular to it's own." },
+	[115] = { name = "Slicer",
+		desc = "Moves forward; upon hitting a cell, it will attempt to push the cell out of the way in a direction perpendicular to it's own." },
 	[116] = { name = "White Marker", desc = "Decoration. Transparent to cells; disappears after being moved onto." },
 	[117] = { name = "Red Marker", desc = "Decoration. Transparent to cells; disappears after being moved onto." },
 	[118] = { name = "Yellow Marker", desc = "Decoration. Transparent to cells; disappears after being moved onto." },
@@ -651,10 +670,12 @@ cellinfo = {
 	[137] = { name = "Latcher", desc = "Prevents cells from being pulled." },
 	[138] = { name = "Sealer", desc = "Prevents cells from being grasped." },
 	[139] = { name = "Bolter", desc = "Prevents cells from being swapped." },
-	[140] = { name = "Tough Two-Directional", desc = "Acts like a wall on 2 sides (+1 corner) and like a push on the other 2." },
+	[140] = { name = "Tough Two-Directional",
+		desc = "Acts like a wall on 2 sides (+1 corner) and like a push on the other 2." },
 	[141] = { name = "Megademolisher", desc = "Similar to a Demolisher, but affects diagonal neighbors too." },
 	[142] = { name = "Resistance", desc = "Can only be pushed with 1 unit of force," },
-	[143] = { name = "Tentative", desc = "Like Resistance, but the amount of force it needs is dependant on it's rotation.\n(1-4, increases clockwise)" },
+	[143] = { name = "Tentative",
+		desc = "Like Resistance, but the amount of force it needs is dependant on it's rotation.\n(1-4, increases clockwise)" },
 	[144] = { name = "Restrictor", desc = "Only allows 1 unit of force to pass through." },
 	[145] = { name = "Megashield", desc = "Like a Shield, but affects a 5x5 area." },
 	[146] = { name = "Timewarper", desc = "Reverts the cell it's pointing at back to what it was in the initial state." },
@@ -667,17 +688,21 @@ cellinfo = {
 	[153] = { name = "Key", desc = "When it gets pushed into a Door cell, it destroys itself and the Door." },
 	[154] = { name = "Door", desc = "Immovable, but when a Key cell is pushed into it they destroy eachother." },
 	[155] = { name = "Cross Intaker", desc = "Two Intakers combined." },
-	[156] = { name = "Magnet", desc = "Magnets can attract or repel each other. Same colors repel, different colors attract." },
+	[156] = { name = "Magnet",
+		desc = "Magnets can attract or repel each other. Same colors repel, different colors attract." },
 	[157] = { name = "Tough One-Directional", desc = "Acts like a wall on 3 sides and like a push on one." },
-	[158] = { name = "Tough Three-Directional", desc = "Acts like a wall on 1 side (+2 corners) and like a push on the other 3." },
+	[158] = { name = "Tough Three-Directional",
+		desc = "Acts like a wall on 1 side (+2 corners) and like a push on the other 3." },
 	[159] = { name = "Tough Pushable", desc = "Can't be affected by cells diagonally." },
 	[160] = { name = "Missile", desc = "Like a moving enemy." },
 	[161] = { name = "Life Missile", desc = "Upon hitting something, it turns into a Life cell." },
 	[162] = { name = "Staller", desc = "Like a Wall, but upon collision, it will be destroyed." },
-	[163] = { name = "Bulk Enemy", desc = "Like an Enemy, but it will also stop force similar to a Wall.\nIn other words, a Staller that also destroys the pusher." },
+	[163] = { name = "Bulk Enemy",
+		desc = "Like an Enemy, but it will also stop force similar to a Wall.\nIn other words, a Staller that also destroys the pusher." },
 	[164] = { name = "Swivel Enemy", desc = "The HP of this enemy is measured by it's rotation.\n(1-4, increases clockwise)" },
 	[165] = { name = "Storage", desc = "If a cell moves into it, it will store the cell until another cell bumps it out." },
-	[166] = { name = "Memory", desc = "Like a Generator, but once it sees a cell it will generate that cell infinitely until it sees another. If it gets pushed on the top or bottom, it will forget what it was generating." },
+	[166] = { name = "Memory",
+		desc = "Like a Generator, but once it sees a cell it will generate that cell infinitely until it sees another. If it gets pushed on the top or bottom, it will forget what it was generating." },
 	[167] = { name = "Trigenerator", desc = "Generator that generates three cells at once." },
 	[168] = { name = "Bigenerator", desc = "Generator that generates two cells at once." },
 	[169] = { name = "CW Multigenerator", desc = "Generator that generates two cells at once." },
@@ -686,10 +711,14 @@ cellinfo = {
 	[172] = { name = "Bicloner", desc = "Bigenerator that doesn't rotate the generated cell." },
 	[173] = { name = "CW Multicloner", desc = "CW Multigenerator that doesn't rotate the generated cell." },
 	[174] = { name = "CCW Multicloner", desc = "CCW Multigenerator that doesn't rotate the generated cell." },
-	[175] = { name = "Transporter", desc = "Like a Storage cell, but once it holds a cell, it will act like a nudger, then release the cell when it hits a wall. The direction it releases it will be favored towards the rotation of the stored cell, but it will always be perpendicular to the Transporter's direction." },
-	[176] = { name = "Tainter", desc = "Like a Trash cell, but when it eats a cell it spreads in the direction that the cell came from." },
-	[177] = { name = "Super Replicator", desc = "Like a Replicator, but it replicates the entire row of cells in front of it." },
-	[178] = { name = "Scissor", desc = "Upon hitting a cell, it will attempt to split the cell in two and push it out it's sides." },
+	[175] = { name = "Transporter",
+		desc = "Like a Storage cell, but once it holds a cell, it will act like a nudger, then release the cell when it hits a wall. The direction it releases it will be favored towards the rotation of the stored cell, but it will always be perpendicular to the Transporter's direction." },
+	[176] = { name = "Tainter",
+		desc = "Like a Trash cell, but when it eats a cell it spreads in the direction that the cell came from." },
+	[177] = { name = "Super Replicator",
+		desc = "Like a Replicator, but it replicates the entire row of cells in front of it." },
+	[178] = { name = "Scissor",
+		desc = "Upon hitting a cell, it will attempt to split the cell in two and push it out it's sides." },
 	[179] = { name = "Triscissor", desc = "Scissor with three outputs." },
 	[180] = { name = "Multiplier", desc = "Scissor that doesn't rotate split cells." },
 	[181] = { name = "Trimultiplier", desc = "Triscissor that doesn't rotate split cells." },
@@ -705,11 +734,16 @@ cellinfo = {
 	[191] = { name = "Tricompounder", desc = "Trispooner that doesn't rotate cells." },
 	[192] = { name = "CW Compounder", desc = "CW Spooner that doesn't rotate cells." },
 	[193] = { name = "CCW Compounder", desc = "CCW Spooner that doesn't rotate cells." },
-	[194] = { name = "IMPLY Gate", desc = "Conditional generator; generates when the condition\n(!A or B) is true. Inputs are on it's sides." },
-	[195] = { name = "CON-IMPLY Gate", desc = "Conditional generator; generates when the condition\n(A or !B) is true. Inputs are on it's sides." },
-	[196] = { name = "NIMPLY Gate", desc = "Conditional generator; generates when the condition\n(A and !B) is true. Inputs are on it's sides." },
-	[197] = { name = "CON-NIMPLY Gate", desc = "Conditional generator; generates when the condition\n(!A and B) is true. Inputs are on it's sides." },
-	[198] = { name = "Converter", desc = "When a cell enters for the first time, the Converter stores the cell. The next time a cell enters, it will be converted into the stored cell." },
+	[194] = { name = "IMPLY Gate",
+		desc = "Conditional generator; generates when the condition\n(!A or B) is true. Inputs are on it's sides." },
+	[195] = { name = "CON-IMPLY Gate",
+		desc = "Conditional generator; generates when the condition\n(A or !B) is true. Inputs are on it's sides." },
+	[196] = { name = "NIMPLY Gate",
+		desc = "Conditional generator; generates when the condition\n(A and !B) is true. Inputs are on it's sides." },
+	[197] = { name = "CON-NIMPLY Gate",
+		desc = "Conditional generator; generates when the condition\n(!A and B) is true. Inputs are on it's sides." },
+	[198] = { name = "Converter",
+		desc = "When a cell enters for the first time, the Converter stores the cell. The next time a cell enters, it will be converted into the stored cell." },
 	[199] = { name = "True Pusher", desc = "Unbreakable Pusher that cannot be stopped." },
 	[200] = { name = "True Puller", desc = "Unbreakable Puller that cannot be stopped." },
 	[201] = { name = "True Driller", desc = "Unbreakable Driller that cannot be stopped." },
@@ -717,12 +751,15 @@ cellinfo = {
 	[203] = { name = "True CW Gear", desc = "Unbreakable CW Gear that cannot be stopped." },
 	[204] = { name = "True CCW Gear", desc = "Unbreakable CCW Gear that cannot be stopped." },
 	[205] = { name = "Phantom", desc = "Trash that cannot be generated." },
-	[206] = { name = "Lluea", desc = "A pusher with AI. Turns when it hits a wall, dies and turns into it's non-living equivalent if it cannot turn. Llueas will also eat infectious cells, and either reproduce or gain another force when doing so." },
+	[206] = { name = "Lluea",
+		desc = "A pusher with AI. Turns when it hits a wall, dies and turns into it's non-living equivalent if it cannot turn. Llueas will also eat infectious cells, and either reproduce or gain another force when doing so." },
 	[207] = { name = "Bar", desc = "When pushed or pulled, it will attempt to grasp the cells at it's sides." },
 	[208] = { name = "Diode Diverter", desc = "One-way Straight Diverter." },
 	[209] = { name = "Crossdiode Diverter", desc = "One-way Cross Diverters." },
-	[210] = { name = "Twist Diverter", desc = "Like a Straight Diverter, but it flips the cell that goes through it like a Twist Generator." },
-	[211] = { name = "Glunki", desc = "Creates trails to bring cells to itself and digest them, which takes 25 ticks each cell. If a Glunki is enveloped by the Protection effect or goes 250 ticks with no food, it dies and releases the cell. Glunki trails cannot go too far or control is lost." },
+	[210] = { name = "Twist Diverter",
+		desc = "Like a Straight Diverter, but it flips the cell that goes through it like a Twist Generator." },
+	[211] = { name = "Glunki",
+		desc = "Creates trails to bring cells to itself and digest them, which takes 25 ticks each cell. If a Glunki is enveloped by the Protection effect or goes 250 ticks with no food, it dies and releases the cell. Glunki trails cannot go too far or control is lost." },
 	[212] = { name = "Glunki Trail", desc = "Glunki trail." },
 	[213] = { name = "Tough Pusher", desc = "Pusher but unbreakable from the sides." },
 	[214] = { name = "Spirit Pushable", desc = "Pushable that cannot be generated." },
@@ -732,20 +769,26 @@ cellinfo = {
 	[218] = { name = "Spirit Three-Directional", desc = "Three-Directional that cannot be generated." },
 	[219] = { name = "Acid", desc = "Pushable, but when pushed into a cell it destroys it." },
 	[220] = { name = "Weak Acid", desc = "One-use Acid." },
-	[221] = { name = "Portal", desc = "Portal. Has an ID and a Target ID. Anything that goes in a portal will come out a portal with the same ID as the entrance portals Target ID." },
+	[221] = { name = "Portal",
+		desc = "Portal. Has an ID and a Target ID. Anything that goes in a portal will come out a portal with the same ID as the entrance portals Target ID." },
 	[222] = { name = "Time Repulsor", desc = "Repulses cells 1 tick after they get near it." },
 	[223] = { name = "Coin", desc = "Adds 1 to a cell's coin count." },
-	[224] = { name = "Coin Diverter", desc = "Acts like a Cross Diverter to cells with enough coins, acts like a Wall otherwise. Also subtracts that amount of coins from the cell when they pass through." },
+	[224] = { name = "Coin Diverter",
+		desc = "Acts like a Cross Diverter to cells with enough coins, acts like a Wall otherwise. Also subtracts that amount of coins from the cell when they pass through." },
 	[225] = { name = "Tough Trash", desc = "Acts like a Trash on two sides and a Wall on the others." },
 	[226] = { name = "Semitrash", desc = "Acts like a Trash on two sides and a Pushable on the others." },
 	[227] = { name = "Conveyor Grapulsor", desc = "Grapulsor but... well, the arrows explain it." },
 	[228] = { name = "Cross Conveyor Grapulsor", desc = "Two conveyor grapulsors." },
-	[229] = { name = "Constructor", desc = "Like a wall, but when a cell touches the backside it generates it out the front." },
+	[229] = { name = "Constructor",
+		desc = "Like a wall, but when a cell touches the backside it generates it out the front." },
 	[230] = { name = "Coin Extractor", desc = "Extracts coins from cells." },
-	[231] = { name = "Silicon", desc = "Sticks to other silicon cells.\n(Note that stickiness doesn't work perfectly with pulling and grasping...)" },
+	[231] = { name = "Silicon",
+		desc = "Sticks to other silicon cells.\n(Note that stickiness doesn't work perfectly with pulling and grasping...)" },
 	[232] = { name = "Gravitizer", desc = "Causes cells near it to start falling in the direction it's pointing in." },
-	[233] = { name = "Filter", desc = "Like a Straight Diverter, but insert a cell on the top or bottom, and it will delete any cell with the same ID." },
-	[234] = { name = "Realistic Fire", desc = "Spreads randomly onto nearby cells, floats around randomly, and dies after a random amount of time. Just fun to watch." },
+	[233] = { name = "Filter",
+		desc = "Like a Straight Diverter, but insert a cell on the top or bottom, and it will delete any cell with the same ID." },
+	[234] = { name = "Realistic Fire",
+		desc = "Spreads randomly onto nearby cells, floats around randomly, and dies after a random amount of time. Just fun to watch." },
 	[235] = { name = "Creator", desc = "Creates the stored cell in all 4 directions.\n(Click to insert cell)" },
 	[236] = { name = "Inertia", desc = "Stores momentum. Loses it when hitting a wall." },
 	[237] = { name = "Transfomer", desc = "Transforms the cell in front of it into the cell behind it." },
@@ -755,7 +798,8 @@ cellinfo = {
 	[241] = { name = "Megafire", desc = "Like fire, but affects diagonal neighbors too." },
 	[242] = { name = "Fireball", desc = "Moving Fire." },
 	[243] = { name = "Megafireball", desc = "Moving Megafire." },
-	[244] = { name = "Super Enemy", desc = "Enemy with infinite health; effectively a trash cell that can't delete protected cells." },
+	[244] = { name = "Super Enemy",
+		desc = "Enemy with infinite health; effectively a trash cell that can't delete protected cells." },
 	[245] = { name = "CW Megarotator", desc = "CW Rotator that affects diagonal neighbors too." },
 	[246] = { name = "CCW Megarotator", desc = "CCW Rotator that affects diagonal neighbors too." },
 	[247] = { name = "180 Megarotator", desc = "180 Rotator that affects diagonal neighbors too." },
@@ -763,7 +807,8 @@ cellinfo = {
 	[249] = { name = "Semisilicon", desc = "Only acts like a silicon on 2 sides." },
 	[250] = { name = "Biintaker", desc = "Two combined opposite-sided Intakers." },
 	[251] = { name = "Tetraintaker", desc = "Intaker in all four directions." },
-	[252] = { name = "Slime", desc = "Causes nearby cells to stick to each other like Silicon.\nNote: Stuck forcers or movers might have trouble propertly exerting force." },
+	[252] = { name = "Slime",
+		desc = "Causes nearby cells to stick to each other like Silicon.\nNote: Stuck forcers or movers might have trouble propertly exerting force." },
 	[253] = { name = "Gluer", desc = "Prevents cells from being scissored." },
 	[254] = { name = "CW Shifter", desc = "Clockwise-bent Shifter." },
 	[255] = { name = "CCW Shifter", desc = "Counter-clockwise-bent Shifter." },
@@ -814,7 +859,8 @@ cellinfo = {
 	[300] = { name = "Deleter Diode Diverter", desc = "Diode Diverter that acts like a Trash cell on the front." },
 	[301] = { name = "Broken Generator", desc = "Generator that can only be used once; destroyed after usage." },
 	[302] = { name = "Broken Replicator", desc = "Replicator that can only be used once; destroyed after usage." },
-	[303] = { name = "Remover", desc = "Pusher that tries to delete the cell in front of it before moving. Cannot delete protected cells." },
+	[303] = { name = "Remover",
+		desc = "Pusher that tries to delete the cell in front of it before moving. Cannot delete protected cells." },
 	[304] = { name = "Broken Mover", desc = "Pusher that dies once it pushes a cell." },
 	[305] = { name = "Broken Puller", desc = "Puller that dies once it pulls a cell." },
 	[306] = { name = "CW Termite", desc = "Attempts to move around walls." },
@@ -823,15 +869,24 @@ cellinfo = {
 	[309] = { name = "Microshield", desc = "Only protects itself." },
 	[310] = { name = "Immobilizer", desc = "Prevents cells from being pushed, pulled, grasped, swapped, or scissored." },
 	[311] = { name = "Inclusive Advancer", desc = "Only moves if it can both push and pull." },
-	placeable = { name = "Placeable", desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
-	placeableR = { name = "Red Placeable", desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
-	placeableY = { name = "Yellow Placeable", desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
-	placeableG = { name = "Green Placeable", desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
-	placeableC = { name = "Cyan Placeable", desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
-	placeableB = { name = "Blue Placeable", desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
-	placeableP = { name = "Purple Placeable", desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
-	rotatable = { name = "Rotatable", desc = "Allows you to rotate the cell on top of it by clicking on it when in Puzzle Mode." },
-	wrap = { name = "Wrap", desc = "Seeing this description in-game either means something has gone wrong, or the creator of the mod you're playing is just dumb." },
+	placeable = { name = "Placeable",
+		desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
+	placeableR = { name = "Red Placeable",
+		desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
+	placeableY = { name = "Yellow Placeable",
+		desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
+	placeableG = { name = "Green Placeable",
+		desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
+	placeableC = { name = "Cyan Placeable",
+		desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
+	placeableB = { name = "Blue Placeable",
+		desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
+	placeableP = { name = "Purple Placeable",
+		desc = "Allows you to drag the cell on top of it to any other Placeable of the same color when in Puzzle Mode." },
+	rotatable = { name = "Rotatable",
+		desc = "Allows you to rotate the cell on top of it by clicking on it when in Puzzle Mode." },
+	wrap = { name = "Wrap",
+		desc = "Seeing this description in-game either means something has gone wrong, or the creator of the mod you're playing is just dumb." },
 	eraser = { name = "Eraser", desc = "Erases cells. You can also right-click to use the eraser.", idadded = true },
 	mode = { name = "Editing Mode", desc = "Changes the editing mode.\nCurrent mode: All", idadded = true },
 	shape = { name = "Brush Shape", desc = "Changes the brush shape.\nCurrent shape: Square", idadded = true },
@@ -848,43 +903,100 @@ buttonorder = {}
 hoveredbutton = nil
 
 --note that x and y will flip which direction they go towards depending on alignment (they increase away from the sides that the button is aligned to; if centered, goes right and down)
-function NewButton(x, y, w, h, icon, key, name, desc, onclick, ishold, enabledwhen, alignment, rot, color, hovercolor, clickcolor)
+function NewButton(x, y, w, h, icon, key, name, desc, onclick, ishold, enabledwhen, alignment, rot, color, hovercolor,
+                   clickcolor)
 	color = color or { 1, 1, 1, .5 }
 	hovercolor = hovercolor or { 1, 1, 1, 1 }
 	clickcolor = clickcolor or { .5, .5, .5, 1 }
-	local halign = (alignment == "bottomleft" or alignment == "left" or alignment == "topleft") and -1 or (alignment == "bottomright" or alignment == "right" or alignment == "topright") and 1 or 0
-	local valign = (alignment == "topleft" or alignment == "top" or alignment == "topright") and -1 or (alignment == "bottomleft" or alignment == "bottom" or alignment == "bottomright") and 1 or 0
-	local button = { x = x, y = y, w = w, h = h, rot = rot, icon = icon, name = name, desc = desc, onclick = onclick, ishold = ishold, isenabled = enabledwhen or function() return true end, halign = halign, valign = valign, color = color, hovercolor = hovercolor, clickcolor = clickcolor }
+	local halign = (alignment == "bottomleft" or alignment == "left" or alignment == "topleft") and -1 or
+			(alignment == "bottomright" or alignment == "right" or alignment == "topright") and 1 or 0
+	local valign = (alignment == "topleft" or alignment == "top" or alignment == "topright") and -1 or
+			(alignment == "bottomleft" or alignment == "bottom" or alignment == "bottomright") and 1 or 0
+	local button = { x = x, y = y, w = w, h = h, rot = rot, icon = icon, name = name, desc = desc, onclick = onclick,
+		ishold = ishold, isenabled = enabledwhen or function() return true end, halign = halign, valign = valign, color = color,
+		hovercolor = hovercolor, clickcolor = clickcolor }
 	if not buttons[key] then table.insert(buttonorder, key) end
 	buttons[key] = button
 	return button
 end
 
 lists = {}
-lists[0] = { name = "Tools", cells = { max = 99, "eraser", "mode", "shape", "randrot", { name = "Markers", 116, 117, 118, 119, 120, 121, 122 } }, desc = "Helpful tools to make editing the world easier.", icon = "eraser" }
-lists[1] = { name = "Basic", cells = { max = 4, { name = "Walls", max = 3, 1, 41, 126, 150, 151, 152, 229, 235, 154, 162, 224 }, { name = "Pushables", max = 5, 4, 5, 6, 7, 8, 159, 69, 157, 140, 158, 214, 215, 216, 217, 218 }, { name = "Oppositions", 52, 53, 54 }, { name = "Weights", max = 4, 22, 103, 144, 104, 42, 142, 143 }, { name = "Sticky", 207, 231, 249, 252 } }, desc = "Basic cells.", icon = 4 }
-lists[2] = { name = "Movers", cells = { max = 4, { name = "Pushers", 2, 28, 72, 74, 59, 60, 76, 78, 269, 271, 273, 275, 277, 279, 281, 283, 213, 284, 206, 303, 304, 311 }, { name = "Pullers", 14, 28, 73, 74, 61, 60, 77, 78, 270, 271, 274, 275, 278, 279, 282, 283, 305, 311 }, { name = "Graspers", 71, 72, 73, 74, 75, 76, 77, 78, 272, 273, 274, 275, 280, 281, 282, 283 }, { name = "Drillers", 58, 59, 61, 60, 75, 76, 77, 78, 276, 277, 278, 279, 280, 281, 282, 283 }, { name = "Slicers", 115, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283 }, { name = "Scissors", 178, 179, 182, 183, 180, 181, 184, 185 }, { name = "Unique", 114, 160, 161, 175, 242, 243, 306, 307, 206 }, { name = "Players", max = 6, 239, 289, 290, 291, 297, 292, 288, 293, 294, 295, 298, 296 } }, desc = "Move on their own, usually with a certain force attached to them.", icon = 2 }
-lists[3] = { name = "Generators", cells = { max = 4, { name = "Generators", 3, 23, 26, 27, 168, 167, 169, 170, 110, 111, 172, 171, 173, 174, 40, 113, 55, 147, 229, 166, 301 }, { name = "Replicators", 45, 46, 177, 302 }, { name = "Shifters", 106, 107, 254, 255, 256, 257, 259, 258, 260, 261, 262, 263, 265, 264 }, { name = "Gates", max = 5, 32, 33, 34, 194, 195, 35, 36, 37, 196, 197 }, 235 }, desc = "Duplicate other cells.", icon = 3 }
-lists[4] = { name = "Rotators", cells = { max = 3, { name = "Rotators", max = 6, 9, 10, 11, 66, 67, 68, 245, 246, 247, 150, 151, 152 }, { name = "Flippers", 30, 89, 90 }, { name = "Redirectors", max = 5, 17, 62, 63, 64, 65 }, { name = "Mixed", 57, 70 }, 105 }, desc = "Rotate other cells.", icon = 9 }
-lists[5] = { name = "Forcers", cells = { max = 4, { name = "Repulsors", 21, 50, 222 }, { name = "Impulsors", 29, 248 }, { name = "Grapulsors", 81, 82, 227, 228 }, { name = "Mirrors", 15, 56, 80 }, { name = "Gears", 18, 19, 108, 109 }, { name = "Intakers", 44, 155, 250, 251 }, 156 }, desc = "Still cells that generate force.", icon = 21 }
-lists[6] = { name = "Diverters", cells = { max = 4, { name = "Diverters", 16, 31, 38, 39, 208, 209, 93, 94, 83, 84, 85, 300, 91, 92, 95, 96, 86, 87, 88, 210, 233, 224 }, { name = "Forkers", 48, 49, 97, 98, 99, 100, 101, 102 }, { name = "Spooners", 186, 187, 188, 189, 190, 191, 192, 193 }, 221 }, desc = "Redirects incoming cells or force to a different or multiple directions.", icon = 16 }
-lists[7] = { name = "Destroyers", cells = { max = 4, { name = "Trashes", max = 4, 12, 225, 226, 205, 51, 141, 176, 300 }, { name = "Enemies", max = 4, 13, 24, 163, 164, 244, 299, 160 }, { name = "Acids", 219, 220 }, { name = "Fire", max = 3, 240, 241, 234, 242, 243 }, { name = "Intakers", 44, 155, 250, 251 } }, desc = "Destroy other cells.", icon = 12 }
-lists[8] = { name = "Miscellaneous", cells = { max = 4, 20, { name = "Infectious", max = 3, 47, 126, 176, 123, 127, 128, 124, 129, 130, 125, 131, 132, 134, 135, 133, 149, 161, 211 }, { name = "Effect Givers", 25, 286, 287, 285, 43, 145, 308, 309, 112, 136, 137, 138, 139, 253, 310, 252, 232, 266, 105 }, 79, { name = "Transformers", 237, 238, 267, 268 }, { name = "Time-Related", 146, 148, 147, 222 }, { name = "Unlocking", 153, 154 }, { name = "Storing", 165, 175, 198 }, { name = "AI", 206, 211, 306, 307 }, 236, { name = "Coins", 223, 224, 230 } }, desc = "The ones that don't fit into another category.", icon = 20 }
-lists[9] = { name = "Backgrounds", cells = { max = 3, { name = "Placeables", "placeable", "placeableR", "placeableY", "placeableG", "placeableC", "placeableB", "placeableP" }, "rotatable" }, desc = "Backgrounds that go behind cells. Usually used for Puzzle Mode.", icon = "placeable" }
-lists[10] = { name = "Cheats", cells = { max = 99, 199, 200, 201, 202, 203, 204 }, desc = "Cells that should not be used for making or breaking vaults.\nUse of these cells might cause bugs, so be careful.", icon = 199 }
+lists[0] = { name = "Tools",
+	cells = { max = 99, "eraser", "mode", "shape", "randrot", { name = "Markers", 116, 117, 118, 119, 120, 121, 122 } },
+	desc = "Helpful tools to make editing the world easier.", icon = "eraser" }
+lists[1] = { name = "Basic",
+	cells = { max = 4, { name = "Walls", max = 3, 1, 41, 126, 150, 151, 152, 229, 235, 154, 162, 224 },
+		{ name = "Pushables", max = 5, 4, 5, 6, 7, 8, 159, 69, 157, 140, 158, 214, 215, 216, 217, 218 },
+		{ name = "Oppositions", 52, 53, 54 }, { name = "Weights", max = 4, 22, 103, 144, 104, 42, 142, 143 },
+		{ name = "Sticky", 207, 231, 249, 252 } }, desc = "Basic cells.", icon = 4 }
+lists[2] = { name = "Movers",
+	cells = { max = 4,
+		{ name = "Pushers", 2, 28, 72, 74, 59, 60, 76, 78, 269, 271, 273, 275, 277, 279, 281, 283, 213, 284, 206, 303, 304, 311 },
+		{ name = "Pullers", 14, 28, 73, 74, 61, 60, 77, 78, 270, 271, 274, 275, 278, 279, 282, 283, 305, 311 },
+		{ name = "Graspers", 71, 72, 73, 74, 75, 76, 77, 78, 272, 273, 274, 275, 280, 281, 282, 283 },
+		{ name = "Drillers", 58, 59, 61, 60, 75, 76, 77, 78, 276, 277, 278, 279, 280, 281, 282, 283 },
+		{ name = "Slicers", 115, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283 },
+		{ name = "Scissors", 178, 179, 182, 183, 180, 181, 184, 185 },
+		{ name = "Unique", 114, 160, 161, 175, 242, 243, 306, 307, 206 },
+		{ name = "Players", max = 6, 239, 289, 290, 291, 297, 292, 288, 293, 294, 295, 298, 296 } },
+	desc = "Move on their own, usually with a certain force attached to them.", icon = 2 }
+lists[3] = { name = "Generators",
+	cells = { max = 4,
+		{ name = "Generators", 3, 23, 26, 27, 168, 167, 169, 170, 110, 111, 172, 171, 173, 174, 40, 113, 55, 147, 229, 166, 301 },
+		{ name = "Replicators", 45, 46, 177, 302 },
+		{ name = "Shifters", 106, 107, 254, 255, 256, 257, 259, 258, 260, 261, 262, 263, 265, 264 },
+		{ name = "Gates", max = 5, 32, 33, 34, 194, 195, 35, 36, 37, 196, 197 }, 235 }, desc = "Duplicate other cells.",
+	icon = 3 }
+lists[4] = { name = "Rotators",
+	cells = { max = 3, { name = "Rotators", max = 6, 9, 10, 11, 66, 67, 68, 245, 246, 247, 150, 151, 152 },
+		{ name = "Flippers", 30, 89, 90 }, { name = "Redirectors", max = 5, 17, 62, 63, 64, 65 }, { name = "Mixed", 57, 70 },
+		105 }, desc = "Rotate other cells.", icon = 9 }
+lists[5] = { name = "Forcers",
+	cells = { max = 4, { name = "Repulsors", 21, 50, 222 }, { name = "Impulsors", 29, 248 },
+		{ name = "Grapulsors", 81, 82, 227, 228 }, { name = "Mirrors", 15, 56, 80 }, { name = "Gears", 18, 19, 108, 109 },
+		{ name = "Intakers", 44, 155, 250, 251 }, 156 }, desc = "Still cells that generate force.", icon = 21 }
+lists[6] = { name = "Diverters",
+	cells = { max = 4,
+		{ name = "Diverters", 16, 31, 38, 39, 208, 209, 93, 94, 83, 84, 85, 300, 91, 92, 95, 96, 86, 87, 88, 210, 233, 224 },
+		{ name = "Forkers", 48, 49, 97, 98, 99, 100, 101, 102 }, { name = "Spooners", 186, 187, 188, 189, 190, 191, 192, 193 },
+		221 }, desc = "Redirects incoming cells or force to a different or multiple directions.", icon = 16 }
+lists[7] = { name = "Destroyers",
+	cells = { max = 4, { name = "Trashes", max = 4, 12, 225, 226, 205, 51, 141, 176, 300 },
+		{ name = "Enemies", max = 4, 13, 24, 163, 164, 244, 299, 160 }, { name = "Acids", 219, 220 },
+		{ name = "Fire", max = 3, 240, 241, 234, 242, 243 }, { name = "Intakers", 44, 155, 250, 251 } },
+	desc = "Destroy other cells.", icon = 12 }
+lists[8] = { name = "Miscellaneous",
+	cells = { max = 4, 20,
+		{ name = "Infectious", max = 3, 47, 126, 176, 123, 127, 128, 124, 129, 130, 125, 131, 132, 134, 135, 133, 149, 161, 211 },
+		{ name = "Effect Givers", 25, 286, 287, 285, 43, 145, 308, 309, 112, 136, 137, 138, 139, 253, 310, 252, 232, 266, 105 },
+		79, { name = "Transformers", 237, 238, 267, 268 }, { name = "Time-Related", 146, 148, 147, 222 },
+		{ name = "Unlocking", 153, 154 }, { name = "Storing", 165, 175, 198 }, { name = "AI", 206, 211, 306, 307 }, 236,
+		{ name = "Coins", 223, 224, 230 } }, desc = "The ones that don't fit into another category.", icon = 20 }
+lists[9] = { name = "Backgrounds",
+	cells = { max = 3,
+		{ name = "Placeables", "placeable", "placeableR", "placeableY", "placeableG", "placeableC", "placeableB", "placeableP" },
+		"rotatable" }, desc = "Backgrounds that go behind cells. Usually used for Puzzle Mode.", icon = "placeable" }
+lists[10] = { name = "Cheats", cells = { max = 99, 199, 200, 201, 202, 203, 204 },
+	desc = "Cells that should not be used for making or breaking vaults.\nUse of these cells might cause bugs, so be careful.",
+	icon = 199 }
 
 local function hudrotation()
 	return math.graphiclerp(hudrot, hudrot + ((chosen.rot - hudrot + 2) % 4 - 2), hudlerp) * math.pi * .5
 end
 
-NewButton(0, 0, 9001, 54, "menubar", "menubar", nil, nil, function() end, nil, function() return not puzzle end, "bottom", nil, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 })
+NewButton(0, 0, 9001, 54, "menubar", "menubar", nil, nil, function() end, nil, function() return not puzzle end, "bottom"
+	, nil, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 })
 lastselects = {}
-NewButton(6, 6, 40, 40, "eraser", "lastselecttab", "Last Selections", nil, function() openedtab = openedtab == -2 and -1 or -2;
-	openedsubtab = -1;
-	propertiesopen = 0
-end, false, function() return not puzzle end, "bottomright", hudrotation)
+NewButton(6, 6, 40, 40, "eraser", "lastselecttab", "Last Selections", nil,
+	function() openedtab = openedtab == -2 and -1 or -2;
+		openedsubtab = -1;
+		propertiesopen = 0
+	end, false, function() return not puzzle end, "bottomright", hudrotation)
 for i = 1, 10 do
-	table.insert(lastselects, NewButton(16, i * 20 + 34, 20, 20, "eraser", "lastselect" .. i, cellinfo["eraser"].name, cellinfo["eraser"].desc, function() propertiesopen = 0; SetSelectedCell("eraser"); openedsubtab = -1 end, false, function() return not puzzle and openedtab == -2 end, "bottomright"))
+	table.insert(lastselects,
+		NewButton(16, i * 20 + 34, 20, 20, "eraser", "lastselect" .. i, cellinfo["eraser"].name, cellinfo["eraser"].desc,
+			function() propertiesopen = 0; SetSelectedCell("eraser"); openedsubtab = -1 end, false,
+			function() return not puzzle and openedtab == -2 end, "bottomright"))
 end
 
 propertynames = {}
@@ -904,8 +1016,12 @@ function MakePropertyMenu(properties, b)
 	buttons.propertybg.y = y
 	buttons.propertybg.h = #properties * 25 + 5
 	for i = 1, #properties do
-		local b = NewButton(x + 85, y + (#properties - i + 1) * 25 - 20, 20, 20, "add", "propertyadd" .. i, nil, nil, function() chosen.data[i] = math.min(chosen.data[i] + 1, 999) end, nil, function() return not puzzle and propertiesopen >= i end, "bottomleft")
-		local b = NewButton(x + 5, y + (#properties - i + 1) * 25 - 20, 20, 20, "subtract", "propertysub" .. i, nil, nil, function() chosen.data[i] = math.max(chosen.data[i] - 1, 0) end, nil, function() return not puzzle and propertiesopen >= i end, "bottomleft")
+		local b = NewButton(x + 85, y + (#properties - i + 1) * 25 - 20, 20, 20, "add", "propertyadd" .. i, nil, nil,
+			function() chosen.data[i] = math.min(chosen.data[i] + 1, 999) end, nil,
+			function() return not puzzle and propertiesopen >= i end, "bottomleft")
+		local b = NewButton(x + 5, y + (#properties - i + 1) * 25 - 20, 20, 20, "subtract", "propertysub" .. i, nil, nil,
+			function() chosen.data[i] = math.max(chosen.data[i] - 1, 0) end, nil,
+			function() return not puzzle and propertiesopen >= i end, "bottomleft")
 		propertynames[i] = properties[i]
 	end
 end
@@ -930,7 +1046,8 @@ function SetSelectedCell(id, b) --not local so it can call itself
 		chosen.randrot = not chosen.randrot
 		b.desc = "Testing tool.\n" .. (chosen.randrot and "Enabled" or "Disabled")
 		return
-	elseif id == "adddata1" or id == "subdata1" or id == "adddata2" or id == "subdata2" or id == "adddata3" or id == "subdata3" then ChangeData(id) return
+	elseif id == "adddata1" or id == "subdata1" or id == "adddata2" or id == "subdata2" or id == "adddata3" or
+			id == "subdata3" then ChangeData(id) return
 	elseif id == 206 and b then MakePropertyMenu({ "Base", "Left", "Right" }, b)
 	elseif id == 221 and b then MakePropertyMenu({ "ID", "Target" }, b)
 	elseif id == 224 and b then MakePropertyMenu({ "Coins" }, b)
@@ -960,16 +1077,19 @@ end
 local function CreateCellBar()
 	for i = 0, #lists do
 		local list = lists[i]
-		NewButton(i * 50 + 6, 6, 40, 40, list.icon, "list" .. i, list.name, list.desc, function() openedtab = openedtab == i and -1 or i;
-			openedsubtab = -1;
-			propertiesopen = 0
-		end, false, list.name == "Cheats" and function() return not puzzle and dodebug end or function() return not puzzle end, "bottomleft", hudrotation)
+		NewButton(i * 50 + 6, 6, 40, 40, list.icon, "list" .. i, list.name, list.desc,
+			function() openedtab = openedtab == i and -1 or i;
+				openedsubtab = -1;
+				propertiesopen = 0
+			end, false, list.name == "Cheats" and function() return not puzzle and dodebug end or function() return not puzzle end
+			, "bottomleft", hudrotation)
 		for j = 1, #list.cells do
 			local cell = list.cells[j]
 			if type(cell) == "table" then
-				NewButton(i * 50 + 16, j * 20 + 34, 20, 20, cell[1], "list" .. i .. "sublist" .. j, cell.name, nil, function() openedsubtab = openedsubtab == j and -1 or j;
-					propertiesopen = 0
-				end, false, function() return not puzzle and openedtab == i end, "bottomleft", hudrotation)
+				NewButton(i * 50 + 16, j * 20 + 34, 20, 20, cell[1], "list" .. i .. "sublist" .. j, cell.name, nil,
+					function() openedsubtab = openedsubtab == j and -1 or j;
+						propertiesopen = 0
+					end, false, function() return not puzzle and openedtab == i end, "bottomleft", hudrotation)
 				for k = 1, #cell do
 					local subcell = cell[k]
 					local m = cell.max or list.cells.max
@@ -979,20 +1099,28 @@ local function CreateCellBar()
 					if not cellinfo[subcell].idadded then cellinfo[subcell].desc = cellinfo[subcell].desc .. "\nID: " .. subcell
 						cellinfo[subcell].idadded = true
 					end
-					local b = NewButton(i * 50 + 16 + x * 20, j * 20 + 34 + y * 20, 20, 20, tex[subcell] and subcell or "X", "list" .. i .. "sublist" .. j .. "cell" .. subcell, cellinfo[subcell].name, cellinfo[subcell].desc, function(b) propertiesopen = 0; SetSelectedCell(subcell, b) end, false, function() return not puzzle and openedtab == i and openedsubtab == j end, "bottomleft", hudrotation)
+					local b = NewButton(i * 50 + 16 + x * 20, j * 20 + 34 + y * 20, 20, 20, tex[subcell] and subcell or "X",
+						"list" .. i .. "sublist" .. j .. "cell" .. subcell, cellinfo[subcell].name, cellinfo[subcell].desc,
+						function(b) propertiesopen = 0; SetSelectedCell(subcell, b) end, false,
+						function() return not puzzle and openedtab == i and openedsubtab == j end, "bottomleft", hudrotation)
 				end
 			else
 				cellinfo[cell] = cellinfo[cell] or { name = "Placeholder A", desc = "Cell info was not set for this id." }
 				if not cellinfo[cell].idadded then cellinfo[cell].desc = cellinfo[cell].desc .. "\nID: " .. cell
 					cellinfo[cell].idadded = true
 				end
-				NewButton(i * 50 + 16, j * 20 + 34, 20, 20, tex[cell] and cell or "X", "list" .. i .. "cell" .. cell, cellinfo[cell].name, cellinfo[cell].desc, function(b) propertiesopen = 0; SetSelectedCell(cell, b); openedsubtab = -1 end, false, function() return not puzzle and openedtab == i end, "bottomleft", hudrotation)
+				NewButton(i * 50 + 16, j * 20 + 34, 20, 20, tex[cell] and cell or "X", "list" .. i .. "cell" .. cell,
+					cellinfo[cell].name, cellinfo[cell].desc,
+					function(b) propertiesopen = 0; SetSelectedCell(cell, b); openedsubtab = -1 end, false,
+					function() return not puzzle and openedtab == i end, "bottomleft", hudrotation)
 			end
 		end
 	end
 end
 
-NewButton(0, 0, 110, 30, "pix", "propertybg", nil, nil, function() end, nil, function() return not puzzle and propertiesopen > 0 end, "bottomleft", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
+NewButton(0, 0, 110, 30, "pix", "propertybg", nil, nil, function() end, nil,
+	function() return not puzzle and propertiesopen > 0 end, "bottomleft", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 },
+	{ .25, .25, .25, 1 })
 
 --miscellaneous setup
 
@@ -1345,21 +1473,41 @@ function CreateCell(title, description, texture, options)
 			end
 		elseif updatemode == "normal" then
 			if type(updateindex) == "number" then
-				table.insert(subticks, updateindex, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 0 end, options.update, "upleft", ConvertId(id)) end)
-				table.insert(subticks, updateindex + 1, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 2 end, options.update, "upright", ConvertId(id)) end)
-				table.insert(subticks, updateindex + 2, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 3 end, options.update, "rightdown", ConvertId(id)) end)
-				table.insert(subticks, updateindex + 3, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 1 end, options.update, "rightup", ConvertId(id)) end)
+				table.insert(subticks, updateindex,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 0 end,
+						options.update, "upleft", ConvertId(id)) end)
+				table.insert(subticks, updateindex + 1,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 2 end,
+						options.update, "upright", ConvertId(id)) end)
+				table.insert(subticks, updateindex + 2,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 3 end,
+						options.update, "rightdown", ConvertId(id)) end)
+				table.insert(subticks, updateindex + 3,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 1 end,
+						options.update, "rightup", ConvertId(id)) end)
 			else
-				table.insert(subticks, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 0 end, options.update, "upleft", ConvertId(id)) end)
-				table.insert(subticks, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 2 end, options.update, "upright", ConvertId(id)) end)
-				table.insert(subticks, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 3 end, options.update, "rightdown", ConvertId(id)) end)
-				table.insert(subticks, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 1 end, options.update, "rightup", ConvertId(id)) end)
+				table.insert(subticks,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 0 end,
+						options.update, "upleft", ConvertId(id)) end)
+				table.insert(subticks,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 2 end,
+						options.update, "upright", ConvertId(id)) end)
+				table.insert(subticks,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 3 end,
+						options.update, "rightdown", ConvertId(id)) end)
+				table.insert(subticks,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) and c.rot == 1 end,
+						options.update, "rightup", ConvertId(id)) end)
 			end
 		elseif updatemode == "static" then
 			if type(updateindex) == "number" then
-				table.insert(subticks, updateindex, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) end, options.update, "rightup", ConvertId(id)) end)
+				table.insert(subticks, updateindex,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) end, options.update,
+						"rightup", ConvertId(id)) end)
 			else
-				table.insert(subticks, function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) end, options.update, "rightup", ConvertId(id)) end)
+				table.insert(subticks,
+					function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == ConvertId(id) end, options.update,
+						"rightup", ConvertId(id)) end)
 			end
 		end
 	end
@@ -1457,7 +1605,9 @@ end
 
 function Modchine.requireVersion(version)
 	if Modchine.compareVersion(Modchine.version, version) < 0 then
-		error("Modchine version " .. Modchine.version .. " is too old. Minimum required version of Modchine for mod \"" .. loadingMod .. "\" is " .. version, 0)
+		error("Modchine version " ..
+			Modchine.version ..
+			" is too old. Minimum required version of Modchine for mod \"" .. loadingMod .. "\" is " .. version, 0)
 	end
 end
 
@@ -1471,7 +1621,8 @@ function ConvertId(id)
 			or id == 169 or id == 170 or id == 171 or id == 172 or id == 173 or id == 174 or id == 301 then return 3
 	elseif id == 46 or id == 302 then return 45
 	elseif id == 56 or id == 80 then return 15
-	elseif id == 10 or id == 11 or id == 57 or id == 70 or id == 66 or id == 67 or id == 68 or id == 245 or id == 246 or id == 247 then return 9
+	elseif id == 10 or id == 11 or id == 57 or id == 70 or id == 66 or id == 67 or id == 68 or id == 245 or id == 246 or
+			id == 247 then return 9
 	elseif id == 62 or id == 63 or id == 64 or id == 65 then return 17
 	elseif id == 89 or id == 90 then return 30
 	elseif id == 59 or id == 60 or id == 61 or id == 75 or id == 76 or id == 77 or id == 78 or id == 276
@@ -1497,7 +1648,8 @@ function ConvertId(id)
 	elseif id == 82 or id == 227 or id == 228 then return 81
 	elseif id == 238 or id == 267 or id == 268 then return 237
 	elseif id == 286 or id == 287 then return 25
-	elseif id == 288 or id == 289 or id == 290 or id == 291 or id == 292 or id == 293 or id == 294 or id == 295 or id == 296 or id == 297 or id == 298 then return 239
+	elseif id == 288 or id == 289 or id == 290 or id == 291 or id == 292 or id == 293 or id == 294 or id == 295 or id == 296
+			or id == 297 or id == 298 then return 239
 	elseif id == 307 then return 306
 	else return id end
 end
@@ -1507,7 +1659,8 @@ function CopyVars(id)
 end
 
 function IsEnemy(id)
-	return id == 13 or id == 24 or id == 160 or id == 163 or id == 164 or id == 244 or id == 299 or ModData.cellTypes[id] == "enemy"
+	return id == 13 or id == 24 or id == 160 or id == 163 or id == 164 or id == 244 or id == 299 or
+			ModData.cellTypes[id] == "enemy"
 end
 
 function IsBackground(id)
@@ -1527,7 +1680,8 @@ function AllChunkIds(cell)
 	table.insert(ids, ConvertId(cell.id))
 	if cell.id ~= 0 then table.insert(ids, "all") end
 	if IsEnemy(cell.id) then table.insert(ids, "enemy") end
-	if cell.vars.timerepulseright or cell.vars.timerepulseleft or cell.vars.timerepulseup or cell.vars.timerepulsedown then table.insert(ids, "timerep") end
+	if cell.vars.timerepulseright or cell.vars.timerepulseleft or cell.vars.timerepulseup or cell.vars.timerepulsedown then table
+			.insert(ids, "timerep") end
 	if cell.vars.gravdir then table.insert(ids, "gravity") end
 	if cell.id == 242 or cell.id == 243 then table.insert(ids, 123) end
 	return ids
@@ -1598,7 +1752,8 @@ end
 
 function PlaceCell(x, y, cell)
 	if not cell.vars then
-		if cell.id == 206 then cell.vars = { math.min(chosen.data[1], 4), math.min(chosen.data[2], 4), math.min(chosen.data[3], 4) }
+		if cell.id == 206 then cell.vars = { math.min(chosen.data[1], 4), math.min(chosen.data[2], 4),
+			math.min(chosen.data[3], 4) }
 		elseif cell.id == 221 then cell.vars = { chosen.data[1], chosen.data[2] }
 		elseif cell.id == 224 or cell.id == 299 then cell.vars = { chosen.data[1] }
 		else cell.vars = DefaultVars(cell.id) end
@@ -1623,7 +1778,8 @@ function PlaceCell(x, y, cell)
 end
 
 function SetCell(x, y, cell)
-	if cells[0][0].id == "wrap" then if x <= 0 then x = x + width - 2 elseif x >= width - 1 then x = x - width + 2 end if y <= 0 then y = y + height - 2 elseif y >= height - 1 then y = y - height + 2 end end
+	if cells[0][0].id == "wrap" then if x <= 0 then x = x + width - 2 elseif x >= width - 1 then x = x - width + 2 end if y
+			<= 0 then y = y + height - 2 elseif y >= height - 1 then y = y - height + 2 end end
 	if x > 0 and x < width - 1 and y > 0 and y < height - 1 then
 		local was = cells[y][x].id
 		cells[y][x] = cell
@@ -1636,12 +1792,15 @@ function SetCell(x, y, cell)
 end
 
 function GetCell(x, y)
-	if cells[0][0].id == "wrap" then if x <= 0 then x = x + width - 2 elseif x >= width - 1 then x = x - width + 2 end if y <= 0 then y = y + height - 2 elseif y >= height - 1 then y = y - height + 2 end end
-	return (x >= 0 and x < width and y >= 0 and y < height) and cells[y][x] or { id = 0, rot = 0, lastvars = { 0, 0, 0 }, vars = {} }
+	if cells[0][0].id == "wrap" then if x <= 0 then x = x + width - 2 elseif x >= width - 1 then x = x - width + 2 end if y
+			<= 0 then y = y + height - 2 elseif y >= height - 1 then y = y - height + 2 end end
+	return (x >= 0 and x < width and y >= 0 and y < height) and cells[y][x] or
+			{ id = 0, rot = 0, lastvars = { 0, 0, 0 }, vars = {} }
 end
 
 function GetData(x, y)
-	if cells[0][0].id == "wrap" then if x <= 0 then x = x + width - 2 elseif x >= width - 1 then x = x - width + 2 end if y <= 0 then y = y + height - 2 elseif y >= height - 1 then y = y - height + 2 end end
+	if cells[0][0].id == "wrap" then if x <= 0 then x = x + width - 2 elseif x >= width - 1 then x = x - width + 2 end if y
+			<= 0 then y = y + height - 2 elseif y >= height - 1 then y = y - height + 2 end end
 	return (x >= 0 and x < width and y >= 0 and y < height) and stilldata[y][x] or {}
 end
 
@@ -1977,17 +2136,27 @@ function EncodeCell(x, y)
 	local code = ""
 	local id = cell.id
 	local rot = cell.rot
-	if id == 0 or id == 1 or id == 4 or id == 9 or id == 10 or id == 11 or id == 12 or id == 13 or id == 18 or id == 19 or id == 20 or id == 21 or id == 22 or id == 24
-			or id == 25 or id == 29 or id == 39 or id == 41 or id == 43 or id == 47 or id == 50 or id == 51 or id == 56 or id == 62 or id == 63 or id == 64 or id == 65 or id == 79
-			or id == 80 or id == 81 or id == 82 or id == 104 or id == 105 or id == 108 or id == 109 or id == 112 or id == 116 or id == 117 or id == 118 or id == 119 or id == 120 or id == 121
-			or id == 122 or id == 123 or id == 124 or id == 125 or id == 126 or id == 127 or id == 128 or id == 129 or id == 130 or id == 131 or id == 132 or id == 133 or id == 133 or id == 134
-			or id == 135 or id == 136 or id == 137 or id == 138 or id == 139 or id == 141 or id == 142 or id == 144 or id == 145 or id == 149 or id == 150 or id == 151 or id == 152 or id == 153 or id == 154
-			or id == 162 or id == 163 or id == 165 or id == 176 or id == 203 or id == 204 or id == 205 or id == 211 or id == 214 or id == 219 or id == 220 or id == 222 or id == 223 or id == 224 or id == 231
-			or id == 235 or id == 239 or id == 240 or id == 241 or id == 245 or id == 246 or id == 247 or id == 248 or id == 251 or id == 252 or id == 266 or id == 253 or id == 285 or id == 286 or id == 288
-			or id == 289 or id == 290 or id == 291 or id == 292 or id == 293 or id == 294 or id == 295 or id == 296 or id == 297 or id == 298 or id == 308 or id == 309 or id == 310 then
+	if id == 0 or id == 1 or id == 4 or id == 9 or id == 10 or id == 11 or id == 12 or id == 13 or id == 18 or id == 19 or
+			id == 20 or id == 21 or id == 22 or id == 24
+			or id == 25 or id == 29 or id == 39 or id == 41 or id == 43 or id == 47 or id == 50 or id == 51 or id == 56 or
+			id == 62 or id == 63 or id == 64 or id == 65 or id == 79
+			or id == 80 or id == 81 or id == 82 or id == 104 or id == 105 or id == 108 or id == 109 or id == 112 or id == 116 or
+			id == 117 or id == 118 or id == 119 or id == 120 or id == 121
+			or id == 122 or id == 123 or id == 124 or id == 125 or id == 126 or id == 127 or id == 128 or id == 129 or id == 130
+			or id == 131 or id == 132 or id == 133 or id == 133 or id == 134
+			or id == 135 or id == 136 or id == 137 or id == 138 or id == 139 or id == 141 or id == 142 or id == 144 or id == 145
+			or id == 149 or id == 150 or id == 151 or id == 152 or id == 153 or id == 154
+			or id == 162 or id == 163 or id == 165 or id == 176 or id == 203 or id == 204 or id == 205 or id == 211 or id == 214
+			or id == 219 or id == 220 or id == 222 or id == 223 or id == 224 or id == 231
+			or id == 235 or id == 239 or id == 240 or id == 241 or id == 245 or id == 246 or id == 247 or id == 248 or id == 251
+			or id == 252 or id == 266 or id == 253 or id == 285 or id == 286 or id == 288
+			or id == 289 or id == 290 or id == 291 or id == 292 or id == 293 or id == 294 or id == 295 or id == 296 or id == 297
+			or id == 298 or id == 308 or id == 309 or id == 310 then
 		rot = 0
-	elseif id == 5 or id == 15 or id == 30 or id == 31 or id == 38 or id == 66 or id == 67 or id == 68 or id == 69 or id == 70 or id == 84 or id == 85 or id == 87 or id == 88 or id == 89 or id == 90
-			or id == 92 or id == 202 or id == 207 or id == 210 or id == 215 or id == 225 or id == 226 or id == 233 or id == 249 or id == 250 or id == 287 then
+	elseif id == 5 or id == 15 or id == 30 or id == 31 or id == 38 or id == 66 or id == 67 or id == 68 or id == 69 or
+			id == 70 or id == 84 or id == 85 or id == 87 or id == 88 or id == 89 or id == 90
+			or id == 92 or id == 202 or id == 207 or id == 210 or id == 215 or id == 225 or id == 226 or id == 233 or id == 249 or
+			id == 250 or id == 287 then
 		rot = rot % 2
 	end
 	if type(id) == "number" then
@@ -2101,8 +2270,11 @@ function DecodeV3(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor(height - 1 - (currentspot) / (width - 2))
-				PlaceCell(x, y, CopyCell((startspot - curcell - 1) % (width - 2) + 1, math.floor(height - 1 - (startspot - curcell) / (width - 2))))
-				SetPlaceable(x, y, GetPlaceable((startspot - curcell - 1) % (width - 2) + 1, math.floor(height - 1 - (startspot - curcell) / (width - 2))))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell - 1) % (width - 2) + 1, math.floor(height - 1 - (startspot - curcell) / (width - 2))))
+				SetPlaceable(x, y,
+					GetPlaceable((startspot - curcell - 1) % (width - 2) + 1,
+						math.floor(height - 1 - (startspot - curcell) / (width - 2))))
 			end
 			currentcharacter = currentcharacter + 2
 		elseif string.sub(code, currentcharacter, currentcharacter) == "(" then --advanced repeat
@@ -2145,8 +2317,11 @@ function DecodeV3(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor(height - 1 - (currentspot) / (width - 2))
-				PlaceCell(x, y, CopyCell((startspot - curcell - 1) % (width - 2) + 1, math.floor(height - 1 - (startspot - curcell) / (width - 2))))
-				SetPlaceable(x, y, GetPlaceable((startspot - curcell - 1) % (width - 2) + 1, math.floor(height - 1 - (startspot - curcell) / (width - 2))))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell - 1) % (width - 2) + 1, math.floor(height - 1 - (startspot - curcell) / (width - 2))))
+				SetPlaceable(x, y,
+					GetPlaceable((startspot - curcell - 1) % (width - 2) + 1,
+						math.floor(height - 1 - (startspot - curcell) / (width - 2))))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == ";" then
 			break
@@ -2229,7 +2404,8 @@ function DecodeK1(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == ">" then --duplicate the last 5 cells X times
 			local howmuch = 0
@@ -2250,7 +2426,8 @@ function DecodeK1(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == "[" then --duplicate the last 4 cells X times
 			local howmuch = 0
@@ -2271,7 +2448,8 @@ function DecodeK1(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == "]" then --duplicate the last 3 cells X times
 			local howmuch = 0
@@ -2292,7 +2470,8 @@ function DecodeK1(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == ")" then --duplicate the last 2 cells X times
 			local howmuch = 0
@@ -2313,14 +2492,16 @@ function DecodeK1(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == ";" then
 			break
 		else --one cell
 			local celltype, cellrot, place
 			if string.sub(code, currentcharacter, currentcharacter) == "(" then
-				celltype, cellrot, place = NumToCell(unbase84(string.sub(code, currentcharacter + 1, currentcharacter + 2)), hasplaceables)
+				celltype, cellrot, place = NumToCell(unbase84(string.sub(code, currentcharacter + 1, currentcharacter + 2)),
+					hasplaceables)
 				currentcharacter = currentcharacter + 2
 			else
 				celltype, cellrot, place = NumToCell(unbase84(string.sub(code, currentcharacter, currentcharacter)), hasplaceables)
@@ -2410,7 +2591,8 @@ function DecodeK2(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == ">" then --duplicate the last 5 cells X times
 			local howmuch = 0
@@ -2431,7 +2613,8 @@ function DecodeK2(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == "[" then --duplicate the last 4 cells X times
 			local howmuch = 0
@@ -2452,7 +2635,8 @@ function DecodeK2(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == "]" then --duplicate the last 3 cells X times
 			local howmuch = 0
@@ -2473,7 +2657,8 @@ function DecodeK2(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == ")" then --duplicate the last 2 cells X times
 			local howmuch = 0
@@ -2494,14 +2679,16 @@ function DecodeK2(code)
 				end
 				currentspot = currentspot + 1
 				local x, y = (currentspot - 1) % (width - 2) + 1, math.floor((currentspot - 1) / (width - 2) + 1)
-				PlaceCell(x, y, CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
+				PlaceCell(x, y,
+					CopyCell((startspot - curcell) % (width - 2) + 1, math.floor((startspot - curcell) / (width - 2) + 1)))
 			end
 		elseif string.sub(code, currentcharacter, currentcharacter) == ";" then
 			break
 		else --one cell
 			local celltype, cellrot, place
 			if string.sub(code, currentcharacter, currentcharacter) == "(" then
-				celltype, cellrot, place = NumToCell(unbase84(string.sub(code, currentcharacter + 1, currentcharacter + 2)), hasplaceables)
+				celltype, cellrot, place = NumToCell(unbase84(string.sub(code, currentcharacter + 1, currentcharacter + 2)),
+					hasplaceables)
 				currentcharacter = currentcharacter + 2
 			else
 				celltype, cellrot, place = NumToCell(unbase84(string.sub(code, currentcharacter, currentcharacter)), hasplaceables)
@@ -2683,7 +2870,8 @@ function DecodeK3(code)
 				end
 				currentcharacter = currentcharacter + 1
 				character = string.sub(celltext, currentcharacter, currentcharacter)
-				PlaceCell(x, y, { id = cell, rot = tonumber(character), lastvars = { x, y, tonumber(character) }, vars = DefaultVars(cell) })
+				PlaceCell(x, y,
+					{ id = cell, rot = tonumber(character), lastvars = { x, y, tonumber(character) }, vars = DefaultVars(cell) })
 			else
 				if character == "(" then
 					character = string.sub(celltext, currentcharacter + 1, currentcharacter + 2)
@@ -2694,7 +2882,8 @@ function DecodeK3(code)
 					currentcharacter = currentcharacter + 1 + num
 				end
 				local cell = unbase84(character)
-				PlaceCell(x, y, { id = math.floor(cell / 4), rot = cell % 4, lastvars = { x, y, cell % 4 }, vars = DefaultVars(math.floor(cell / 4)) })
+				PlaceCell(x, y,
+					{ id = math.floor(cell / 4), rot = cell % 4, lastvars = { x, y, cell % 4 }, vars = DefaultVars(math.floor(cell / 4)) })
 			end
 			currentcell = currentcell + 1
 		end
@@ -2942,7 +3131,8 @@ function DeleteSelection()
 end
 
 function HandleJoystick()
-	local jx, jy = love.mouse.getX() - love.graphics.getWidth() + 90 * uiscale, love.mouse.getY() - love.graphics.getHeight() + 120 * uiscale
+	local jx, jy = love.mouse.getX() - love.graphics.getWidth() + 90 * uiscale,
+			love.mouse.getY() - love.graphics.getHeight() + 120 * uiscale
 	if jx * jx + jy * jy > 50 * 50 * uiscale * uiscale then
 		jx, jy = 0, 0
 	end
@@ -2999,48 +3189,86 @@ local mbleandnopuz = function() return mobile and not puzzle and not mainmenu en
 local mmenu1 = function() return mainmenu == 1 end
 local mmenu2 = function() return mainmenu == 2 end
 local exitbtn = function() return mainmenu == 2 or mainmenu == 3 or mainmenu == 4 end
-NewButton(20, 20, 40, 40, "menu", "menu", "Menu", nil, function() inmenu = not inmenu and not winscreen end, false, function() return not mainmenu end, "topleft")
+NewButton(20, 20, 40, 40, "menu", "menu", "Menu", nil, function() inmenu = not inmenu and not winscreen end, false,
+	function() return not mainmenu end, "topleft")
 NewButton(70, 20, 40, 40, "zoomin", "zoomin", "Zoom In", nil, function() ChangeZoom(1) end, false, mble, "topleft")
 NewButton(120, 20, 40, 40, "zoomout", "zoomout", "Zoom Out", nil, function() ChangeZoom(-1) end, false, mble, "topleft")
-NewButton(170, 20, 40, 40, "eraser", "erase", "Eraser", nil, function() SetSelectedCell("eraser") end, false, mbleandnopuz, "topleft")
-NewButton(220, 20, 40, 40, "brushup", "brushup", "Increase Brush Size", nil, function() chosen.size = chosen.size + 1 end, false, mbleandnopuz, "topleft")
+NewButton(170, 20, 40, 40, "eraser", "erase", "Eraser", nil, function() SetSelectedCell("eraser") end, false,
+	mbleandnopuz, "topleft")
+NewButton(220, 20, 40, 40, "brushup", "brushup", "Increase Brush Size", nil, function() chosen.size = chosen.size + 1 end
+	, false, mbleandnopuz, "topleft")
 NewButton(20, 70, 40, 40, "select", "select", "Select (Tab)", nil, ToggleSelection, false, mbleandnopuz, "topleft")
 NewButton(70, 70, 40, 40, "copy", "copy", "Copy Selected (Ctrl+C)", nil, CopySelection, false, mbleandnopuz, "topleft")
 NewButton(120, 70, 40, 40, "cut", "cut", "Cut Selected (Ctrl+X)", nil, CutSelection, false, mbleandnopuz, "topleft")
-NewButton(170, 70, 40, 40, "delete", "remove", "Delete Selected (Backspace)", nil, DeleteSelection, false, mbleandnopuz, "topleft")
-NewButton(220, 70, 40, 40, "brushdown", "brushdown", "Decrease Brush Size", nil, function() chosen.size = math.max(1, chosen.size - 1) end, false, mbleandnopuz, "topleft")
+NewButton(170, 70, 40, 40, "delete", "remove", "Delete Selected (Backspace)", nil, DeleteSelection, false, mbleandnopuz,
+	"topleft")
+NewButton(220, 70, 40, 40, "brushdown", "brushdown", "Decrease Brush Size", nil,
+	function() chosen.size = math.max(1, chosen.size - 1) end, false, mbleandnopuz, "topleft")
 NewButton(20, 120, 40, 40, 9, "rotatecw", "Rotate CW (E)", nil, RotateCW, false, mbleandnopuz, "topleft")
 NewButton(70, 120, 40, 40, 10, "rotateccw", "Rotate CCW (Q)", nil, RotateCCW, false, mbleandnopuz, "topleft")
 NewButton(120, 120, 40, 40, 15, "fliph", "Flip Horizontally (Ctrl+Q)", nil, FlipH, false, mbleandnopuz, "topleft")
-NewButton(170, 120, 40, 40, 15, "flipv", "Flip Vertically (Ctrl+E)", nil, FlipV, false, mbleandnopuz, "topleft", math.pi * .5)
+NewButton(170, 120, 40, 40, 15, "flipv", "Flip Vertically (Ctrl+E)", nil, FlipV, false, mbleandnopuz, "topleft",
+	math.pi * .5)
 NewButton(20, 170, 40, 40, "paste", "paste", "Paste (Ctrl+V)", nil, function() pasting = copied[0] and not pasting;
 	buttons.paste.color = pasting and { .5, 1, .5, 1 } or { 1, 1, 1, .5 }
 end, false, function() return copied[0] and mobile and not puzzle and not mainmenu end, "topleft")
-NewButton(20, 20, 40, 40, 2, "playbtn", "Unpause (Space)", nil, function() TogglePause(not paused) end, false, mble, "topright")
-NewButton(70, 20, 40, 40, 17, "stepbtn", "Step (F)", nil, function() for i = 1, tpu do DoTick(i == 1) end TogglePause(true) end, false, mble, "topright")
-NewButton(120, 20, 40, 40, 14, "undobtn", "Undo (Ctrl+Z)", nil, Undo, false, function() return mobile and not mainmenu and #undocells > 0 end, "topright", math.pi)
-NewButton(20, 70, 40, 40, 11, "resetlvl", "Reset (Ctrl+R)", nil, RefreshWorld, false, function() return not isinitial and mobile and not mainmenu end, "topright")
-NewButton(70, 70, 40, 40, 146, "setinitial", "Set Initial", "Sets the initial state to the current state.", SetInitial, false, function() return not isinitial and not puzzle end, "topright")
-NewButton(40, 70, 100, 100, "joystickbg", "joystick", nil, nil, HandleJoystick, true, mble, "bottomright", nil, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 })
-NewButton(0, 0, 400, 300, "menubg", "menubg", nil, nil, function() end, false, function() return (inmenu or winscreen) and not mainmenu end, "center", nil, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 })
-NewButton(-150, 100, 40, 40, 2, "closemenu", "Close Menu", nil, function() inmenu = false PlaySound(sound.beep) end, false, bactive, "center")
-NewButton(-100, 100, 40, 40, 11, "resetlvlmenu", "Reset Level", "Also resizes the world to the values specified above.\n(In Sandbox Mode)", RefreshWorld, false, bactive, "center")
-NewButton(-50, 100, 40, 40, 9, "resetpuzzlemenu", "Reset Puzzle", "Resets the puzzle to how it was in the beginning.", function() level = level - 1; NextLevel() end, false, function() return level and inmenu end, "center")
-NewButton(-50, 100, 40, 40, 12, "clearlvl", "Clear Level", "Also resizes the world to the values specified above.", function() title, subtitle = "", ""; ClearWorld() PlaySound(sound.beep) end, false, strictbactive, "center")
-NewButton(0, 100, 40, 40, 3, "savelvl", "Save level", "Saves to clipboard. Format: K3", SaveWorld, false, strictbactive, "center", -math.pi * .5)
-NewButton(50, 100, 40, 40, "mode", "loadlvl", "Load & Edit Level", "Fetches from clipboard.\nLoads V3 and K1-K3 codes.", function() LoadWorld(); puzzle = false end, false, strictbactive, "center")
-NewButton(100, 100, 40, 40, "puzzle", "puzzleloadlvl", "Load Level as Puzzle", "Fetches from clipboard.\nLoads V3 and K1-K3 codes.", function() LoadWorld(); puzzle = true; SetSelectedCell("eraser") end, false, strictbactive, "center")
+NewButton(20, 20, 40, 40, 2, "playbtn", "Unpause (Space)", nil, function() TogglePause(not paused) end, false, mble,
+	"topright")
+NewButton(70, 20, 40, 40, 17, "stepbtn", "Step (F)", nil,
+	function() for i = 1, tpu do DoTick(i == 1) end TogglePause(true) end, false, mble, "topright")
+NewButton(120, 20, 40, 40, 14, "undobtn", "Undo (Ctrl+Z)", nil, Undo, false,
+	function() return mobile and not mainmenu and #undocells > 0 end, "topright", math.pi)
+NewButton(20, 70, 40, 40, 11, "resetlvl", "Reset (Ctrl+R)", nil, RefreshWorld, false,
+	function() return not isinitial and mobile and not mainmenu end, "topright")
+NewButton(70, 70, 40, 40, 146, "setinitial", "Set Initial", "Sets the initial state to the current state.", SetInitial,
+	false, function() return not isinitial and not puzzle end, "topright")
+NewButton(40, 70, 100, 100, "joystickbg", "joystick", nil, nil, HandleJoystick, true, mble, "bottomright", nil,
+	{ 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 })
+NewButton(0, 0, 400, 300, "menubg", "menubg", nil, nil, function() end, false,
+	function() return (inmenu or winscreen) and not mainmenu end, "center", nil, { 1, 1, 1, 1 }, { 1, 1, 1, 1 },
+	{ 1, 1, 1, 1 })
+NewButton(-150, 100, 40, 40, 2, "closemenu", "Close Menu", nil, function() inmenu = false PlaySound(sound.beep) end,
+	false, bactive, "center")
+NewButton(-100, 100, 40, 40, 11, "resetlvlmenu", "Reset Level",
+	"Also resizes the world to the values specified above.\n(In Sandbox Mode)", RefreshWorld, false, bactive, "center")
+NewButton(-50, 100, 40, 40, 9, "resetpuzzlemenu", "Reset Puzzle", "Resets the puzzle to how it was in the beginning.",
+	function() level = level - 1; NextLevel() end, false, function() return level and inmenu end, "center")
+NewButton(-50, 100, 40, 40, 12, "clearlvl", "Clear Level", "Also resizes the world to the values specified above.",
+	function() title, subtitle = "", ""; ClearWorld() PlaySound(sound.beep) end, false, strictbactive, "center")
+NewButton(0, 100, 40, 40, 3, "savelvl", "Save level", "Saves to clipboard. Format: K3", SaveWorld, false, strictbactive,
+	"center", -math.pi * .5)
+NewButton(50, 100, 40, 40, "mode", "loadlvl", "Load & Edit Level", "Fetches from clipboard.\nLoads V3 and K1-K3 codes.",
+	function() LoadWorld(); puzzle = false end, false, strictbactive, "center")
+NewButton(100, 100, 40, 40, "puzzle", "puzzleloadlvl", "Load Level as Puzzle",
+	"Fetches from clipboard.\nLoads V3 and K1-K3 codes.",
+	function() LoadWorld(); puzzle = true; SetSelectedCell("eraser") end, false, strictbactive, "center")
 NewButton(150, 100, 40, 40, "delete", "tomainmenu", "Back to Main Menu", nil, function() mainmenu = 1;
 	puzzle = true;
 	inmenu = false;
 	PlaySound(sound.beep)
 end, false, bactive, "center", nil, { 1, .5, .5, .5 }, { 1, .5, .5, 1 }, { .5, .25, .25, 1 })
-NewButton(0, -105, 300, 10, "pix", "delayslider", nil, nil, function() delay = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150) / 3) * .01 end, true, bactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
-NewButton(0, -83, 300, 10, "pix", "tpuslider", nil, nil, function() tpu = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150 + 33.3333333) / 33.3333333) end, true, bactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
-NewButton(0, -61, 300, 10, "pix", "volumeslider", nil, nil, function() volume = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150) / 3) * .01 music:setVolume(volume) music2:setVolume(volume) music3:setVolume(volume) end, true, optionbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
-NewButton(0, -39, 300, 10, "pix", "svolumeslider", nil, nil, function() svolume = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150) / 3) * .01 sound.beep:setVolume(svolume) sound.destroy:setVolume(svolume) sound.unlock:setVolume(svolume) sound.move:setVolume(svolume * 4) sound.rotate:setVolume(svolume * .5) sound.infect:setVolume(svolume * 3) sound.coin:setVolume(svolume * .5) end, true, optionbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
-NewButton(0, -17, 300, 10, "pix", "borderslider", nil, nil, function() if not puzzle then border = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150 + 300 / (#bordercells - 1)) / (300 / (#bordercells - 1))) end end, true, stricterbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
-NewButton(0, 5, 300, 10, "pix", "uiscaleslider", nil, nil, function() newuiscale = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 250) / 2) * .01 end, true, optionbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
+NewButton(0, -105, 300, 10, "pix", "delayslider", nil, nil,
+	function() delay = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150) / 3) * .01 end, true, bactive,
+	"center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
+NewButton(0, -83, 300, 10, "pix", "tpuslider", nil, nil,
+	function() tpu = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150 + 33.3333333) / 33.3333333) end, true
+	, bactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
+NewButton(0, -61, 300, 10, "pix", "volumeslider", nil, nil,
+	function() volume = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150) / 3) * .01 music:setVolume(volume) music2
+			:setVolume(volume) music3:setVolume(volume) end, true, optionbactive, "center", nil, { .25, .25, .25, 1 },
+	{ .25, .25, .25, 1 }, { .25, .25, .25, 1 })
+NewButton(0, -39, 300, 10, "pix", "svolumeslider", nil, nil,
+	function() svolume = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 150) / 3) * .01 sound.beep:setVolume(svolume) sound
+			.destroy:setVolume(svolume) sound.unlock:setVolume(svolume) sound.move:setVolume(svolume * 4) sound.rotate:setVolume(svolume
+		* .5) sound.infect:setVolume(svolume * 3) sound.coin:setVolume(svolume * .5) end, true, optionbactive, "center", nil,
+	{ .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
+NewButton(0, -17, 300, 10, "pix", "borderslider", nil, nil,
+	function() if not puzzle then border = math.round((
+		love.mouse.getX() / uiscale - centerx / uiscale + 150 + 300 / (#bordercells - 1)) / (300 / (#bordercells - 1))) end end
+	, true, stricterbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
+NewButton(0, 5, 300, 10, "pix", "uiscaleslider", nil, nil,
+	function() newuiscale = math.round((love.mouse.getX() / uiscale - centerx / uiscale + 250) / 2) * .01 end, true,
+	optionbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
 NewButton(0, 25, 20, 20, "debug", "debugbtn", "Debug mode", nil, function(b) dodebug = not dodebug
 	b.icon = dodebug and "checkon" or "debug"
 end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
@@ -3052,24 +3280,35 @@ NewButton(25, 25, 20, 20, "checkon", "fancybtn", "Fancy Graphics", nil, function
 end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
 NewButton(-50, 25, 20, 20, "checkon", "mobilebtn", "Extended UI", nil, function(b) mobile = not mobile;
 	b.icon = mobile and "checkon" or "bigui";
-	buttons.setinitial.x, buttons.setinitial.y, buttons.resetlvl.y = mobile and 70 or 20, mobile and 70 or 20, mobile and 70 or 20
+	buttons.setinitial.x, buttons.setinitial.y, buttons.resetlvl.y = mobile and 70 or 20, mobile and 70 or 20,
+			mobile and 70 or 20
 end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
-NewButton(50, 25, 20, 20, "music", "musicbtn", "Change Music", nil, function() if music:tell() > 0 then music:stop() music2:play() elseif music2:tell() > 0 then music2:stop() music3:play() else music:play() music3:stop() end end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
+NewButton(50, 25, 20, 20, "music", "musicbtn", "Change Music", nil,
+	function() if music:tell() > 0 then music:stop() music2:play() elseif music2:tell() > 0 then music2:stop() music3:play() else music
+			:play() music3:stop() end end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 },
+	{ .25, .25, .25, 1 })
 NewButton(-75, 25, 20, 20, "checkon", "popups", "Show Pop-up Info", nil, function(b) showinfo = not showinfo
 	b.icon = showinfo and "checkon" or "popups"
 end, false, optionbactive, "center", nil, { .5, .5, .5, 1 }, { .75, .75, .75, 1 }, { .25, .25, .25, 1 })
-NewButton(-75, 62, 50, 25, "pix", "widthbtn", nil, nil, function() if not puzzle then typing = 1 end end, false, stricterbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
-NewButton(75, 62, 50, 25, "pix", "heightbtn", nil, nil, function() if not puzzle then typing = 2 end end, false, stricterbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
-NewButton(-80, 80, 60, 60, 2, "nextlvlwin", "Next Level", nil, function() NextLevel() PlaySound(sound.beep) winscreen = false end, false, wactive, "center")
+NewButton(-75, 62, 50, 25, "pix", "widthbtn", nil, nil, function() if not puzzle then typing = 1 end end, false,
+	stricterbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
+NewButton(75, 62, 50, 25, "pix", "heightbtn", nil, nil, function() if not puzzle then typing = 2 end end, false,
+	stricterbactive, "center", nil, { .25, .25, .25, 1 }, { .25, .25, .25, 1 }, { .25, .25, .25, 1 })
+NewButton(-80, 80, 60, 60, 2, "nextlvlwin", "Next Level", nil,
+	function() NextLevel() PlaySound(sound.beep) winscreen = false end, false, wactive, "center")
 NewButton(0, 80, 60, 60, 11, "replaylvlwin", "Replay Solution", nil, RefreshWorld, false, wactive, "center")
-NewButton(80, 80, 60, 60, 9, "resetlvlwin", "Reset Level", nil, function() level = level and level - 1; NextLevel() PlaySound(sound.beep) winscreen = false end, false, wactive, "center")
+NewButton(80, 80, 60, 60, 9, "resetlvlwin", "Reset Level", nil,
+	function() level = level and level - 1; NextLevel() PlaySound(sound.beep) winscreen = false end, false, wactive,
+	"center")
 NewButton(-120, 100, 60, 60, "puzzle", "puzzlescreen", "Puzzles", nil, function() mainmenu = 2;
 	delay = .2;
 	tpu = 1;
 	PlaySound(sound.beep)
 end, false, mmenu1, "center")
-NewButton(-40, 100, 60, 60, 105, "optionsbtn", "Options", nil, function() mainmenu = 3; PlaySound(sound.beep) end, false, mmenu1, "center")
-NewButton(40, 100, 60, 60, 17, "modbtn", "Import mod", nil, function() mainmenu = 4; PlaySound(sound.beep) end, false, mmenu1, "center", math.pi / 2)
+NewButton(-40, 100, 60, 60, 105, "optionsbtn", "Options", nil, function() mainmenu = 3; PlaySound(sound.beep) end, false
+	, mmenu1, "center")
+NewButton(40, 100, 60, 60, 17, "modbtn", "Import mod", nil, function() mainmenu = 4; PlaySound(sound.beep) end, false,
+	mmenu1, "center", math.pi / 2)
 NewButton(120, 100, 60, 60, 2, "startgamebtn", "Sandbox", nil, function() mainmenu = false;
 	newwidth = 100;
 	newheight = 100;
@@ -3083,12 +3322,14 @@ NewButton(120, 100, 60, 60, 2, "startgamebtn", "Sandbox", nil, function() mainme
 	ResetCam()
 	PlaySound(sound.beep)
 end, false, mmenu1, "center")
-NewButton(20, 20, 40, 40, "delete", "backtomain", "Go Back", nil, function() mainmenu = 1 PlaySound(sound.beep) end, false, exitbtn, "topleft")
+NewButton(20, 20, 40, 40, "delete", "backtomain", "Go Back", nil, function() mainmenu = 1 PlaySound(sound.beep) end,
+	false, exitbtn, "topleft")
 local xamnt = math.ceil(math.sqrt(#levels)) + 1 -- +1 so the layout will stay more rectangular to fit the screen better
 local xoff = 25 * (xamnt - 1)
 local yoff = 25 * math.floor((#levels - 1) / xamnt)
 for i = 0, #levels - 1 do
-	NewButton(50 * (i % xamnt) - xoff, 50 * math.floor(i / xamnt) - yoff, 40, 40, "checkoff", "topuzzle" .. i + 1, nil, nil, function() level = i; NextLevel() ResetCam() PlaySound(sound.beep) end, false, mmenu2, "center")
+	NewButton(50 * (i % xamnt) - xoff, 50 * math.floor(i / xamnt) - yoff, 40, 40, "checkoff", "topuzzle" .. i + 1, nil, nil
+		, function() level = i; NextLevel() ResetCam() PlaySound(sound.beep) end, false, mmenu2, "center")
 end
 
 function ToSide(rot, dir) --laziness (converts rotation of cell & direction of force -> the side that the force is being applied to)
@@ -3104,7 +3345,8 @@ function GetNeighbors(x, y) --4 neighbors
 end
 
 function GetSurrounding(x, y) --8 neighbors
-	return { [0] = { x + 1, y }, [0.5] = { x + 1, y + 1 }, [1] = { x, y + 1 }, [1.5] = { x - 1, y + 1 }, [2] = { x - 1, y }, [2.5] = { x - 1, y - 1 }, [3] = { x, y - 1 }, [3.5] = { x + 1, y - 1 } }
+	return { [0] = { x + 1, y }, [0.5] = { x + 1, y + 1 }, [1] = { x, y + 1 }, [1.5] = { x - 1, y + 1 }, [2] = { x - 1, y },
+		[2.5] = { x - 1, y - 1 }, [3] = { x, y - 1 }, [3.5] = { x + 1, y - 1 } }
 end
 
 function GetDiagonals(x, y) --4 diagonal neighbors
@@ -3118,18 +3360,30 @@ function IsUnbreakable(cell, dir, x, y, vars)
 	if type(ModData.unbreakable[id]) == "function" then
 		return ModData.unbreakable[id](cell, dir, x, y, vars, side)
 	end
-	return id == 1 or id == 41 or (id == 69 or id == 213) and side ~= 0 and side ~= 2 or id == 140 and side ~= 2 and side ~= 1 or id == 157 and side ~= 2 or id == 158 and side ~= 3 and side ~= 2 and side ~= 1 or id == 159 and side % 1 ~= 0
-			or id == 12 or id == 51 or id == 141 or id == 205 or id == 176 or id == 126 or id == 150 or id == 151 or id == 152 or id == 162 or id == 229 or id == 163 or id == 165 or id == 221 or id == 224 or id == 225 or id == 226 and (side == 0 or side == 2) or id == 300 and side == 0
-			or id == 154 and vars.lastcell.id ~= 153 or cell.bolted and vars.forcetype == "swap" or cell.reinforced and vars.forcetype == "scissor" or id == "wrap" or id == 199 or id == 200 or id == 201 or id == 202 or id == 203 or id == 204 or
-			(id == 206 or id == 234 or id == 240 or id == 241) and vars.forcetype == "infect" or (id == 234 or id == 240 or id == 241 or id == 242 or id == 243) and vars.forcetype == "burn" or id == 235
-			or cell.protected and (vars.forcetype == "destroy" or vars.forcetype == "infect" or vars.forcetype == "burn" or vars.forcetype == "transform")
+	return id == 1 or id == 41 or (id == 69 or id == 213) and side ~= 0 and side ~= 2 or
+			id == 140 and side ~= 2 and side ~= 1 or id == 157 and side ~= 2 or
+			id == 158 and side ~= 3 and side ~= 2 and side ~= 1 or id == 159 and side % 1 ~= 0
+			or id == 12 or id == 51 or id == 141 or id == 205 or id == 176 or id == 126 or id == 150 or id == 151 or id == 152 or
+			id == 162 or id == 229 or id == 163 or id == 165 or id == 221 or id == 224 or id == 225 or
+			id == 226 and (side == 0 or side == 2) or id == 300 and side == 0
+			or id == 154 and vars.lastcell.id ~= 153 or cell.bolted and vars.forcetype == "swap" or
+			cell.reinforced and vars.forcetype == "scissor" or id == "wrap" or id == 199 or id == 200 or id == 201 or id == 202 or
+			id == 203 or id == 204 or
+			(id == 206 or id == 234 or id == 240 or id == 241) and vars.forcetype == "infect" or
+			(id == 234 or id == 240 or id == 241 or id == 242 or id == 243) and vars.forcetype == "burn" or id == 235
+			or
+			cell.protected and
+			(
+			vars.forcetype == "destroy" or vars.forcetype == "infect" or vars.forcetype == "burn" or vars.forcetype == "transform"
+			)
 end
 
 function IsNonexistant(cell, dir, x, y) --act like empty space
 	if type(ModData.nonexistant[cell.id]) == "function" then
 		return ModData.nonexistant[cell.id](cell, dir, x, y)
 	end
-	return cell.id == 0 or cell.id == 116 or cell.id == 117 or cell.id == 118 or cell.id == 119 or cell.id == 120 or cell.id == 121 or cell.id == 122 or cell.id == 223 or cell.id == "wrap"
+	return cell.id == 0 or cell.id == 116 or cell.id == 117 or cell.id == 118 or cell.id == 119 or cell.id == 120 or
+			cell.id == 121 or cell.id == 122 or cell.id == 223 or cell.id == "wrap"
 end
 
 function IsDestroyer(cell, dir, x, y, vars)
@@ -3143,21 +3397,41 @@ function IsDestroyer(cell, dir, x, y, vars)
 	if type(ModData.acidic[vars.lastcell.id]) == "function" then
 		return ModData.acidic[vars.lastcell.id](cell, dir, x, y, vars)
 	end
-	return ((id == 13 or id == 24 or id == 160 or id == 163 or id == 164 or id == 244 or id == 288 or id == 293 or id == 294 or id == 295 or id == 296 or id == 298 or id == 299
-			or (vars.lastcell.id == 13 or vars.lastcell.id == 24 or vars.lastcell.id == 160 or vars.lastcell.id == 164 or vars.lastcell.id == 244 or vars.lastcell.id == 288 or vars.lastcell.id == 293 or vars.lastcell.id == 294 or vars.lastcell.id == 295 or vars.lastcell.id == 296 or vars.lastcell.id == 298 or vars.lastcell.id == 299
-					or (vars.lastcell.id == 219 or vars.lastcell.id == 220) and id ~= 219 and id ~= 220 and (vars.forcetype == "push" or vars.forcetype == "nudge")) and vars.forcetype ~= "swap")
-			and not IsUnbreakable(cell, dir, x, y, { forcetype = "destroy", lastcell = vars.lastcell }) and not IsNonexistant(cell, dir, x, y, vars)
-			or (id == 44 and side == 0 or id == 155 and (side == 0 or side == 3) or id == 250 and (side == 0 or side == 2) or id == 251)
-			and (vars.forcetype == "push" or vars.forcetype == "nudge" or vars.forcetype == "scissor") or id == 154 and vars.lastcell.id == 153)
+	return (
+			(
+					id == 13 or id == 24 or id == 160 or id == 163 or id == 164 or id == 244 or id == 288 or id == 293 or id == 294 or
+							id == 295 or id == 296 or id == 298 or id == 299
+							or
+							(
+							vars.lastcell.id == 13 or vars.lastcell.id == 24 or vars.lastcell.id == 160 or vars.lastcell.id == 164 or
+									vars.lastcell.id == 244 or vars.lastcell.id == 288 or vars.lastcell.id == 293 or vars.lastcell.id == 294 or
+									vars.lastcell.id == 295 or vars.lastcell.id == 296 or vars.lastcell.id == 298 or vars.lastcell.id == 299
+									or
+									(vars.lastcell.id == 219 or vars.lastcell.id == 220) and id ~= 219 and id ~= 220 and
+									(vars.forcetype == "push" or vars.forcetype == "nudge")) and vars.forcetype ~= "swap")
+					and not IsUnbreakable(cell, dir, x, y, { forcetype = "destroy", lastcell = vars.lastcell }) and
+					not IsNonexistant(cell, dir, x, y, vars)
+					or
+					(
+					id == 44 and side == 0 or id == 155 and (side == 0 or side == 3) or id == 250 and (side == 0 or side == 2) or
+							id == 251)
+					and (vars.forcetype == "push" or vars.forcetype == "nudge" or vars.forcetype == "scissor") or
+					id == 154 and vars.lastcell.id == 153)
 			and not IsUnbreakable(vars.lastcell, (dir + 2) % 4, x, y, { forcetype = "destroy", lastcell = cell })
-			or id == 12 or id == 51 or id == 141 or id == 176 or id == 205 or (id == 225 or id == 226) and (side == 0 or side == 2) or id == 300 and side == 0
-			or id == 165 or id == 175 and (cell.updatekey == updatekey or not cell.vars[1]) or id == 198 and side == 2 or id == 233
-			or ((id == 48 or id == 49 or id == 97 or id == 98 or id == 99 or id == 100 or id == 101 or id == 102) and side == 2
+			or id == 12 or id == 51 or id == 141 or id == 176 or id == 205 or
+			(id == 225 or id == 226) and (side == 0 or side == 2) or id == 300 and side == 0
+			or id == 165 or id == 175 and (cell.updatekey == updatekey or not cell.vars[1]) or id == 198 and side == 2 or
+			id == 233
+			or (
+			(id == 48 or id == 49 or id == 97 or id == 98 or id == 99 or id == 100 or id == 101 or id == 102) and side == 2
 					or (id == 186 or id == 187 or id == 189 or id == 190 or id == 191 or id == 193) and side == 3
 					or (id == 187 or id == 188 or id == 189 or id == 191 or id == 192 or id == 193) and side == 2
 					or (id == 186 or id == 187 or id == 188 or id == 190 or id == 191 or id == 192) and side == 1)
 			and (vars.forcetype == "push" or vars.forcetype == "nudge" or vars.forcetype == "scissor")
-			or (id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or id == 197) and (side == 1 or side == 3)
+			or
+			(
+			id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or
+					id == 197) and (side == 1 or side == 3)
 end
 
 function IsTransparent(cell, dir, x, y, vars)
@@ -3176,7 +3450,8 @@ function ToGenerate(cell, dir, x, y)
 	end
 	if id == 20 then
 		return getempty()
-	elseif IsNonexistant(cell, dir, x, y) or id == 41 or id == 205 or id == 214 or id == 215 or id == 216 or id == 217 or id == 218 then
+	elseif IsNonexistant(cell, dir, x, y) or id == 41 or id == 205 or id == 214 or id == 215 or id == 216 or id == 217 or
+			id == 218 then
 		return nil
 	end
 	return cell
@@ -3186,8 +3461,11 @@ function StopsOptimize(cell, dir, x, y, vars)
 	if type(ModData.stopOptimization[cell.id]) == "function" then
 		return ModData.stopOptimization[cell.id](cell, dir, x, y, vars)
 	end
-	return IsTransparent(cell, dir, x, y, vars) or cell.id == 126 or cell.id == 150 or cell.id == 151 or cell.id == 152 or cell.id == 162 or cell.id == 163 or
-			(cell.id == 168 or cell.id == 167 or cell.id == 169 or cell.id == 170 or cell.id == 171 or cell.id == 172 or cell.id == 173 or cell.id == 174) and cell.rot == dir
+	return IsTransparent(cell, dir, x, y, vars) or cell.id == 126 or cell.id == 150 or cell.id == 151 or cell.id == 152 or
+			cell.id == 162 or cell.id == 163 or
+			(
+			cell.id == 168 or cell.id == 167 or cell.id == 169 or cell.id == 170 or cell.id == 171 or cell.id == 172 or
+					cell.id == 173 or cell.id == 174) and cell.rot == dir
 			or cell.id == 219 or cell.id == 220
 end
 
@@ -3402,7 +3680,8 @@ function RotateCell(x, y, rot, dir, large)
 		for k, v in pairs(neighbors) do
 			RotateCell(v[1], v[2], rot, k, large)
 		end
-	elseif not IsUnbreakable(cell, dir, x, y, { forcetype = "rotate", lastcell = getempty() }) and not IsNonexistant(cell, dir, x, y) then
+	elseif not IsUnbreakable(cell, dir, x, y, { forcetype = "rotate", lastcell = getempty() }) and
+			not IsNonexistant(cell, dir, x, y) then
 		cell.rot = (cell.rot + rot) % 4
 		PlaySound(sound.rotate)
 	end
@@ -3421,7 +3700,8 @@ function RotateCellTo(x, y, rot, dir)
 		for k, v in pairs(neighbors) do
 			RotateCellTo(v[1], v[2], rot, k)
 		end
-	elseif not IsUnbreakable(cell, dir, x, y, { forcetype = "rotate", lastcell = getempty() }) and ConvertId(cell.id) ~= 17 and not IsNonexistant(cell, dir, x, y) then
+	elseif not IsUnbreakable(cell, dir, x, y, { forcetype = "rotate", lastcell = getempty() }) and ConvertId(cell.id) ~= 17
+			and not IsNonexistant(cell, dir, x, y) then
 		cell.rot = rot
 		PlaySound(sound.rotate)
 	end
@@ -3467,19 +3747,32 @@ function FlipCellRaw(cell, rot)
 	--right facing cells
 	local id = cell.id
 	if id == 6 or id == 8
-			or id == 2 or id == 14 or id == 17 or id == 28 or id == 58 or id == 59 or id == 60 or id == 61 or id == 72 or id == 73 or id == 74
-			or id == 75 or id == 76 or id == 77 or id == 78 or id == 3 or id == 26 or id == 27 or id == 110 or id == 111 or id == 40 or id == 44
-			or id == 55 or id == 113 or id == 45 or id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 93 or id == 94
-			or id == 83 or id == 95 or id == 96 or id == 86 or id == 48 or id == 49 or id == 97 or id == 98 or id == 99 or id == 106 or id == 100
-			or id == 101 or id == 102 or id == 42 or id == 114 or id == 115 or id == 146 or id == 147 or id == 156 or id == 157 or id == 158
-			or id == 160 or id == 161 or id == 166 or id == 167 or id == 168 or id == 169 or id == 170 or id == 171 or id == 172 or id == 173
-			or id == 174 or id == 175 or id == 177 or id == 178 or id == 179 or id == 180 or id == 181 or id == 182 or id == 183 or id == 184
-			or id == 185 or id == 186 or id == 187 or id == 188 or id == 189 or id == 190 or id == 191 or id == 192 or id == 193 or id == 194
-			or id == 195 or id == 196 or id == 197 or id == 198 or id == 199 or id == 200 or id == 201 or id == 206 or id == 208 or id == 212
-			or id == 213 or id == 227 or id == 230 or id == 232 or id == 237 or id == 242 or id == 243 or id == 254 or id == 255 or id == 256
-			or id == 257 or id == 258 or id == 259 or id == 260 or id == 261 or id == 262 or id == 263 or id == 264 or id == 265 or id == 268
-			or id == 269 or id == 270 or id == 271 or id == 272 or id == 273 or id == 274 or id == 275 or id == 276 or id == 277 or id == 278
-			or id == 279 or id == 280 or id == 281 or id == 282 or id == 283 or id == 284 or id == 300 or id == 301 or id == 302 or id == 304
+			or id == 2 or id == 14 or id == 17 or id == 28 or id == 58 or id == 59 or id == 60 or id == 61 or id == 72 or id == 73
+			or id == 74
+			or id == 75 or id == 76 or id == 77 or id == 78 or id == 3 or id == 26 or id == 27 or id == 110 or id == 111 or
+			id == 40 or id == 44
+			or id == 55 or id == 113 or id == 45 or id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or
+			id == 93 or id == 94
+			or id == 83 or id == 95 or id == 96 or id == 86 or id == 48 or id == 49 or id == 97 or id == 98 or id == 99 or
+			id == 106 or id == 100
+			or id == 101 or id == 102 or id == 42 or id == 114 or id == 115 or id == 146 or id == 147 or id == 156 or id == 157 or
+			id == 158
+			or id == 160 or id == 161 or id == 166 or id == 167 or id == 168 or id == 169 or id == 170 or id == 171 or id == 172
+			or id == 173
+			or id == 174 or id == 175 or id == 177 or id == 178 or id == 179 or id == 180 or id == 181 or id == 182 or id == 183
+			or id == 184
+			or id == 185 or id == 186 or id == 187 or id == 188 or id == 189 or id == 190 or id == 191 or id == 192 or id == 193
+			or id == 194
+			or id == 195 or id == 196 or id == 197 or id == 198 or id == 199 or id == 200 or id == 201 or id == 206 or id == 208
+			or id == 212
+			or id == 213 or id == 227 or id == 230 or id == 232 or id == 237 or id == 242 or id == 243 or id == 254 or id == 255
+			or id == 256
+			or id == 257 or id == 258 or id == 259 or id == 260 or id == 261 or id == 262 or id == 263 or id == 264 or id == 265
+			or id == 268
+			or id == 269 or id == 270 or id == 271 or id == 272 or id == 273 or id == 274 or id == 275 or id == 276 or id == 277
+			or id == 278
+			or id == 279 or id == 280 or id == 281 or id == 282 or id == 283 or id == 284 or id == 300 or id == 301 or id == 302
+			or id == 304
 			or id == 305 or id == 311 then
 		if rot == 0 or rot == 2 then
 			cell.rot = (-cell.rot + 2) % 4
@@ -3487,15 +3780,18 @@ function FlipCellRaw(cell, rot)
 			cell.rot = (-cell.rot) % 4
 		end
 		--up-right facing cells
-	elseif id == 7 or id == 23 or id == 46 or id == 107 or id == 140 or id == 148 or id == 155 or id == 209 or id == 228 or id == 238 or id == 268 then
-		if (rot == 0 or rot == 2) and (cell.rot == 0 or cell.rot == 2) or (rot == 1 or rot == 3) and (cell.rot == 1 or cell.rot == 3) then
+	elseif id == 7 or id == 23 or id == 46 or id == 107 or id == 140 or id == 148 or id == 155 or id == 209 or id == 228 or
+			id == 238 or id == 268 then
+		if (rot == 0 or rot == 2) and (cell.rot == 0 or cell.rot == 2) or
+				(rot == 1 or rot == 3) and (cell.rot == 1 or cell.rot == 3) then
 			cell.rot = (cell.rot - 1) % 4
 		else
 			cell.rot = (cell.rot + 1) % 4
 		end
 		--down-right facing cells
 	elseif id == 57 or id == 16 or id == 31 or id == 91 or id == 92 then
-		if (rot == 0 or rot == 2) and (cell.rot == 0 or cell.rot == 2) or (rot == 1 or rot == 3) and (cell.rot == 1 or cell.rot == 3) then
+		if (rot == 0 or rot == 2) and (cell.rot == 0 or cell.rot == 2) or
+				(rot == 1 or rot == 3) and (cell.rot == 1 or cell.rot == 3) then
 			cell.rot = (cell.rot + 1) % 4
 		else
 			cell.rot = (cell.rot - 1) % 4
@@ -3512,7 +3808,8 @@ function FlipCell(x, y, rot, dir)
 		for k, v in pairs(neighbors) do
 			FlipCell(v[1], v[2], rot, k)
 		end
-	elseif not IsUnbreakable(cell, dir, x, y, { forcetype = "flip", lastcell = getempty() }) and not IsNonexistant(cell, dir, x, y) then
+	elseif not IsUnbreakable(cell, dir, x, y, { forcetype = "flip", lastcell = getempty() }) and
+			not IsNonexistant(cell, dir, x, y) then
 		FlipCellRaw(cell, rot)
 		SetChunk(x, y, cell)
 		PlaySound(sound.rotate)
@@ -3716,7 +4013,9 @@ function HandleNudge(cell, dir, x, y, vars)
 			PlaySound(sound.coin)
 		end
 	elseif vars.active == "destroy" then
-		if (vars.lastcell.id == 160 or vars.lastcell.id == 288 or vars.lastcell.id == 293 or vars.lastcell.id == 294 or vars.lastcell.id == 295 or vars.lastcell.id == 296 or vars.lastcell.id == 298) then
+		if (
+				vars.lastcell.id == 160 or vars.lastcell.id == 288 or vars.lastcell.id == 293 or vars.lastcell.id == 294 or
+						vars.lastcell.id == 295 or vars.lastcell.id == 296 or vars.lastcell.id == 298) then
 			if vars.undocells then vars.undocells[x + y * width] = vars.undocells[x + y * width] or cell end
 			if id == 24 then
 				cell.id = 13
@@ -3836,7 +4135,9 @@ function HandleNudge(cell, dir, x, y, vars)
 					cell.scrosses = (cell.supdatekey == supdatekey and cell.scrosses or 0) + 1
 					cell.supdatekey = supdatekey
 					PushCell(cx, cy, dir, { force = 1, replacecell = {
-						id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) } })
+						id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+						vars = DefaultVars(cell.vars[1])
+					} })
 				end
 				cell.vars = {}
 				supdatekey = supdatekey + 1
@@ -3860,7 +4161,10 @@ function HandleNudge(cell, dir, x, y, vars)
 			end
 		elseif id == 233 and (side == 1 or side == 3) then
 			cell.vars[1] = vars.lastcell.id
-		elseif (id == 12 or id == 205 or (id == 225 or id == 226) and (side == 0 or side == 2) or id == 300 and side == 0 or id == 44 and side == 0 or id == 155 and (side == 0 or side == 3) or id == 250 and (side == 0 or side == 2) or id == 251) and not IsNonexistant(vars.lastcell, dir, x, y, vars) then
+		elseif (
+				id == 12 or id == 205 or (id == 225 or id == 226) and (side == 0 or side == 2) or id == 300 and side == 0 or
+						id == 44 and side == 0 or id == 155 and (side == 0 or side == 3) or id == 250 and (side == 0 or side == 2) or
+						id == 251) and not IsNonexistant(vars.lastcell, dir, x, y, vars) then
 			PlaySound(sound.destroy)
 		elseif id == 51 then
 			local neighbors = GetNeighbors(x, y)
@@ -3886,7 +4190,8 @@ function HandleNudge(cell, dir, x, y, vars)
 			SetCell(vars.lastx, vars.lasty, table.copy(cell))
 			PlaySound(sound.destroy)
 			PlaySound(sound.infect)
-		elseif id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or id == 197 then
+		elseif id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or
+				id == 197 then
 			PlaySound(sound.destroy)
 			if side == 3 then cell.inl = true
 			elseif side == 1 then cell.inr = true end
@@ -3898,28 +4203,44 @@ function HandleNudge(cell, dir, x, y, vars)
 			end
 		end
 	else
-		if id == 126 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "infect", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
+		if id == 126 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "infect", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and
+				not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
 			if vars.undocells and vars.undocells[vars.lastx + vars.lasty * width] ~= vars.lastcell then
 				vars.undocells[vars.lastx + vars.lasty * width] = CopyCell(x, y)
 			else
 				SetCell(vars.lastx, vars.lasty, CopyCell(x, y))
 			end
 			PlaySound(sound.infect)
-		elseif id == 150 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "rotate", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
+		elseif id == 150 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "rotate", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and
+				not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
 			if vars.undocells and vars.undocells[vars.lastx + vars.lasty * width] ~= vars.lastcell then
 				vars.undocells[vars.lastx + vars.lasty * width].rot = (vars.undocells[vars.lastx + vars.lasty * width].rot + 1) % 4
 			else
 				vars.lastcell.rot = (vars.lastcell.rot + 1) % 4
 			end
 			PlaySound(sound.rotate)
-		elseif id == 151 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "rotate", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
+		elseif id == 151 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "rotate", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and
+				not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
 			if vars.undocells and vars.undocells[vars.lastx + vars.lasty * width] ~= vars.lastcell then
 				vars.undocells[vars.lastx + vars.lasty * width].rot = (vars.undocells[vars.lastx + vars.lasty * width].rot - 1) % 4
 			else
 				vars.lastcell.rot = (vars.lastcell.rot - 1) % 4
 			end
 			PlaySound(sound.rotate)
-		elseif id == 152 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "rotate", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
+		elseif id == 152 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "rotate", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and
+				not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
 			if vars.undocells and vars.undocells[vars.lastx + vars.lasty * width] ~= vars.lastcell then
 				vars.undocells[vars.lastx + vars.lasty * width].rot = (vars.undocells[vars.lastx + vars.lasty * width].rot + 2) % 4
 			else
@@ -3933,7 +4254,11 @@ function HandleNudge(cell, dir, x, y, vars)
 			end
 			if fancy then stallerparticles:setPosition(x * 20 - 10, y * 20 - 10) stallerparticles:emit(50) end
 			PlaySound(sound.destroy)
-		elseif id == 163 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "destroy", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
+		elseif id == 163 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "destroy", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and
+				not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
 			SetCell(x, y, getempty())
 			SetCell(vars.lastx, vars.lasty, getempty())
 			if vars.undocells then
@@ -4023,7 +4348,10 @@ function HandlePush(force, cell, dir, x, y, vars)
 			end
 		end
 	end
-	if (vars.lastcell.id == 13 or vars.lastcell.id == 160 or vars.lastcell.id == 288 or vars.lastcell.id == 293 or vars.lastcell.id == 294 or vars.lastcell.id == 295 or vars.lastcell.id == 296 or vars.lastcell.id == 298) and vars.destroying and not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
+	if (
+			vars.lastcell.id == 13 or vars.lastcell.id == 160 or vars.lastcell.id == 288 or vars.lastcell.id == 293 or
+					vars.lastcell.id == 294 or vars.lastcell.id == 295 or vars.lastcell.id == 296 or vars.lastcell.id == 298) and
+			vars.destroying and not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
 		vars.undocells[x + y * width] = vars.undocells[x + y * width] or table.copy(cell)
 		if id == 24 then
 			cell.id = 13
@@ -4034,10 +4362,12 @@ function HandlePush(force, cell, dir, x, y, vars)
 		elseif id ~= 244 then
 			SetCell(x, y, getempty())
 		end
-		if fancy then enemyparticles:setPosition(x * 20 - 10, y * 20 - 10) enemyparticles:emit(50) GetCell(x, y).eatencells = { table.copy(cell) } end
+		if fancy then enemyparticles:setPosition(x * 20 - 10, y * 20 - 10) enemyparticles:emit(50) GetCell(x, y).eatencells = { table
+				.copy(cell) } end
 		PlaySound(sound.destroy)
 		return force
-	elseif vars.lastcell.id == 24 and vars.destroying and not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
+	elseif vars.lastcell.id == 24 and vars.destroying and
+			not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
 		vars.undocells[x + y * width] = vars.undocells[x + y * width] or table.copy(cell)
 		if id == 164 and rot > 1 then
 			cell.rot = cell.rot - 2
@@ -4055,7 +4385,8 @@ function HandlePush(force, cell, dir, x, y, vars)
 		if fancy then enemyparticles:setPosition(x * 20 - 10, y * 20 - 10) enemyparticles:emit(50) end
 		PlaySound(sound.destroy)
 		return force
-	elseif vars.lastcell.id == 164 and vars.destroying and not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
+	elseif vars.lastcell.id == 164 and vars.destroying and
+			not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
 		vars.undocells[x + y * width] = vars.undocells[x + y * width] or table.copy(cell)
 		if id == 13 then
 			vars.lastcell.rot = vars.lastcell.rot - 1
@@ -4098,10 +4429,12 @@ function HandlePush(force, cell, dir, x, y, vars)
 				SetCell(x, y, getempty())
 			end
 		end
-		if fancy then swivelparticles:setPosition(x * 20 - 10, y * 20 - 10) swivelparticles:emit(50) GetCell(x, y).eatencells = { table.copy(cell) } end
+		if fancy then swivelparticles:setPosition(x * 20 - 10, y * 20 - 10) swivelparticles:emit(50) GetCell(x, y).eatencells = { table
+				.copy(cell) } end
 		PlaySound(sound.destroy)
 		return force
-	elseif vars.lastcell.id == 244 and vars.destroying and not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
+	elseif vars.lastcell.id == 244 and vars.destroying and
+			not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
 		if id == 244 then
 			SetCell(x, y, getempty())
 		elseif cell.id == 299 then
@@ -4110,10 +4443,12 @@ function HandlePush(force, cell, dir, x, y, vars)
 		else
 			cell.id = 0
 		end
-		if fancy then enemyparticles:setPosition(x * 20 - 10, y * 20 - 10) enemyparticles:emit(50) GetCell(x, y).eatencells = { table.copy(cell) } end
+		if fancy then enemyparticles:setPosition(x * 20 - 10, y * 20 - 10) enemyparticles:emit(50) GetCell(x, y).eatencells = { table
+				.copy(cell) } end
 		PlaySound(sound.destroy)
 		return force
-	elseif vars.lastcell.id == 299 and vars.destroying and not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
+	elseif vars.lastcell.id == 299 and vars.destroying and
+			not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
 		DoQuantumEnemy(vars.lastcell, vars)
 		if id == 24 then
 			cell.id = 13
@@ -4126,16 +4461,20 @@ function HandlePush(force, cell, dir, x, y, vars)
 		end
 		PlaySound(sound.destroy)
 		return force
-	elseif vars.lastcell.id == 219 and vars.destroying and not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
+	elseif vars.lastcell.id == 219 and vars.destroying and
+			not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
 		vars.undocells[x + y * width] = vars.undocells[x + y * width] or table.copy(cell)
 		SetCell(x, y, vars.lastcell)
-		if fancy then stallerparticles:setPosition(x * 20 - 10, y * 20 - 10) stallerparticles:emit(50) GetCell(x, y).eatencells = { table.copy(cell) } end
+		if fancy then stallerparticles:setPosition(x * 20 - 10, y * 20 - 10) stallerparticles:emit(50) GetCell(x, y).eatencells = { table
+				.copy(cell) } end
 		PlaySound(sound.destroy)
 		return force
-	elseif vars.lastcell.id == 220 and vars.destroying and not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
+	elseif vars.lastcell.id == 220 and vars.destroying and
+			not IsUnbreakable(cell, x, y, dir, { forcetype = "destroy", lastcell = vars.lastcell }) then
 		vars.undocells[x + y * width] = vars.undocells[x + y * width] or table.copy(cell)
 		SetCell(x, y, getempty())
-		if fancy then stallerparticles:setPosition(x * 20 - 10, y * 20 - 10) stallerparticles:emit(50) GetCell(x, y).eatencells = { table.copy(cell) } end
+		if fancy then stallerparticles:setPosition(x * 20 - 10, y * 20 - 10) stallerparticles:emit(50) GetCell(x, y).eatencells = { table
+				.copy(cell) } end
 		PlaySound(sound.destroy)
 		return force
 	else
@@ -4151,7 +4490,8 @@ function HandlePush(force, cell, dir, x, y, vars)
 			return force == rot + 1 and rot + 1 + gfactor or 0
 		elseif id == 144 then
 			return 1 + gfactor
-		elseif (id == 13 or id == 160 or id == 288 or id == 293 or id == 294 or id == 295 or id == 296 or id == 298) and vars.destroying and not IsNonexistant(vars.lastcell, x, y, (dir + 2)) then
+		elseif (id == 13 or id == 160 or id == 288 or id == 293 or id == 294 or id == 295 or id == 296 or id == 298) and
+				vars.destroying and not IsNonexistant(vars.lastcell, x, y, (dir + 2)) then
 			vars.undocells[x + y * width] = vars.undocells[x + y * width] or table.copy(cell)
 			SetCell(x, y, getempty())
 			if fancy then enemyparticles:setPosition(x * 20 - 10, y * 20 - 10) enemyparticles:emit(50) end
@@ -4217,7 +4557,8 @@ function HandlePush(force, cell, dir, x, y, vars)
 		elseif id == 163 and vars.destroying and not IsNonexistant(vars.lastcell, x, y, (dir + 2)) then
 			vars.undocells[x + y * width] = getempty()
 			if vars.lastcell.id == 24 then vars.undocells[vars.lastx + vars.lasty * width].id = 13
-			elseif vars.lastcell.id == 164 and vars.lastcell.rot > 0 then vars.undocells[vars.lastx + vars.lasty * width].rot = vars.lastcell.rot - 1
+			elseif vars.lastcell.id == 164 and vars.lastcell.rot > 0 then vars.undocells[vars.lastx + vars.lasty * width].rot = vars
+					.lastcell.rot - 1
 			elseif vars.undocells[vars.lastx + vars.lasty * width] then vars.undocells[vars.lastx + vars.lasty * width] = getempty() end
 			if fancy then bulkparticles:setPosition(x * 20 - 10, y * 20 - 10) bulkparticles:emit(50) end
 			PlaySound(sound.destroy)
@@ -4233,7 +4574,9 @@ function HandlePush(force, cell, dir, x, y, vars)
 					cell.scrosses = (cell.supdatekey == supdatekey and cell.scrosses or 0) + 1
 					cell.supdatekey = supdatekey
 					PushCell(cx, cy, dir, { force = 1, replacecell = {
-						id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) } })
+						id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+						vars = DefaultVars(cell.vars[1])
+					} })
 				end
 				cell.vars = {}
 				supdatekey = supdatekey + 1
@@ -4266,10 +4609,12 @@ function HandlePush(force, cell, dir, x, y, vars)
 			elseif dir == 1 or dir == 3 then
 				cell.vars[2] = dir == 1 and 1 or -1
 			end
-			if dir == 0 and cell.vars[1] == 1 or dir == 2 and cell.vars[1] == -1 or dir == 1 and cell.vars[2] == 1 or dir == 3 and cell.vars[2] == -1 then
+			if dir == 0 and cell.vars[1] == 1 or dir == 2 and cell.vars[1] == -1 or dir == 1 and cell.vars[2] == 1 or
+					dir == 3 and cell.vars[2] == -1 then
 				vars.undocells[x + y * width] = vars.undocells[x + y * width] or oldcell
 				return force + 1
-			elseif dir == 2 and cell.vars[1] == 1 or dir == 0 and cell.vars[1] == -1 or dir == 3 and cell.vars[2] == 1 or dir == 1 and cell.vars[2] == -1 then
+			elseif dir == 2 and cell.vars[1] == 1 or dir == 0 and cell.vars[1] == -1 or dir == 3 and cell.vars[2] == 1 or
+					dir == 1 and cell.vars[2] == -1 then
 				return force - 1
 			end
 		elseif id == 207 and (side == 1 or side == 3) then
@@ -4290,7 +4635,10 @@ function HandlePush(force, cell, dir, x, y, vars)
 			PlaySound(sound.destroy)
 			vars.optimizegen = false
 			return 0
-		elseif (id == 12 or id == 205 or (id == 225 or id == 226) and (side == 0 or side == 2) or id == 300 and side == 0 or id == 44 and side == 0 or id == 155 and (side == 0 or side == 3) or id == 250 and (side == 0 or side == 2) or id == 251) and not IsNonexistant(vars.lastcell, dir, x, y, vars) then
+		elseif (
+				id == 12 or id == 205 or (id == 225 or id == 226) and (side == 0 or side == 2) or id == 300 and side == 0 or
+						id == 44 and side == 0 or id == 155 and (side == 0 or side == 3) or id == 250 and (side == 0 or side == 2) or
+						id == 251) and not IsNonexistant(vars.lastcell, dir, x, y, vars) then
 			PlaySound(sound.destroy)
 			return force
 		elseif id == 51 and not IsNonexistant(vars.lastcell, dir, x, y, vars) then
@@ -4320,7 +4668,11 @@ function HandlePush(force, cell, dir, x, y, vars)
 			PlaySound(sound.destroy)
 			PlaySound(sound.infect)
 			return force
-		elseif id == 47 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "infect", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
+		elseif id == 47 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "infect", lastcell = vars.lastcell, lastx = vars.lastx, lasty = vars.lasty }) and
+				not IsNonexistant(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty) then
 			vars.lastcell.id = 47
 			PlaySound(sound.infect)
 		elseif (id == 231 or id == 249) and not cell.sticky and not vars.checkonly then
@@ -4386,21 +4738,30 @@ function HandlePush(force, cell, dir, x, y, vars)
 				end
 			end
 			return force
-		elseif id == 126 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "infect", lastcell = vars.lastcell }) then
+		elseif id == 126 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "infect", lastcell = vars.lastcell }) then
 			if vars.undocells[vars.lastx + vars.lasty * width] then
 				vars.undocells[vars.lastx + vars.lasty * width] = CopyCell(x, y) --since this is a wall it'll undo the changes
 				PlaySound(sound.infect)
 			end
 			vars.optimizegen = false
 			return 0
-		elseif id == 150 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "rotate", lastcell = vars.lastcell }) then
+		elseif id == 150 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "rotate", lastcell = vars.lastcell }) then
 			if vars.undocells[vars.lastx + vars.lasty * width] then
 				vars.undocells[vars.lastx + vars.lasty * width].rot = (vars.undocells[vars.lastx + vars.lasty * width].rot + 1) % 4
 				PlaySound(sound.rotate)
 			end
 			vars.optimizegen = false
 			return 0
-		elseif id == 151 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "rotate", lastcell = vars.lastcell }) then
+		elseif id == 151 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "rotate", lastcell = vars.lastcell }) then
 			if vars.undocells[vars.lastx + vars.lasty * width] then
 				vars.undocells[vars.lastx + vars.lasty * width].rot = (vars.undocells[vars.lastx + vars.lasty * width].rot - 1) % 4
 				PlaySound(sound.rotate)
@@ -4408,7 +4769,10 @@ function HandlePush(force, cell, dir, x, y, vars)
 			end
 			vars.optimizegen = false
 			return 0
-		elseif id == 152 and not IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty, { forcetype = "rotate", lastcell = vars.lastcell }) then
+		elseif id == 152 and
+				not
+				IsUnbreakable(vars.lastcell, (dir - 2) % 4, vars.lastx, vars.lasty,
+					{ forcetype = "rotate", lastcell = vars.lastcell }) then
 			if vars.undocells[vars.lastx + vars.lasty * width] then
 				vars.undocells[vars.lastx + vars.lasty * width].rot = (vars.undocells[vars.lastx + vars.lasty * width].rot + 2) % 4
 				PlaySound(sound.rotate)
@@ -4424,12 +4788,15 @@ function HandlePush(force, cell, dir, x, y, vars)
 			PushCell(cx, cy, dir, { replacecell = gen, force = 1, noupdate = true })
 			vars.optimizegen = false
 			return 0
-		elseif (id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or id == 197) and not IsNonexistant(vars.lastcell, dir, x, y, vars) then
+		elseif (
+				id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or
+						id == 197) and not IsNonexistant(vars.lastcell, dir, x, y, vars) then
 			PlaySound(sound.destroy)
 			if side == 3 then cell.inl = true
 			elseif side == 1 then cell.inr = true
 			else return 0 end
-		elseif (id == 186 or id == 187 or id == 188 or id == 189 or id == 190 or id == 191 or id == 192 or id == 193) and IsDestroyer(cell, dir, x, y, vars) and not IsNonexistant(vars.lastcell, dir, x, y, vars) then
+		elseif (id == 186 or id == 187 or id == 188 or id == 189 or id == 190 or id == 191 or id == 192 or id == 193) and
+				IsDestroyer(cell, dir, x, y, vars) and not IsNonexistant(vars.lastcell, dir, x, y, vars) then
 			if not cell.output then
 				cell.output = vars.lastcell
 				if side == 1 and id < 190 then cell.output.rot = (cell.output.rot + 1) % 4
@@ -4544,15 +4911,18 @@ function HandleGrasp(force, cell, dir, x, y, vars)
 		end
 	elseif id == 2 or id == 14 or id == 28 or id == 58 or id == 59 or id == 60 or id == 61 or id == 114 or id == 115
 			or id == 269 or id == 270 or id == 271 or id == 276 or id == 277 or id == 278 or id == 279 or id == 160 or id == 161
-			or id == 175 and cell.updatekey ~= updatekey and cell.vars[1] or id == 178 or id == 179 or id == 180 or id == 181 or id == 182
-			or id == 183 or id == 184 or id == 185 or id == 206 or id == 213 and (side == 0 or side == 2) or id == 303 or id == 304 or id == 305 or id == 311 then
+			or id == 175 and cell.updatekey ~= updatekey and cell.vars[1] or id == 178 or id == 179 or id == 180 or id == 181 or
+			id == 182
+			or id == 183 or id == 184 or id == 185 or id == 206 or id == 213 and (side == 0 or side == 2) or id == 303 or
+			id == 304 or id == 305 or id == 311 then
 		if side == 2 then
 			vars.undocells[x + y * width] = vars.undocells[x + y * width] or table.copy(cell)
 			cell.updated = cell.updated or not vars.noupdate
 		end
 	elseif id == 103 then
 		return math.max(force - rot, 0)
-	elseif id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or id == 197 then
+	elseif id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or
+			id == 197 then
 		vars.ended = true
 	elseif (id == 231 or id == 249) and not vars.checkonly then
 		if not vars.sticking then stickkey = stickkey + 1 end
@@ -4616,7 +4986,8 @@ function HandleGrasp(force, cell, dir, x, y, vars)
 				vars.ended = true
 			end
 		end
-	elseif IsUnbreakable(cell, (dir + (vars.side == "left" and -1 or 1)) % 4, x, y, vars) and not IsDestroyer(cell, (dir - 2) % 4, x, y, vars)
+	elseif IsUnbreakable(cell, (dir + (vars.side == "left" and -1 or 1)) % 4, x, y, vars) and
+			not IsDestroyer(cell, (dir - 2) % 4, x, y, vars)
 			or (id == 5 or id == 215) and side ~= 2 and side ~= 0 or (id == 6 or id == 216) and side ~= 2
 			or (id == 7 or id == 217) and (side == 0 or side == 3) or (id == 8 or id == 218) and side == 0
 			or (id == 52 or id == 54) and side ~= 1 and side ~= 3 then
@@ -4717,8 +5088,10 @@ function HandlePull(force, cell, dir, x, y, vars)
 		end
 	elseif id == 2 or id == 58 or id == 59 or id == 71 or id == 72 or id == 75 or id == 76 or id == 114 or id == 115
 			or id == 269 or id == 272 or id == 273 or id == 276 or id == 277 or id == 280 or id == 281 or id == 160 or id == 161
-			or id == 175 and cell.updatekey ~= updatekey and cell.vars[1] or id == 178 or id == 179 or id == 180 or id == 181 or id == 182
-			or id == 183 or id == 184 or id == 185 or id == 206 or id == 213 and (side == 0 or side == 2) or id == 303 or id == 304 then
+			or id == 175 and cell.updatekey ~= updatekey and cell.vars[1] or id == 178 or id == 179 or id == 180 or id == 181 or
+			id == 182
+			or id == 183 or id == 184 or id == 185 or id == 206 or id == 213 and (side == 0 or side == 2) or id == 303 or
+			id == 304 then
 		if side == 2 then
 			vars.undocells[x + y * width] = vars.undocells[x + y * width] or table.copy(cell)
 			cell.updated = cell.updated or not vars.noupdate
@@ -4730,7 +5103,8 @@ function HandlePull(force, cell, dir, x, y, vars)
 		gvars.force = force
 		GraspEmptyCell(x, y, dir, gvars)
 		table.merge(vars.undocells, gvars.undocells)
-	elseif id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or id == 197 then
+	elseif id == 32 or id == 33 or id == 34 or id == 35 or id == 36 or id == 37 or id == 194 or id == 195 or id == 196 or
+			id == 197 then
 		vars.ended = true
 	elseif (id == 231 or id == 249) and not vars.checkonly then
 		if not vars.sticking then stickkey = stickkey + 1 end
@@ -4813,7 +5187,8 @@ function HandleSwap(cell, dir, x, y, vars)
 	elseif id == 244 and vars.active == "destroy" then
 		if fancy then enemyparticles:setPosition(x * 20 - 10, y * 20 - 10) enemyparticles:emit(50) end
 		PlaySound(sound.destroy)
-	elseif (id == 13 or id == 160 or id == 288 or id == 293 or id == 294 or id == 295 or id == 296 or id == 298) and vars.active == "destroy" then
+	elseif (id == 13 or id == 160 or id == 288 or id == 293 or id == 294 or id == 295 or id == 296 or id == 298) and
+			vars.active == "destroy" then
 		cell.id = 0
 		if fancy then enemyparticles:setPosition(x * 20 - 10, y * 20 - 10) enemyparticles:emit(50) end
 		PlaySound(sound.destroy)
@@ -4842,7 +5217,9 @@ function HandleSwap(cell, dir, x, y, vars)
 			if dir == 0 then cx = x + 1 elseif dir == 2 then cx = x - 1 end
 			if dir == 1 then cy = y + 1 elseif dir == 3 then cy = y - 1 end
 			PushCell(cx, cy, dir, { force = 1, replacecell = {
-				id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) } })
+				id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+				vars = DefaultVars(cell.vars[1])
+			} })
 			cell.vars = {}
 		end
 		if not IsNonexistant(vars.lastcell, dir, x, y) then
@@ -4892,11 +5269,14 @@ end
 function CanMove(cell, dir, x, y, ftype, force)
 	local vars = { noupdate = true, checkonly = true, lastcell = getempty(), undocells = {} }
 	if ftype == "pull" then
-		return HandlePull(force or 1, cell, dir, x, y, vars) > 0 and not IsDestroyer(cell, dir, x, y, { forcetype = "pull" }) and not vars.ended
+		return HandlePull(force or 1, cell, dir, x, y, vars) > 0 and not IsDestroyer(cell, dir, x, y, { forcetype = "pull" })
+				and not vars.ended
 	elseif ftype == "grasp" then
-		return HandleGrasp(force or 1, cell, dir, x, y, vars) > 0 and not IsDestroyer(cell, dir, x, y, { forcetype = "grasp" }) and not vars.ended
+		return HandleGrasp(force or 1, cell, dir, x, y, vars) > 0 and not IsDestroyer(cell, dir, x, y, { forcetype = "grasp" })
+				and not vars.ended
 	else
-		return HandlePush(force or 1, cell, dir, x, y, vars) > 0 and not IsDestroyer(cell, dir, x, y, { forcetype = "push" }) and not vars.ended
+		return HandlePush(force or 1, cell, dir, x, y, vars) > 0 and not IsDestroyer(cell, dir, x, y, { forcetype = "push" })
+				and not vars.ended
 	end
 end
 
@@ -4913,7 +5293,8 @@ function NudgeCell(x, y, dir, vars)
 		if IsDestroyer(checkedcell, cdir, cx, cy, vars) and (x ~= cx or y ~= cy) then
 			SetCell(x, y, getempty())
 			vars.active = "destroy"
-			if fancy then checkedcell.eatencells = checkedcell.eatencells or {}; table.insert(checkedcell.eatencells, vars.lastcell) end
+			if fancy then checkedcell.eatencells = checkedcell.eatencells or {}; table.insert(checkedcell.eatencells,
+				vars.lastcell) end
 			HandleNudge(checkedcell, cdir, cx, cy, vars)
 			return true, cx, cy, cdir
 		elseif IsNonexistant(checkedcell, cdir, cx, cy, vars) or x == cx and y == cy then
@@ -4955,7 +5336,9 @@ function PushCell(x, y, dir, vars)
 		local cx, cy = x, y
 		if dir == 0 then cx = x - 1 elseif dir == 2 then cx = x + 1
 		elseif dir == 1 then cy = y - 1 elseif dir == 3 then cy = y + 1 end
-		if (GetCell(cx, cy).id == 231 or GetCell(cx, cy).id == 249 and GetCell(cx, cy).rot % 2 == dir % 2 or GetCell(cx, cy).sticky) and GetCell(cx, cy).stickkey ~= stickkey then
+		if (
+				GetCell(cx, cy).id == 231 or GetCell(cx, cy).id == 249 and GetCell(cx, cy).rot % 2 == dir % 2 or
+						GetCell(cx, cy).sticky) and GetCell(cx, cy).stickkey ~= stickkey then
 			return PushCell(cx, cy, dir, vars)
 		end
 	end
@@ -5010,7 +5393,9 @@ function LGraspCell(x, y, dir, vars)
 		local cx, cy = x, y
 		if dir == 1 then cx = x - 1 elseif dir == 3 then cx = x + 1
 		elseif dir == 2 then cy = y - 1 elseif dir == 0 then cy = y + 1 end
-		if (GetCell(cx, cy).id == 231 or GetCell(cx, cy).id == 249 and GetCell(cx, cy).rot % 2 ~= dir % 2 or GetCell(cx, cy).sticky) and GetCell(cx, cy).stickkey ~= stickkey then
+		if (
+				GetCell(cx, cy).id == 231 or GetCell(cx, cy).id == 249 and GetCell(cx, cy).rot % 2 ~= dir % 2 or
+						GetCell(cx, cy).sticky) and GetCell(cx, cy).stickkey ~= stickkey then
 			return LGraspCell(cx, cy, dir, vars)
 		end
 	end
@@ -5067,7 +5452,9 @@ function RGraspCell(x, y, dir, vars)
 		local cx, cy = x, y
 		if dir == 3 then cx = x - 1 elseif dir == 1 then cx = x + 1
 		elseif dir == 0 then cy = y - 1 elseif dir == 2 then cy = y + 1 end
-		if (GetCell(cx, cy).id == 231 or GetCell(cx, cy).id == 249 and GetCell(cx, cy).rot % 2 ~= dir % 2 or GetCell(cx, cy).sticky) and GetCell(cx, cy).stickkey ~= stickkey then
+		if (
+				GetCell(cx, cy).id == 231 or GetCell(cx, cy).id == 249 and GetCell(cx, cy).rot % 2 ~= dir % 2 or
+						GetCell(cx, cy).sticky) and GetCell(cx, cy).stickkey ~= stickkey then
 			return RGraspCell(cx, cy, dir, vars)
 		end
 	end
@@ -5174,7 +5561,9 @@ function PullCell(x, y, dir, vars)
 		local cx, cy = x, y
 		if dir == 2 then cx = x - 1 elseif dir == 0 then cx = x + 1
 		elseif dir == 3 then cy = y - 1 elseif dir == 1 then cy = y + 1 end
-		if (GetCell(cx, cy).id == 231 or GetCell(cx, cy).id == 249 and GetCell(cx, cy).rot % 2 == dir % 2 or GetCell(cx, cy).sticky) and GetCell(cx, cy).stickkey ~= stickkey then
+		if (
+				GetCell(cx, cy).id == 231 or GetCell(cx, cy).id == 249 and GetCell(cx, cy).rot % 2 == dir % 2 or
+						GetCell(cx, cy).sticky) and GetCell(cx, cy).stickkey ~= stickkey then
 			return PullCell(cx, cy, dir, vars)
 		end
 	end
@@ -5227,20 +5616,24 @@ end
 function SwapCells(x1, y1, dir1, x2, y2, dir2)
 	local cell1 = GetCell(x1, y1)
 	local cell2 = CopyCell(x2, y2)
-	local dest1, dest2 = IsDestroyer(cell1, dir1, x1, y1, { lastcell = cell2, forcetype = "swap", lastx = x2, lasty = y2 }), IsDestroyer(cell2, dir2, x2, y2, { lastcell = cell1, lastx = x1, lasty = y1, forcetype = "swap" })
-	local unb1, unb2 = IsUnbreakable(cell1, dir1, x1, y1, { lastcell = cell2, forcetype = "swap", lastx = x2, lasty = y2 }), IsUnbreakable(cell2, dir2, x2, y2, { lastcell = cell1, lastx = x1, lasty = y1, forcetype = "swap" })
+	local dest1, dest2 = IsDestroyer(cell1, dir1, x1, y1, { lastcell = cell2, forcetype = "swap", lastx = x2, lasty = y2 })
+			, IsDestroyer(cell2, dir2, x2, y2, { lastcell = cell1, lastx = x1, lasty = y1, forcetype = "swap" })
+	local unb1, unb2 = IsUnbreakable(cell1, dir1, x1, y1, { lastcell = cell2, forcetype = "swap", lastx = x2, lasty = y2 })
+			, IsUnbreakable(cell2, dir2, x2, y2, { lastcell = cell1, lastx = x1, lasty = y1, forcetype = "swap" })
 	GetCell(x1, y1).testvar = "A"
 	GetCell(x2, y2).testvar = "A"
 	if (not unb1 or dest1) or (not unb2 or dest2) then
 		if dest1 and not dest2 and not unb2 and not IsNonexistant(cell2, dir2, x2, y2) then
 			SetCell(x2, y2, getempty())
-			if fancy then GetCell(x1, y1).eatencells = GetCell(x1, y1).eatencells or {}; table.insert(GetCell(x1, y1).eatencells, cell2) end
+			if fancy then GetCell(x1, y1).eatencells = GetCell(x1, y1).eatencells or {}; table.insert(GetCell(x1, y1).eatencells,
+				cell2) end
 			HandleSwap(GetCell(x1, y1), dir1, x1, y1, { lastcell = cell2, lastx = x2, lasty = y2, active = "destroy" })
 			PlaySound(sound.move)
 			return true
 		elseif not dest1 and not unb1 and dest2 and not IsNonexistant(cell1, dir1, x1, y1) then
 			SetCell(x1, y1, getempty())
-			if fancy then GetCell(x2, y2).eatencells = GetCell(x2, y2).eatencells or {}; table.insert(GetCell(x2, y2).eatencells, cell1) end
+			if fancy then GetCell(x2, y2).eatencells = GetCell(x2, y2).eatencells or {}; table.insert(GetCell(x2, y2).eatencells,
+				cell1) end
 			HandleSwap(GetCell(x2, y2), dir2, x2, y2, { lastcell = cell1, lastx = x1, lasty = y1, active = "destroy" })
 			PlaySound(sound.move)
 			return true
@@ -5650,8 +6043,11 @@ function DoTransformer(x, y, cell, dir)
 		local cell1 = GetCell(cx, cy)
 		local copycell = CopyCell(cx, cy)
 		NextCell(cx, cy, (cdir + 2) % 4, copycell)
-		if not IsNonexistant(cell2, cdir, cx, cy) and not IsNonexistant(copycell, ccdir, ccx, ccy) and not IsUnbreakable(cell2, ccdir, ccx, ccy, { forcetype = "transform", lastcell = cell }) and
-				((cell.id == 237 or cell.id == 238) or not IsUnbreakable(copycell, cdir, cx, cy, { forcetype = "pull", lastcell = cell })) then
+		if not IsNonexistant(cell2, cdir, cx, cy) and not IsNonexistant(copycell, ccdir, ccx, ccy) and
+				not IsUnbreakable(cell2, ccdir, ccx, ccy, { forcetype = "transform", lastcell = cell }) and
+				(
+				(cell.id == 237 or cell.id == 238) or
+						not IsUnbreakable(copycell, cdir, cx, cy, { forcetype = "pull", lastcell = cell })) then
 			NextCell(x, y, dir, copycell)
 			copycell.lastvars = table.copy(cell2.lastvars)
 			copycell.lastvars[3] = copycell.rot
@@ -5662,7 +6058,8 @@ function DoTransformer(x, y, cell, dir)
 				local px, py = cx, cy
 				if cdir == 0 then px = cx + 1 elseif cdir == 2 then px = cx - 1
 				elseif cdir == 1 then py = cy + 1 elseif cdir == 3 then py = cy - 1 end
-				if not CanMove(copycell, cx, cy, cdir, "pull") or not PullCell(px, py, (cdir + 2) % 4, { force = 1, noupdate = true }) then
+				if not CanMove(copycell, cx, cy, cdir, "pull") or
+						not PullCell(px, py, (cdir + 2) % 4, { force = 1, noupdate = true }) then
 					SetCell(cx, cy, cell1)
 					SetCell(ccx, ccy, cell2)
 				else
@@ -5814,7 +6211,9 @@ function DoCreator(x, y, cell)
 			local cx, cy = x, y
 			if i == 0 then cx = cx + 1 elseif i == 2 then cx = cx - 1
 			elseif i == 1 then cy = cy + 1 elseif i == 3 then cy = cy - 1 end
-			PushCell(cx, cy, i, { replacecell = { id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, vars = {} }, noupdate = true, force = 1 })
+			PushCell(cx, cy, i,
+				{ replacecell = { id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, vars = {} },
+					noupdate = true, force = 1 })
 		end
 	end
 end
@@ -5832,7 +6231,8 @@ function DoMemory(x, y, cell)
 		end
 	end
 	if cell.vars[1] then
-		local gencell = { id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, vars = DefaultVars(cell.vars[1]) }
+		local gencell = { id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] },
+			vars = DefaultVars(cell.vars[1]) }
 		gencell.lastvars = table.copy(cell.lastvars)
 		gencell.lastvars[3] = gencell.rot
 		if cell.rot == 0 then x = x + 1 elseif cell.rot == 2 then x = x - 1
@@ -5876,7 +6276,10 @@ function DoSuperGenerator(x, y, cell)
 	local cx, cy, cdir, c = x, y, cell.rot, getempty()
 	for i = #gencells, 1, -1 do
 		cx, cy, cdir = NextCell(cx, cy, cdir, c)
-		if cx and not IsDestroyer(GetCell(cx, cy), cdir, cx, cy, { forcetype = "push", lastcell = gencells[i] or cell, lastx = x, lasty = y }) then
+		if cx and
+				not
+				IsDestroyer(GetCell(cx, cy), cdir, cx, cy,
+					{ forcetype = "push", lastcell = gencells[i] or cell, lastx = x, lasty = y }) then
 			gencells[i].rot = (gencells[i].rot + c.rot) % 4
 			local a, b = PushCell(cx, cy, cdir, { replacecell = gencells[i], noupdate = true, force = 1 })
 			if not a and b then
@@ -5892,7 +6295,8 @@ function DoSuperGenerator(x, y, cell)
 						NextCell(genx, geny, (gendir + 2) % 4, gencell)
 					else gencell = getempty() end
 					local nextx, nexty = NextCell(cx, cy, cell.rot, nil, false, true)
-					if StopsOptimize(newcell, cell.rot, cx, cy, { forcetype = "push", lastcell = gencell, lastx = cx, lasty = cy }) or (cell.rot == 1 or cell.rot == 3) and nextx ~= cx or (cell.rot == 0 or cell.rot == 2) and nexty ~= cy then
+					if StopsOptimize(newcell, cell.rot, cx, cy, { forcetype = "push", lastcell = gencell, lastx = cx, lasty = cy }) or
+							(cell.rot == 1 or cell.rot == 3) and nextx ~= cx or (cell.rot == 0 or cell.rot == 2) and nexty ~= cy then
 						break
 					elseif newcell.id == 55 and newcell.rot == cell.rot then
 						newcell.updated = true
@@ -5916,7 +6320,8 @@ end
 function DoGenerator(x, y, cell, dir)
 	if (dir == 0 or dir == 2) and cell.id == 23 then cell.hupdated = true
 	else cell.updated = true end
-	if cell.id == 3 or cell.id == 23 or cell.id == 26 or cell.id == 27 or cell.id == 40 or cell.id == 113 or cell.id == 110 or cell.id == 111 or cell.id == 301 then
+	if cell.id == 3 or cell.id == 23 or cell.id == 26 or cell.id == 27 or cell.id == 40 or cell.id == 113 or cell.id == 110
+			or cell.id == 111 or cell.id == 301 then
 		local cx, cy, cdir, c
 		if cell.id == 26 or cell.id == 110 then cx, cy, cdir, c = NextCell(x, y, (dir + 1) % 4, nil, true)
 		elseif cell.id == 27 or cell.id == 111 then cx, cy, cdir, c = NextCell(x, y, (dir - 1) % 4, nil, true)
@@ -5967,9 +6372,12 @@ function DoGenerator(x, y, cell, dir)
 						else gencell = getempty() end
 						if newcell.id == 40 then FlipCellRaw(gencell, (cell.rot + 1) % 2) end
 						local nextx, nexty = NextCell(cx, cy, dir)
-						if StopsOptimize(newcell, dir, cx, cy, { forcetype = "push", lastcell = gencell, lastx = cx, lasty = cy }) or (dir == 0 or dir == 2) and nexty ~= cy or (dir == 1 or dir == 3) and nextx ~= cx then
+						if StopsOptimize(newcell, dir, cx, cy, { forcetype = "push", lastcell = gencell, lastx = cx, lasty = cy }) or
+								(dir == 0 or dir == 2) and nexty ~= cy or (dir == 1 or dir == 3) and nextx ~= cx then
 							break
-						elseif (newcell.id == 3 or newcell.id == 26 or newcell.id == 27 or newcell.id == 110 or newcell.id == 111 or newcell.id == 301) and newcell.rot == dir then
+						elseif (
+								newcell.id == 3 or newcell.id == 26 or newcell.id == 27 or newcell.id == 110 or newcell.id == 111 or
+										newcell.id == 301) and newcell.rot == dir then
 							newcell.updated = true
 						elseif newcell.id == 23 and (newcell.rot == dir or newcell.rot == (dir + 1) % 4) then
 							if dir == 0 or dir == 2 then newcell.hupdated = true
@@ -6101,7 +6509,10 @@ function DoSuperReplicator(x, y, cell)
 	local cx, cy, cdir, addedrot = x, y, cell.rot, 0
 	for i = 1, #gencells do
 		cx, cy, cdir = NextCell(cx, cy, cdir, nil, nil, nil, true)
-		if cx and not IsDestroyer(GetCell(cx, cy), cdir, cx, cy, { forcetype = "push", lastcell = gencells[i] or cell, lastx = x, lasty = y }) then
+		if cx and
+				not
+				IsDestroyer(GetCell(cx, cy), cdir, cx, cy,
+					{ forcetype = "push", lastcell = gencells[i] or cell, lastx = x, lasty = y }) then
 			local a, b = PushCell(cx, cy, cdir, { replacecell = gencells[i], noupdate = true, force = 1 })
 			if not a and b then
 				local cx, cy = x, y
@@ -6109,9 +6520,11 @@ function DoSuperReplicator(x, y, cell)
 					if cell.rot == 2 then cx = cx + 1 elseif cell.rot == 0 then cx = cx - 1
 					elseif cell.rot == 3 then cy = cy + 1 elseif cell.rot == 1 then cy = cy - 1 end
 					local newcell = GetCell(cx, cy)
-					local gencell = GetCell(cx + (rot == 0 and 1 or rot == 2 and -1 or 0), cy + (rot == 1 and 1 or rot == 3 and -1 or 0))
+					local gencell = GetCell(cx + (rot == 0 and 1 or rot == 2 and -1 or 0), cy + (rot == 1 and 1 or rot == 3 and -1 or 0
+						))
 					local nextx, nexty = NextCell(cx, cy, cell.rot, nil, false, true)
-					if StopsOptimize(newcell, cell.rot, cx, cy, { forcetype = "push", lastcell = getempty(), lastx = cx, lasty = cy }) or (cell.rot == 1 or cell.rot == 3) and nextx ~= cx or (cell.rot == 0 or cell.rot == 2) and nexty ~= cy then
+					if StopsOptimize(newcell, cell.rot, cx, cy, { forcetype = "push", lastcell = getempty(), lastx = cx, lasty = cy })
+							or (cell.rot == 1 or cell.rot == 3) and nextx ~= cx or (cell.rot == 0 or cell.rot == 2) and nexty ~= cy then
 						break
 					elseif newcell.id == 177 and newcell.rot == cell.rot then
 						newcell.updated = true
@@ -6157,9 +6570,11 @@ function DoReplicator(x, y, cell, dir)
 					if dir == 2 then cx = cx + 1 elseif dir == 0 then cx = cx - 1
 					elseif dir == 3 then cy = cy + 1 elseif dir == 1 then cy = cy - 1 end
 					local newcell = GetCell(cx, cy)
-					local gencell = GetCell(cx + (dir == 0 and 1 or dir == 2 and -1 or 0), cy + (dir == 1 and 1 or dir == 3 and -1 or 0))
+					local gencell = GetCell(cx + (dir == 0 and 1 or dir == 2 and -1 or 0), cy + (dir == 1 and 1 or dir == 3 and -1 or 0
+						))
 					local nextx, nexty = NextCell(cx, cy, dir, nil, false, true)
-					if StopsOptimize(newcell, dir, cx, cy, { forcetype = "push", lastcell = gencell, lastx = cx, lasty = cy }) or (dir == 0 or dir == 2) and nexty ~= cy or (dir == 1 or dir == 3) and nextx ~= cx then
+					if StopsOptimize(newcell, dir, cx, cy, { forcetype = "push", lastcell = gencell, lastx = cx, lasty = cy }) or
+							(dir == 0 or dir == 2) and nexty ~= cy or (dir == 1 or dir == 3) and nextx ~= cx then
 						break
 					elseif (newcell.id == 45 or newcell.id == 302) and newcell.rot == dir then
 						newcell.updated = true
@@ -6301,7 +6716,8 @@ function DoGear(x, y, cell)
 		local neighbors = GetSurrounding(x, y)
 		local jammed
 		for k, v in pairs(neighbors) do
-			jammed = jammed or IsUnbreakable(GetCell(v[1], v[2]), k, v[1], v[2], { forcetype = "swap", lastcell = cell }) or ConvertId(GetCell(v[1], v[2]).id) == 18 or ConvertId(GetCell(v[1], v[2]).id) == 19
+			jammed = jammed or IsUnbreakable(GetCell(v[1], v[2]), k, v[1], v[2], { forcetype = "swap", lastcell = cell }) or
+					ConvertId(GetCell(v[1], v[2]).id) == 18 or ConvertId(GetCell(v[1], v[2]).id) == 19
 		end
 		if not jammed then
 			RotateCell(neighbors[0.5][1], neighbors[0.5][2], 1, 0.5)
@@ -6324,7 +6740,8 @@ function DoGear(x, y, cell)
 		local neighbors = GetSurrounding(x, y)
 		local jammed
 		for k, v in pairs(neighbors) do
-			jammed = jammed or IsUnbreakable(GetCell(v[1], v[2]), k, v[1], v[2], { forcetype = "swap", lastcell = cell }) or ConvertId(GetCell(v[1], v[2]).id) == 18 or ConvertId(GetCell(v[1], v[2]).id) == 19
+			jammed = jammed or IsUnbreakable(GetCell(v[1], v[2]), k, v[1], v[2], { forcetype = "swap", lastcell = cell }) or
+					ConvertId(GetCell(v[1], v[2]).id) == 18 or ConvertId(GetCell(v[1], v[2]).id) == 19
 		end
 		if not jammed then
 			RotateCell(neighbors[0.5][1], neighbors[0.5][2], -1, 0.5)
@@ -6347,7 +6764,8 @@ function DoGear(x, y, cell)
 		local neighbors = GetNeighbors(x, y)
 		local jammed
 		for k, v in pairs(neighbors) do
-			jammed = jammed or IsUnbreakable(GetCell(v[1], v[2]), k, v[1], v[2], { forcetype = "swap", lastcell = cell }) or ConvertId(GetCell(v[1], v[2]).id) == 18 or ConvertId(GetCell(v[1], v[2]).id) == 19
+			jammed = jammed or IsUnbreakable(GetCell(v[1], v[2]), k, v[1], v[2], { forcetype = "swap", lastcell = cell }) or
+					ConvertId(GetCell(v[1], v[2]).id) == 18 or ConvertId(GetCell(v[1], v[2]).id) == 19
 		end
 		if not jammed then
 			RotateCell(neighbors[0][1], neighbors[0][2], 1, 0)
@@ -6370,7 +6788,8 @@ function DoGear(x, y, cell)
 		local neighbors = GetNeighbors(x, y)
 		local jammed
 		for k, v in pairs(neighbors) do
-			jammed = jammed or IsUnbreakable(GetCell(v[1], v[2]), k, v[1], v[2], { forcetype = "swap", lastcell = cell }) or ConvertId(GetCell(v[1], v[2]).id) == 18 or ConvertId(GetCell(v[1], v[2]).id) == 19
+			jammed = jammed or IsUnbreakable(GetCell(v[1], v[2]), k, v[1], v[2], { forcetype = "swap", lastcell = cell }) or
+					ConvertId(GetCell(v[1], v[2]).id) == 18 or ConvertId(GetCell(v[1], v[2]).id) == 19
 		end
 		if not jammed then
 			RotateCell(neighbors[0][1], neighbors[0][2], -1, 0)
@@ -6450,7 +6869,8 @@ function DoSuperImpulsor(x, y, dir)
 	end
 	while true do
 		if cx then
-			if IsTransparent(GetCell(cx, cy), (cdir + 2) % 4, cx, cy, { forcetype = "nudge", lastcell = GetCell(cx, cy) }) or not PullCell(cx, cy, cdir, { force = math.huge }) then
+			if IsTransparent(GetCell(cx, cy), (cdir + 2) % 4, cx, cy, { forcetype = "nudge", lastcell = GetCell(cx, cy) }) or
+					not PullCell(cx, cy, cdir, { force = math.huge }) then
 				break
 			end
 			local data = GetData(cx, cy)
@@ -6500,7 +6920,8 @@ function DoSuperRepulsor(x, y, dir)
 	local cx, cy, cdir = NextCell(x, y, dir)
 	while true do
 		local nextx, nexty, nextdir = NextCell(cx, cy, cdir)
-		if IsTransparent(GetCell(cx, cy), cdir, cx, cy, { forcetype = "push", lastcell = GetCell(cx, cy) }) or not PushCell(cx, cy, cdir, { force = math.huge, noupdate = true }) then
+		if IsTransparent(GetCell(cx, cy), cdir, cx, cy, { forcetype = "push", lastcell = GetCell(cx, cy) }) or
+				not PushCell(cx, cy, cdir, { force = math.huge, noupdate = true }) then
 			break
 		end
 		local data = GetData(cx, cy)
@@ -6520,7 +6941,9 @@ function DoTimeRepulsor(x, y, dir)
 	for i = 0, 3 do
 		local cx, cy, cdir = NextCell(x, y, i)
 		local cell = GetCell(cx, cy)
-		cell.vars[cdir == 0 and "timerepulseright" or cdir == 2 and "timerepulseleft" or cdir == 3 and "timerepulseup" or "timerepulsedown"] = 1
+		cell.vars[
+				cdir == 0 and "timerepulseright" or cdir == 2 and "timerepulseleft" or cdir == 3 and "timerepulseup" or
+						"timerepulsedown"] = 1
 		SetChunkId(x, y, "timerep")
 	end
 end
@@ -6585,10 +7008,12 @@ function SliceCell(x, y, dir, vars)
 		if dir == 0 then cx = x + 1 elseif dir == 2 then cx = x - 1
 		elseif dir == 1 then cy = y + 1 elseif dir == 3 then cy = y - 1 end
 		local cdir = (dir == 0 or dir == 2) and 3 or 0
-		if not IsUnbreakable(GetCell(cx, cy), dir, cx, cy, { forcetype = "slice", lastcell = cell }) and PushCell(cx, cy, cdir, { force = 1 }) then
+		if not IsUnbreakable(GetCell(cx, cy), dir, cx, cy, { forcetype = "slice", lastcell = cell }) and
+				PushCell(cx, cy, cdir, { force = 1 }) then
 			if GetCell(x, y) == cell then return NudgeCell(x, y, dir) end
 		else
-			if not IsUnbreakable(GetCell(cx, cy), dir, cx, cy, { forcetype = "slice", lastcell = cell }) and PushCell(cx, cy, (cdir + 2) % 4, { force = 1 }) then
+			if not IsUnbreakable(GetCell(cx, cy), dir, cx, cy, { forcetype = "slice", lastcell = cell }) and
+					PushCell(cx, cy, (cdir + 2) % 4, { force = 1 }) then
 				if GetCell(x, y) == cell then return NudgeCell(x, y, dir) end
 			end
 		end
@@ -6797,7 +7222,8 @@ function DoPuller(x, y, cell)
 		end
 	elseif cell.id == 305 then
 		local ccx, ccy = NextCell(x, y, cell.rot)
-		if PullCell(x, y, cell.rot) and not IsTransparent(GetCell(x, y), cell.rot, x, y, { forcetype = "pull", lastcell = cell }) then
+		if PullCell(x, y, cell.rot) and
+				not IsTransparent(GetCell(x, y), cell.rot, x, y, { forcetype = "pull", lastcell = cell }) then
 			SetCell(ccx, ccy, getempty())
 			if fancy then GetCell(ccx, ccy).eatencells = { cell } end
 		end
@@ -6841,7 +7267,8 @@ function DoSuperPusher(x, y, cell)
 	local cx, cy, cdir = x, y, cell.rot
 	while true do
 		local nextx, nexty, nextdir = NextCell(cx, cy, cdir)
-		if IsTransparent(GetCell(cx, cy), cdir, cx, cy, { forcetype = "push", lastcell = GetCell(cx, cy) }) or not PushCell(cx, cy, cdir) then
+		if IsTransparent(GetCell(cx, cy), cdir, cx, cy, { forcetype = "push", lastcell = GetCell(cx, cy) }) or
+				not PushCell(cx, cy, cdir) then
 			break
 		end
 		local data = GetData(cx, cy)
@@ -6882,7 +7309,9 @@ function DoPusher(x, y, cell)
 			PushCell(x, y, cell.rot)
 		else
 			SetCell(x, y, getempty())
-			PushCell(cx, cy, cdir, { force = 1, undocells = { [x + y * width] = cell }, replacecell = { id = 0, rot = 0, lastvars = { x, y, 0 }, vars = {}, eatencells = { cell } } })
+			PushCell(cx, cy, cdir,
+				{ force = 1, undocells = { [x + y * width] = cell },
+					replacecell = { id = 0, rot = 0, lastvars = { x, y, 0 }, vars = {}, eatencells = { cell } } })
 		end
 	end
 end
@@ -6936,23 +7365,32 @@ function DoNudger(x, y, cell)
 			elseif cell.rot == 0 then cy2 = y + 1 elseif cell.rot == 2 then cy2 = y - 1 end
 			if cell.vars[2] == (cell.rot + 1) % 4 then
 				if PushCell(cx2, cy2, (cell.rot + 1) % 4, { force = 1, replacecell = {
-					id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) } }) then
+					id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+					vars = DefaultVars(cell.vars[1])
+				} }) then
 					cell.vars = {}
 				elseif PushCell(cx, cy, (cell.rot - 1) % 4, { force = 1, replacecell = {
-					id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) } }) then
+					id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+					vars = DefaultVars(cell.vars[1])
+				} }) then
 					cell.vars = {}
 				end
 			else
 				if PushCell(cx, cy, (cell.rot - 1) % 4, { force = 1, replacecell = {
-					id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) } }) then
+					id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+					vars = DefaultVars(cell.vars[1])
+				} }) then
 					cell.vars = {}
 				elseif PushCell(cx2, cy2, (cell.rot + 1) % 4, { force = 1, replacecell = {
-					id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) } }) then
+					id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+					vars = DefaultVars(cell.vars[1])
+				} }) then
 					cell.vars = {}
 				end
 			end
 		end
-	elseif cell.id == 178 or cell.id == 179 or cell.id == 180 or cell.id == 181 or cell.id == 182 or cell.id == 183 or cell.id == 184 or cell.id == 185 then
+	elseif cell.id == 178 or cell.id == 179 or cell.id == 180 or cell.id == 181 or cell.id == 182 or cell.id == 183 or
+			cell.id == 184 or cell.id == 185 then
 		local newcell = table.copy(cell)
 		local cx, cy, cdir, cell = NextCell(x, y, cell.rot, newcell)
 		if cx then
@@ -6967,7 +7405,8 @@ function DoNudger(x, y, cell)
 				vars.active = true
 				HandleNudge(checkedcell, cdir, cx, cy, vars)
 				return
-			elseif not IsUnbreakable(checkedcell, cdir, cx, cy, vars) and not IsNonexistant(checkedcell, cdir, cx, cy, vars) and (x ~= cx or y ~= cy) then
+			elseif not IsUnbreakable(checkedcell, cdir, cx, cy, vars) and not IsNonexistant(checkedcell, cdir, cx, cy, vars) and
+					(x ~= cx or y ~= cy) then
 				local oldcell = CopyCell(cx, cy)
 				SetCell(x, y, getempty())
 				SetCell(cx, cy, newcell)
@@ -7073,7 +7512,9 @@ function DoNudger(x, y, cell)
 					cell = GetCell(x, y)
 					if cell.id ~= 206 then return end
 					cell.rot = (cell.rot - 1) % 4
-					cell.id = (cell.vars[1] == 0 and 2 or cell.vars[1] == 1 and 72 or cell.vars[1] == 2 and 28 or cell.vars[1] == 3 and 59 or 269)
+					cell.id = (
+							cell.vars[1] == 0 and 2 or cell.vars[1] == 1 and 72 or cell.vars[1] == 2 and 28 or cell.vars[1] == 3 and 59 or 269
+							)
 				end
 			end
 		end
@@ -7109,9 +7550,12 @@ function DoCoinExtractor(x, y, cell)
 end
 
 function DoGate(x, y, cell)
-	if (cell.id == 32 and (cell.inl or cell.inr)) or (cell.id == 33 and (cell.inl and cell.inr)) or (cell.id == 34 and (cell.inl ~= cell.inr)) or
-			(cell.id == 35 and not (cell.inl or cell.inr)) or (cell.id == 36 and not (cell.inl and cell.inr)) or (cell.id == 37 and not (cell.inl ~= cell.inr)) or
-			(cell.id == 194 and (not cell.inl or cell.inr)) or (cell.id == 195 and (cell.inl or not cell.inr)) or (cell.id == 196 and (cell.inl and not cell.inr)) or (cell.id == 197 and (not cell.inl and cell.inr)) then
+	if (cell.id == 32 and (cell.inl or cell.inr)) or (cell.id == 33 and (cell.inl and cell.inr)) or
+			(cell.id == 34 and (cell.inl ~= cell.inr)) or
+			(cell.id == 35 and not (cell.inl or cell.inr)) or (cell.id == 36 and not (cell.inl and cell.inr)) or
+			(cell.id == 37 and not (cell.inl ~= cell.inr)) or
+			(cell.id == 194 and (not cell.inl or cell.inr)) or (cell.id == 195 and (cell.inl or not cell.inr)) or
+			(cell.id == 196 and (cell.inl and not cell.inr)) or (cell.id == 197 and (not cell.inl and cell.inr)) then
 		cell.updated = true
 		local cx, cy, cdir = NextCell(x, y, (cell.rot + 2) % 4, nil, true)
 		if cx then
@@ -7126,7 +7570,9 @@ function DoGate(x, y, cell)
 				PushCell(x, y, cell.rot, { replacecell = gencell, noupdate = true, force = 1 })
 			end
 		end
-	elseif (cell.id == 186 or cell.id == 187 or cell.id == 188 or cell.id == 189 or cell.id == 190 or cell.id == 191 or cell.id == 192 or cell.id == 193) then
+	elseif (
+			cell.id == 186 or cell.id == 187 or cell.id == 188 or cell.id == 189 or cell.id == 190 or cell.id == 191 or
+					cell.id == 192 or cell.id == 193) then
 		cell.updated = true
 		if cell.output then
 			if cell.rot == 0 then x = x + 1 elseif cell.rot == 2 then x = x - 1
@@ -7154,8 +7600,10 @@ function DoInfectious(x, y, cell)
 		local neighbors = GetNeighbors(x, y)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
-			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 123 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 123, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 123 and
+					not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
+				SetCell(v[1], v[2],
+					{ id = 123, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7164,8 +7612,10 @@ function DoInfectious(x, y, cell)
 		local neighbors = GetDiagonals(x, y)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
-			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 124 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 124, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 124 and
+					not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
+				SetCell(v[1], v[2],
+					{ id = 124, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7174,8 +7624,10 @@ function DoInfectious(x, y, cell)
 		local neighbors = GetSurrounding(x, y)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
-			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 125 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 125, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 125 and
+					not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
+				SetCell(v[1], v[2],
+					{ id = 125, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7185,7 +7637,8 @@ function DoInfectious(x, y, cell)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
 			if cell2.id ~= 127 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 127, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+				SetCell(v[1], v[2],
+					{ id = 127, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7195,7 +7648,8 @@ function DoInfectious(x, y, cell)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
 			if IsNonexistant(cell2, k, v[1], v[2]) then
-				SetCell(v[1], v[2], { id = 128, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+				SetCell(v[1], v[2],
+					{ id = 128, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7205,7 +7659,8 @@ function DoInfectious(x, y, cell)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
 			if cell2.id ~= 129 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 129, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+				SetCell(v[1], v[2],
+					{ id = 129, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7215,7 +7670,8 @@ function DoInfectious(x, y, cell)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
 			if IsNonexistant(cell2, k, v[1], v[2]) then
-				SetCell(v[1], v[2], { id = 130, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+				SetCell(v[1], v[2],
+					{ id = 130, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7225,7 +7681,8 @@ function DoInfectious(x, y, cell)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
 			if cell2.id ~= 131 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 131, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+				SetCell(v[1], v[2],
+					{ id = 131, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7235,7 +7692,8 @@ function DoInfectious(x, y, cell)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
 			if IsNonexistant(cell2, k, v[1], v[2]) then
-				SetCell(v[1], v[2], { id = 132, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+				SetCell(v[1], v[2],
+					{ id = 132, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7245,7 +7703,8 @@ function DoInfectious(x, y, cell)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
 			if IsNonexistant(cell2, k, v[1], v[2]) then
-				SetCell(v[1], v[2], { id = 133, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+				SetCell(v[1], v[2],
+					{ id = 133, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7254,8 +7713,10 @@ function DoInfectious(x, y, cell)
 		local neighbors = GetNeighbors(x, y)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
-			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 134 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 134, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 134 and
+					not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
+				SetCell(v[1], v[2],
+					{ id = 134, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7265,7 +7726,8 @@ function DoInfectious(x, y, cell)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
 			if cell2.id ~= 135 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 135, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+				SetCell(v[1], v[2],
+					{ id = 135, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7287,10 +7749,13 @@ function DoInfectious(x, y, cell)
 					end
 				end
 				if nnum == 3 then
-					SetCell(v[1], v[2], { id = 149, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+					SetCell(v[1], v[2],
+						{ id = 149, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				end
-			elseif cell2.id ~= 149 or (v[1] == x or v[2] == y) and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 149, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+			elseif cell2.id ~= 149 or
+					(v[1] == x or v[2] == y) and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
+				SetCell(v[1], v[2],
+					{ id = 149, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7299,7 +7764,9 @@ function DoInfectious(x, y, cell)
 		end
 	elseif cell.id == 211 or cell.id == 212 then
 		if cell.protected then SetCell(x, y, cell.vars[1] and {
-				id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) }
+				id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+				vars = DefaultVars(cell.vars[1])
+			}
 				or getempty())
 			GetCell(x, y).eatencells = { cell }
 			return
@@ -7311,8 +7778,11 @@ function DoInfectious(x, y, cell)
 				local k = math.random(0, 3)
 				local v = neighbors[k]
 				local cell2 = GetCell(v[1], v[2])
-				if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 211 and (cell2.id ~= 212 or cell.id == 211 and cell2.rot ~= k) and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
-					local clone = { id = 212, rot = k, updated = true, lastvars = { x, y, k }, vars = { cell2.id, cell2.rot, 250, cell.id == 212 and cell.vars[4] or 0 }, eatencells = { cell2 } }
+				if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 211 and
+						(cell2.id ~= 212 or cell.id == 211 and cell2.rot ~= k) and
+						not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "infect", lastcell = cell }) then
+					local clone = { id = 212, rot = k, updated = true, lastvars = { x, y, k },
+						vars = { cell2.id, cell2.rot, 250, cell.id == 212 and cell.vars[4] or 0 }, eatencells = { cell2 } }
 					SetCell(v[1], v[2], clone)
 					break
 				end
@@ -7377,7 +7847,9 @@ function DoInfectious(x, y, cell)
 					cell.vars[3] = cell.vars[3] - 1
 					if cell.vars[3] == 0 then
 						SetCell(x, y, cell.vars[1] and {
-							id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) }
+							id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+							vars = DefaultVars(cell.vars[1])
+						}
 							or getempty())
 						GetCell(x, y).eatencells = { cell }
 					end
@@ -7385,7 +7857,9 @@ function DoInfectious(x, y, cell)
 				cell.vars[4] = cell.vars[4] + 1
 				if cell.vars[4] >= 250 then
 					SetCell(x, y, cell.vars[1] and {
-						id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true, vars = DefaultVars(cell.vars[1]) }
+						id = cell.vars[1], rot = cell.vars[2], lastvars = { x, y, cell.vars[2] }, updated = true,
+						vars = DefaultVars(cell.vars[1])
+					}
 						or getempty())
 					GetCell(x, y).eatencells = { cell }
 				end
@@ -7398,8 +7872,10 @@ function DoInfectious(x, y, cell)
 		local neighbors = GetNeighbors(x, y)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
-			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 234 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "burn", lastcell = cell }) and math.random() < .5 then
-				SetCell(v[1], v[2], { id = 234, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 234 and
+					not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "burn", lastcell = cell }) and math.random() < .5 then
+				SetCell(v[1], v[2],
+					{ id = 234, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7417,8 +7893,10 @@ function DoInfectious(x, y, cell)
 		local neighbors = GetNeighbors(x, y)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
-			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 240 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "burn", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 240, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 240 and
+					not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "burn", lastcell = cell }) then
+				SetCell(v[1], v[2],
+					{ id = 240, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7432,8 +7910,10 @@ function DoInfectious(x, y, cell)
 		local neighbors = GetSurrounding(x, y)
 		for k, v in pairs(neighbors) do
 			local cell2 = GetCell(v[1], v[2])
-			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 241 and not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "burn", lastcell = cell }) then
-				SetCell(v[1], v[2], { id = 241, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
+			if not IsNonexistant(cell2, k, v[1], v[2]) and cell2.id ~= 241 and
+					not IsUnbreakable(cell2, k, v[1], v[2], { forcetype = "burn", lastcell = cell }) then
+				SetCell(v[1], v[2],
+					{ id = 241, rot = cell.rot, lastvars = cell.lastvars, vars = {}, updated = true, eatencells = { cell2 } })
 				PlaySound(sound.infect)
 			end
 		end
@@ -7475,135 +7955,308 @@ end
 
 --behold the funcularity
 subticks = {
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 199 and (c.rot == 0 and c.id ~= 202) and c.id ~= 203 and c.id ~= 204 end, function(x, y, c) DoCheater(x, y, c) end, "upleft", 199) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 199 and c.rot == 2 or c.id == 202 and c.rot == 0) and c.id ~= 203 and c.id ~= 204 end, function(x, y, c) DoCheater(x, y, c) end, "upright", 199) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 199 and c.rot == 3 and c.id ~= 202 or c.id == 203 or c.id == 204) end, function(x, y, c) DoCheater(x, y, c) end, "rightdown", 199) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 199 and c.rot == 1 or c.id == 202 and c.rot == 3) and c.id ~= 203 and c.id ~= 204 end, function(x, y, c) DoCheater(x, y, c) end, "rightup", 199) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 199 and (c.rot == 0 and c.id ~= 202) and
+			c.id ~= 203 and c.id ~= 204 end, function(x, y, c) DoCheater(x, y, c) end, "upleft", 199) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 199 and c.rot == 2 or c.id == 202 and c.rot == 0) and c.id ~= 203 and c.id ~= 204 end,
+		function(x, y, c) DoCheater(x, y, c) end, "upright", 199) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 199 and c.rot == 3 and c.id ~= 202 or c.id == 203 or c.id == 204) end,
+		function(x, y, c) DoCheater(x, y, c) end, "rightdown", 199) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 199 and c.rot == 1 or c.id == 202 and c.rot == 3) and c.id ~= 203 and c.id ~= 204 end,
+		function(x, y, c) DoCheater(x, y, c) end, "rightup", 199) end,
 	function() return RunOn(function(c) return c.id == 285 end, function(x, y, c) DoThawer(x, y, c) end, "rightup", 285) end,
-	function() return RunOn(function(c) return ConvertId(c.id) == 25 end, function(x, y, c) DoFreezer(x, y, c) end, "rightup", 25) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 43 end, function(x, y, c) DoEffectGiver(x, y, c) end, "rightup", 43) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 266 end, function(x, y, c) DoDegravitizer(x, y, c) end, "rightup", 266) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 146 and c.id ~= 148 and c.rot == 0 or c.id == 148 and not c.hupdated and (c.rot == 0 or c.rot == 1)) end, function(x, y, c) DoTimewarper(x, y, c, 0) end, "upleft", 146) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 146 and c.id ~= 148 and c.rot == 2 or c.id == 148 and not c.hupdated and (c.rot == 2 or c.rot == 3)) end, function(x, y, c) DoTimewarper(x, y, c, 2) end, "upright", 146) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 146 and c.rot == 3 or c.id == 148 and c.rot == 0) end, function(x, y, c) DoTimewarper(x, y, c, 3) end, "rightdown", 146) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 146 and c.rot == 1 or c.id == 148 and c.rot == 2) end, function(x, y, c) DoTimewarper(x, y, c, 1) end, "rightup", 146) end,
-	function() return RunOn(function(c) return not c.updated and ((c.id == 237 or c.id == 267) and c.rot == 0 or (c.id == 238 or c.id == 268) and not c.hupdated and (c.rot == 0 or c.rot == 1)) end, function(x, y, c) DoTransformer(x, y, c, 0) end, "upleft", 237) end,
-	function() return RunOn(function(c) return not c.updated and ((c.id == 237 or c.id == 267) and c.rot == 2 or (c.id == 238 or c.id == 268) and not c.hupdated and (c.rot == 2 or c.rot == 3)) end, function(x, y, c) DoTransformer(x, y, c, 2) end, "upright", 237) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 237 and c.rot == 3 or (c.id == 238 or c.id == 268) and c.rot == 0) end, function(x, y, c) DoTransformer(x, y, c, 3) end, "rightdown", 237) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 237 and c.rot == 1 or (c.id == 238 or c.id == 268) and c.rot == 2) end, function(x, y, c) DoTransformer(x, y, c, 1) end, "rightup", 237) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 15 end, function(x, y, c) DoHMirror(x, y, c) end, "upright", 15) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 15 end, function(x, y, c) DoVMirror(x, y, c) end, "rightup", 15) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 80 end, function(x, y, c) DoDMirror(x, y, c) end, "rightup", 15) end,
-	function() return RunOn(function(c) return not c.updated and (c.id == 44 and c.rot == 0 or c.id == 155 and not c.hupdated and (c.rot == 0 or c.rot == 1) or c.id == 250 and (c.rot == 0 or c.rot == 2) and not c.firstupdated or c.id == 251 and not c.Rupdated) end, function(x, y, c) DoIntaker(x, y, c, 0) end, "upright", 44) end,
-	function() return RunOn(function(c) return not c.updated and (c.id == 44 and c.rot == 2 or c.id == 155 and not c.hupdated and (c.rot == 2 or c.rot == 3) or c.id == 250 and (c.rot == 0 or c.rot == 2) or c.id == 251 and not c.Lupdated) end, function(x, y, c) DoIntaker(x, y, c, 2) end, "upleft", 44) end,
-	function() return RunOn(function(c) return not c.updated and (c.id == 44 and c.rot == 3 or c.id == 155 and (c.rot == 0 or c.rot == 3) or c.id == 250 and (c.rot == 1 or c.rot == 3) and not c.firstupdated or c.id == 251 and not c.Uupdated) end, function(x, y, c) DoIntaker(x, y, c, 3) end, "rightup", 44) end,
-	function() return RunOn(function(c) return not c.updated and (c.id == 44 and c.rot == 1 or c.id == 155 and (c.rot == 2 or c.rot == 1) or c.id == 250 and (c.rot == 1 or c.rot == 3) or c.id == 251) end, function(x, y, c) DoIntaker(x, y, c, 1) end, "rightdown", 44) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 106 and c.id ~= 107 and c.rot == 0 or c.id == 107 and not c.hupdated and (c.rot == 0 or c.rot == 1)) end, function(x, y, c) DoShifter(x, y, c, 0) end, "upleft", 106) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 106 and c.id ~= 107 and c.rot == 2 or c.id == 107 and not c.hupdated and (c.rot == 2 or c.rot == 3)) end, function(x, y, c) DoShifter(x, y, c, 2) end, "upright", 106) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 106 and c.rot == 3 or c.id == 107 and c.rot == 0) end, function(x, y, c) DoShifter(x, y, c, 3) end, "rightdown", 106) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 106 and c.rot == 1 or c.id == 107 and c.rot == 2) end, function(x, y, c) DoShifter(x, y, c, 1) end, "rightup", 106) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 235 end, function(x, y, c) DoCreator(x, y, c) end, "upleft", 235) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 166 and c.rot == 0 end, function(x, y, c) DoMemory(x, y, c) end, "upleft", 166) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 166 and c.rot == 2 end, function(x, y, c) DoMemory(x, y, c) end, "upright", 166) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 166 and c.rot == 3 end, function(x, y, c) DoMemory(x, y, c) end, "rightdown", 166) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 166 and c.rot == 1 end, function(x, y, c) DoMemory(x, y, c) end, "rightup", 166) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 55 and c.rot == 0 end, function(x, y, c) DoSuperGenerator(x, y, c) end, "upleft", 55) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 55 and c.rot == 2 end, function(x, y, c) DoSuperGenerator(x, y, c) end, "upright", 55) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 55 and c.rot == 3 end, function(x, y, c) DoSuperGenerator(x, y, c) end, "rightdown", 55) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 55 and c.rot == 1 end, function(x, y, c) DoSuperGenerator(x, y, c) end, "rightup", 55) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 3 and c.id ~= 23 and c.rot == 0 or c.id == 23 and not c.hupdated and (c.rot == 0 or c.rot == 1)) end, function(x, y, c) DoGenerator(x, y, c, 0) end, "upleft", 3) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 3 and c.id ~= 23 and c.rot == 2 or c.id == 23 and not c.hupdated and (c.rot == 2 or c.rot == 3)) end, function(x, y, c) DoGenerator(x, y, c, 2) end, "upright", 3) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 3 and c.rot == 3 or c.id == 23 and c.rot == 0) end, function(x, y, c) DoGenerator(x, y, c, 3) end, "rightdown", 3) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 3 and c.rot == 1 or c.id == 23 and c.rot == 2) end, function(x, y, c) DoGenerator(x, y, c, 1) end, "rightup", 3) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 177 and c.rot == 0 end, function(x, y, c) DoSuperReplicator(x, y, c) end, "upleft", 177) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 177 and c.rot == 2 end, function(x, y, c) DoSuperReplicator(x, y, c) end, "upright", 177) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 177 and c.rot == 3 end, function(x, y, c) DoSuperReplicator(x, y, c) end, "rightdown", 177) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 177 and c.rot == 1 end, function(x, y, c) DoSuperReplicator(x, y, c) end, "rightup", 177) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 45 and c.id ~= 46 and c.rot == 0 or c.id == 46 and not c.hupdated and (c.rot == 0 or c.rot == 1)) end, function(x, y, c) DoReplicator(x, y, c, 0) end, "upleft", 45) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 45 and c.id ~= 46 and c.rot == 2 or c.id == 46 and not c.hupdated and (c.rot == 2 or c.rot == 3)) end, function(x, y, c) DoReplicator(x, y, c, 2) end, "upright", 45) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 45 and c.rot == 3 or c.id == 46 and c.rot == 0) end, function(x, y, c) DoReplicator(x, y, c, 3) end, "rightdown", 45) end,
-	function() return RunOn(function(c) return not c.updated and (ConvertId(c.id) == 45 and c.rot == 1 or c.id == 46 and c.rot == 2) end, function(x, y, c) DoReplicator(x, y, c, 1) end, "rightup", 45) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 30 end, function(x, y, c) DoFlipper(x, y, c) end, "upright", 30) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 9 end, function(x, y, c) DoRotator(x, y, c) end, "rightup", 9) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 18 end, function(x, y, c) DoGear(x, y, c) end, "rightup", 18) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 19 end, function(x, y, c) DoGear(x, y, c) end, "leftup", 19) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 17 end, function(x, y, c) DoRedirector(x, y, c) end, "rightup", 17) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 236 and c.vars[1] == 1 end, function(x, y, c) DoInertia(x, y, c, 0) end, "upleft", 236) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 236 and c.vars[1] == -1 end, function(x, y, c) DoInertia(x, y, c, 2) end, "upright", 236) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 236 and c.vars[2] == -1 end, function(x, y, c) DoInertia(x, y, c, 3) end, "rightdown", 236) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 236 and c.vars[2] == 1 end, function(x, y, c) DoInertia(x, y, c, 1) end, "rightup", 236) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 248 end, function(x, y, c) DoSuperImpulsor(x, y, 0) end, "upleft", 248) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 248 end, function(x, y, c) DoSuperImpulsor(x, y, 2) end, "upright", 248) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 248 end, function(x, y, c) DoSuperImpulsor(x, y, 3) end, "rightdown", 248) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 248 end, function(x, y, c) DoSuperImpulsor(x, y, 1) end, "rightup", 248) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 29 end, function(x, y, c) DoImpulsor(x, y, 0) end, "upleft", 29) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 29 end, function(x, y, c) DoImpulsor(x, y, 2) end, "upright", 29) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 29 end, function(x, y, c) DoImpulsor(x, y, 3) end, "rightdown", 29) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 29 end, function(x, y, c) DoImpulsor(x, y, 1) end, "rightup", 29) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 81 and (c.id ~= 227 or c.rot == 0) and (c.id ~= 228 or c.rot == 0 or c.rot == 1) end, function(x, y, c) DoGrapulsor(x, y, c, 0) end, "upleft", 81) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 81 and (c.id ~= 227 or c.rot == 2) and (c.id ~= 228 or c.rot == 2 or c.rot == 3) end, function(x, y, c) DoGrapulsor(x, y, c, 2) end, "upright", 81) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 81 and (c.id ~= 227 or c.rot == 3) and (c.id ~= 228 or c.rot == 3 or c.rot == 0) end, function(x, y, c) DoGrapulsor(x, y, c, 3) end, "rightdown", 81) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 81 and (c.id ~= 227 or c.rot == 1) and (c.id ~= 228 or c.rot == 1 or c.rot == 2) end, function(x, y, c) DoGrapulsor(x, y, c, 1) end, "rightup", 81) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 50 end, function(x, y, c) DoSuperRepulsor(x, y, 0) end, "upleft", 50) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 50 end, function(x, y, c) DoSuperRepulsor(x, y, 2) end, "upright", 50) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 50 end, function(x, y, c) DoSuperRepulsor(x, y, 3) end, "rightdown", 50) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 50 end, function(x, y, c) DoSuperRepulsor(x, y, 1) end, "rightup", 50) end,
-	function() return RunOn(function(c) return c.vars.timerepulseright end, function(x, y, c) c.vars.timerepulseright = nil; PushCell(x, y, 0, { force = 1, noupdate = true }) end, "upleft", "timerep") end,
-	function() return RunOn(function(c) return c.vars.timerepulseleft end, function(x, y, c) c.vars.timerepulseleft = nil; PushCell(x, y, 2, { force = 1, noupdate = true }) end, "upright", "timerep") end,
-	function() return RunOn(function(c) return c.vars.timerepulseup end, function(x, y, c) c.vars.timerepulseup = nil; PushCell(x, y, 3, { force = 1, noupdate = true }) end, "rightdown", "timerep") end,
-	function() return RunOn(function(c) return c.vars.timerepulsedown end, function(x, y, c) c.vars.timerepulsedown = nil; PushCell(x, y, 1, { force = 1, noupdate = true }) end, "rightup", "timerep") end,
-	function() return RunOn(function(c) return not c.updated and c.id == 222 end, function(x, y, c) DoTimeRepulsor(x, y, c) end, "upright", 222) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 21 end, function(x, y, c) DoRepulsor(x, y, 0) end, "upleft", 21) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 21 end, function(x, y, c) DoRepulsor(x, y, 2) end, "upright", 21) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 21 end, function(x, y, c) DoRepulsor(x, y, 3) end, "rightdown", 21) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 21 end, function(x, y, c) DoRepulsor(x, y, 1) end, "rightup", 21) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 156 end, function(x, y, c) DoMagnet(x, y, c) end, "rightup", 156) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 306 end, function(x, y, c) DoTermite(x, y, c) end, "rightup", 306) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 306 end, function(x, y, c) DoTermite(x, y, c) end, "leftup", 306) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 58 and c.rot == 0 end, function(x, y, c) DoDriller(x, y, c) end, "upleft", 58) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 58 and c.rot == 2 end, function(x, y, c) DoDriller(x, y, c) end, "upright", 58) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 58 and c.rot == 3 end, function(x, y, c) DoDriller(x, y, c) end, "rightdown", 58) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 58 and c.rot == 1 end, function(x, y, c) DoDriller(x, y, c) end, "rightup", 58) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 14 and c.rot == 0 end, function(x, y, c) DoPuller(x, y, c) end, "upleft", 14) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 14 and c.rot == 2 end, function(x, y, c) DoPuller(x, y, c) end, "upright", 14) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 14 and c.rot == 3 end, function(x, y, c) DoPuller(x, y, c) end, "rightdown", 14) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 14 and c.rot == 1 end, function(x, y, c) DoPuller(x, y, c) end, "rightup", 14) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 71 and c.rot == 0 end, function(x, y, c) DoGrasper(x, y, c) end, "upleft", 71) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 71 and c.rot == 2 end, function(x, y, c) DoGrasper(x, y, c) end, "upright", 71) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 71 and c.rot == 3 end, function(x, y, c) DoGrasper(x, y, c) end, "rightdown", 71) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 71 and c.rot == 1 end, function(x, y, c) DoGrasper(x, y, c) end, "rightup", 71) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 284 and c.rot == 0 end, function(x, y, c) DoSuperPusher(x, y, c) end, "upright", 284) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 284 and c.rot == 2 end, function(x, y, c) DoSuperPusher(x, y, c) end, "upleft", 284) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 284 and c.rot == 3 end, function(x, y, c) DoSuperPusher(x, y, c) end, "rightup", 284) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 284 and c.rot == 1 end, function(x, y, c) DoSuperPusher(x, y, c) end, "rightdown", 284) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 2 and c.rot == 0 end, function(x, y, c) DoPusher(x, y, c) end, "upright", 2) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 2 and c.rot == 2 end, function(x, y, c) DoPusher(x, y, c) end, "upleft", 2) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 2 and c.rot == 3 end, function(x, y, c) DoPusher(x, y, c) end, "rightup", 2) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 2 and c.rot == 1 end, function(x, y, c) DoPusher(x, y, c) end, "rightdown", 2) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 115 and c.rot == 0 end, function(x, y, c) DoSlicer(x, y, c) end, "upleft", 115) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 115 and c.rot == 2 end, function(x, y, c) DoSlicer(x, y, c) end, "upright", 115) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 115 and c.rot == 3 end, function(x, y, c) DoSlicer(x, y, c) end, "rightdown", 115) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 115 and c.rot == 1 end, function(x, y, c) DoSlicer(x, y, c) end, "rightup", 115) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 114 and c.rot == 0 end, function(x, y, c) DoNudger(x, y, c) end, "upleft", 114) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 114 and c.rot == 2 end, function(x, y, c) DoNudger(x, y, c) end, "upright", 114) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 114 and c.rot == 3 end, function(x, y, c) DoNudger(x, y, c) end, "rightdown", 114) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 114 and c.rot == 1 end, function(x, y, c) DoNudger(x, y, c) end, "rightup", 114) end,
-	function() return RunOn(function(c) return c.vars.gravdir == 0 and c.id ~= 232 and not c.gupdated end, function(x, y, c) c.gupdated = true; PushCell(x, y, 0, { force = 1 }) end, "upleft", "gravity") end,
-	function() return RunOn(function(c) return c.vars.gravdir == 2 and c.id ~= 232 and not c.gupdated end, function(x, y, c) c.gupdated = true; PushCell(x, y, 2, { force = 1 }) end, "upright", "gravity") end,
-	function() return RunOn(function(c) return c.vars.gravdir == 3 and c.id ~= 232 and not c.gupdated end, function(x, y, c) c.gupdated = true; PushCell(x, y, 3, { force = 1 }) end, "rightdown", "gravity") end,
-	function() return RunOn(function(c) return c.vars.gravdir == 1 and c.id ~= 232 and not c.gupdated end, function(x, y, c) c.gupdated = true; PushCell(x, y, 1, { force = 1 }) end, "rightup", "gravity") end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 32 and c.rot == 0 end, function(x, y, c) DoGate(x, y, c) end, "upright", 32) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 32 and c.rot == 2 end, function(x, y, c) DoGate(x, y, c) end, "upleft", 32) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 32 and c.rot == 3 end, function(x, y, c) DoGate(x, y, c) end, "rightup", 32) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 32 and c.rot == 1 end, function(x, y, c) DoGate(x, y, c) end, "rightdown", 32) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 230 and c.rot == 0 end, function(x, y, c) DoCoinExtractor(x, y, c) end, "upright", 230) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 230 and c.rot == 2 end, function(x, y, c) DoCoinExtractor(x, y, c) end, "upleft", 230) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 230 and c.rot == 3 end, function(x, y, c) DoCoinExtractor(x, y, c) end, "rightup", 230) end,
-	function() return RunOn(function(c) return not c.updated and c.id == 230 and c.rot == 1 end, function(x, y, c) DoCoinExtractor(x, y, c) end, "rightdown", 230) end,
-	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 123 or c.id == 242 or c.id == 243 end, function(x, y, c) DoInfectious(x, y, c) end, "rightup", 123) end,
+	function() return RunOn(function(c) return ConvertId(c.id) == 25 end, function(x, y, c) DoFreezer(x, y, c) end,
+		"rightup", 25) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 43 end,
+		function(x, y, c) DoEffectGiver(x, y, c) end, "rightup", 43) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 266 end,
+		function(x, y, c) DoDegravitizer(x, y, c) end, "rightup", 266) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			ConvertId(c.id) == 146 and c.id ~= 148 and c.rot == 0 or c.id == 148 and not c.hupdated and (c.rot == 0 or c.rot == 1
+					)) end, function(x, y, c) DoTimewarper(x, y, c, 0) end, "upleft", 146) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			ConvertId(c.id) == 146 and c.id ~= 148 and c.rot == 2 or c.id == 148 and not c.hupdated and (c.rot == 2 or c.rot == 3
+					)) end, function(x, y, c) DoTimewarper(x, y, c, 2) end, "upright", 146) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 146 and c.rot == 3 or c.id == 148 and c.rot == 0) end,
+		function(x, y, c) DoTimewarper(x, y, c, 3) end, "rightdown", 146) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 146 and c.rot == 1 or c.id == 148 and c.rot == 2) end,
+		function(x, y, c) DoTimewarper(x, y, c, 1) end, "rightup", 146) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			(c.id == 237 or c.id == 267) and c.rot == 0 or
+					(c.id == 238 or c.id == 268) and not c.hupdated and (c.rot == 0 or c.rot == 1)) end,
+		function(x, y, c) DoTransformer(x, y, c, 0) end, "upleft", 237) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			(c.id == 237 or c.id == 267) and c.rot == 2 or
+					(c.id == 238 or c.id == 268) and not c.hupdated and (c.rot == 2 or c.rot == 3)) end,
+		function(x, y, c) DoTransformer(x, y, c, 2) end, "upright", 237) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 237 and c.rot == 3 or (c.id == 238 or c.id == 268) and c.rot == 0) end,
+		function(x, y, c) DoTransformer(x, y, c, 3) end, "rightdown", 237) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 237 and c.rot == 1 or (c.id == 238 or c.id == 268) and c.rot == 2) end,
+		function(x, y, c) DoTransformer(x, y, c, 1) end, "rightup", 237) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 15 end,
+		function(x, y, c) DoHMirror(x, y, c) end, "upright", 15) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 15 end,
+		function(x, y, c) DoVMirror(x, y, c) end, "rightup", 15) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 80 end, function(x, y, c) DoDMirror(x, y, c) end,
+		"rightup", 15) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			c.id == 44 and c.rot == 0 or c.id == 155 and not c.hupdated and (c.rot == 0 or c.rot == 1) or
+					c.id == 250 and (c.rot == 0 or c.rot == 2) and not c.firstupdated or c.id == 251 and not c.Rupdated) end,
+		function(x, y, c) DoIntaker(x, y, c, 0) end, "upright", 44) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			c.id == 44 and c.rot == 2 or c.id == 155 and not c.hupdated and (c.rot == 2 or c.rot == 3) or
+					c.id == 250 and (c.rot == 0 or c.rot == 2) or c.id == 251 and not c.Lupdated) end,
+		function(x, y, c) DoIntaker(x, y, c, 2) end, "upleft", 44) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			c.id == 44 and c.rot == 3 or c.id == 155 and (c.rot == 0 or c.rot == 3) or
+					c.id == 250 and (c.rot == 1 or c.rot == 3) and not c.firstupdated or c.id == 251 and not c.Uupdated) end,
+		function(x, y, c) DoIntaker(x, y, c, 3) end, "rightup", 44) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			c.id == 44 and c.rot == 1 or c.id == 155 and (c.rot == 2 or c.rot == 1) or c.id == 250 and (c.rot == 1 or c.rot == 3)
+					or c.id == 251) end, function(x, y, c) DoIntaker(x, y, c, 1) end, "rightdown", 44) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			ConvertId(c.id) == 106 and c.id ~= 107 and c.rot == 0 or c.id == 107 and not c.hupdated and (c.rot == 0 or c.rot == 1
+					)) end, function(x, y, c) DoShifter(x, y, c, 0) end, "upleft", 106) end,
+	function() return RunOn(function(c) return not c.updated and
+			(
+			ConvertId(c.id) == 106 and c.id ~= 107 and c.rot == 2 or c.id == 107 and not c.hupdated and (c.rot == 2 or c.rot == 3
+					)) end, function(x, y, c) DoShifter(x, y, c, 2) end, "upright", 106) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 106 and c.rot == 3 or c.id == 107 and c.rot == 0) end, function(x, y, c) DoShifter(x, y, c, 3) end
+		, "rightdown", 106) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 106 and c.rot == 1 or c.id == 107 and c.rot == 2) end, function(x, y, c) DoShifter(x, y, c, 1) end
+		, "rightup", 106) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 235 end, function(x, y, c) DoCreator(x, y, c) end,
+		"upleft", 235) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 166 and c.rot == 0 end,
+		function(x, y, c) DoMemory(x, y, c) end, "upleft", 166) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 166 and c.rot == 2 end,
+		function(x, y, c) DoMemory(x, y, c) end, "upright", 166) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 166 and c.rot == 3 end,
+		function(x, y, c) DoMemory(x, y, c) end, "rightdown", 166) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 166 and c.rot == 1 end,
+		function(x, y, c) DoMemory(x, y, c) end, "rightup", 166) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 55 and c.rot == 0 end,
+		function(x, y, c) DoSuperGenerator(x, y, c) end, "upleft", 55) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 55 and c.rot == 2 end,
+		function(x, y, c) DoSuperGenerator(x, y, c) end, "upright", 55) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 55 and c.rot == 3 end,
+		function(x, y, c) DoSuperGenerator(x, y, c) end, "rightdown", 55) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 55 and c.rot == 1 end,
+		function(x, y, c) DoSuperGenerator(x, y, c) end, "rightup", 55) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 3 and c.id ~= 23 and c.rot == 0 or c.id == 23 and not c.hupdated and (c.rot == 0 or c.rot == 1)) end
+		, function(x, y, c) DoGenerator(x, y, c, 0) end, "upleft", 3) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 3 and c.id ~= 23 and c.rot == 2 or c.id == 23 and not c.hupdated and (c.rot == 2 or c.rot == 3)) end
+		, function(x, y, c) DoGenerator(x, y, c, 2) end, "upright", 3) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 3 and c.rot == 3 or c.id == 23 and c.rot == 0) end, function(x, y, c) DoGenerator(x, y, c, 3) end
+		, "rightdown", 3) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 3 and c.rot == 1 or c.id == 23 and c.rot == 2) end, function(x, y, c) DoGenerator(x, y, c, 1) end
+		, "rightup", 3) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 177 and c.rot == 0 end,
+		function(x, y, c) DoSuperReplicator(x, y, c) end, "upleft", 177) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 177 and c.rot == 2 end,
+		function(x, y, c) DoSuperReplicator(x, y, c) end, "upright", 177) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 177 and c.rot == 3 end,
+		function(x, y, c) DoSuperReplicator(x, y, c) end, "rightdown", 177) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 177 and c.rot == 1 end,
+		function(x, y, c) DoSuperReplicator(x, y, c) end, "rightup", 177) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 45 and c.id ~= 46 and c.rot == 0 or c.id == 46 and not c.hupdated and (c.rot == 0 or c.rot == 1)) end
+		, function(x, y, c) DoReplicator(x, y, c, 0) end, "upleft", 45) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 45 and c.id ~= 46 and c.rot == 2 or c.id == 46 and not c.hupdated and (c.rot == 2 or c.rot == 3)) end
+		, function(x, y, c) DoReplicator(x, y, c, 2) end, "upright", 45) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 45 and c.rot == 3 or c.id == 46 and c.rot == 0) end,
+		function(x, y, c) DoReplicator(x, y, c, 3) end, "rightdown", 45) end,
+	function() return RunOn(function(c) return not c.updated and
+			(ConvertId(c.id) == 45 and c.rot == 1 or c.id == 46 and c.rot == 2) end,
+		function(x, y, c) DoReplicator(x, y, c, 1) end, "rightup", 45) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 30 end,
+		function(x, y, c) DoFlipper(x, y, c) end, "upright", 30) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 9 end,
+		function(x, y, c) DoRotator(x, y, c) end, "rightup", 9) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 18 end,
+		function(x, y, c) DoGear(x, y, c) end, "rightup", 18) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 19 end,
+		function(x, y, c) DoGear(x, y, c) end, "leftup", 19) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 17 end,
+		function(x, y, c) DoRedirector(x, y, c) end, "rightup", 17) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 236 and c.vars[1] == 1 end,
+		function(x, y, c) DoInertia(x, y, c, 0) end, "upleft", 236) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 236 and c.vars[1] == -1 end,
+		function(x, y, c) DoInertia(x, y, c, 2) end, "upright", 236) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 236 and c.vars[2] == -1 end,
+		function(x, y, c) DoInertia(x, y, c, 3) end, "rightdown", 236) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 236 and c.vars[2] == 1 end,
+		function(x, y, c) DoInertia(x, y, c, 1) end, "rightup", 236) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 248 end,
+		function(x, y, c) DoSuperImpulsor(x, y, 0) end, "upleft", 248) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 248 end,
+		function(x, y, c) DoSuperImpulsor(x, y, 2) end, "upright", 248) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 248 end,
+		function(x, y, c) DoSuperImpulsor(x, y, 3) end, "rightdown", 248) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 248 end,
+		function(x, y, c) DoSuperImpulsor(x, y, 1) end, "rightup", 248) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 29 end, function(x, y, c) DoImpulsor(x, y, 0) end,
+		"upleft", 29) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 29 end, function(x, y, c) DoImpulsor(x, y, 2) end,
+		"upright", 29) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 29 end, function(x, y, c) DoImpulsor(x, y, 3) end,
+		"rightdown", 29) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 29 end, function(x, y, c) DoImpulsor(x, y, 1) end,
+		"rightup", 29) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 81 and (c.id ~= 227 or c.rot == 0) and
+			(c.id ~= 228 or c.rot == 0 or c.rot == 1) end, function(x, y, c) DoGrapulsor(x, y, c, 0) end, "upleft", 81) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 81 and (c.id ~= 227 or c.rot == 2) and
+			(c.id ~= 228 or c.rot == 2 or c.rot == 3) end, function(x, y, c) DoGrapulsor(x, y, c, 2) end, "upright", 81) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 81 and (c.id ~= 227 or c.rot == 3) and
+			(c.id ~= 228 or c.rot == 3 or c.rot == 0) end, function(x, y, c) DoGrapulsor(x, y, c, 3) end, "rightdown", 81) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 81 and (c.id ~= 227 or c.rot == 1) and
+			(c.id ~= 228 or c.rot == 1 or c.rot == 2) end, function(x, y, c) DoGrapulsor(x, y, c, 1) end, "rightup", 81) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 50 end,
+		function(x, y, c) DoSuperRepulsor(x, y, 0) end, "upleft", 50) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 50 end,
+		function(x, y, c) DoSuperRepulsor(x, y, 2) end, "upright", 50) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 50 end,
+		function(x, y, c) DoSuperRepulsor(x, y, 3) end, "rightdown", 50) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 50 end,
+		function(x, y, c) DoSuperRepulsor(x, y, 1) end, "rightup", 50) end,
+	function() return RunOn(function(c) return c.vars.timerepulseright end,
+		function(x, y, c) c.vars.timerepulseright = nil; PushCell(x, y, 0, { force = 1, noupdate = true }) end, "upleft",
+		"timerep") end,
+	function() return RunOn(function(c) return c.vars.timerepulseleft end,
+		function(x, y, c) c.vars.timerepulseleft = nil; PushCell(x, y, 2, { force = 1, noupdate = true }) end, "upright",
+		"timerep") end,
+	function() return RunOn(function(c) return c.vars.timerepulseup end,
+		function(x, y, c) c.vars.timerepulseup = nil; PushCell(x, y, 3, { force = 1, noupdate = true }) end, "rightdown",
+		"timerep") end,
+	function() return RunOn(function(c) return c.vars.timerepulsedown end,
+		function(x, y, c) c.vars.timerepulsedown = nil; PushCell(x, y, 1, { force = 1, noupdate = true }) end, "rightup",
+		"timerep") end,
+	function() return RunOn(function(c) return not c.updated and c.id == 222 end,
+		function(x, y, c) DoTimeRepulsor(x, y, c) end, "upright", 222) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 21 end, function(x, y, c) DoRepulsor(x, y, 0) end,
+		"upleft", 21) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 21 end, function(x, y, c) DoRepulsor(x, y, 2) end,
+		"upright", 21) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 21 end, function(x, y, c) DoRepulsor(x, y, 3) end,
+		"rightdown", 21) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 21 end, function(x, y, c) DoRepulsor(x, y, 1) end,
+		"rightup", 21) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 156 end,
+		function(x, y, c) DoMagnet(x, y, c) end, "rightup", 156) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 306 end,
+		function(x, y, c) DoTermite(x, y, c) end, "rightup", 306) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 306 end,
+		function(x, y, c) DoTermite(x, y, c) end, "leftup", 306) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 58 and c.rot == 0 end,
+		function(x, y, c) DoDriller(x, y, c) end, "upleft", 58) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 58 and c.rot == 2 end,
+		function(x, y, c) DoDriller(x, y, c) end, "upright", 58) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 58 and c.rot == 3 end,
+		function(x, y, c) DoDriller(x, y, c) end, "rightdown", 58) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 58 and c.rot == 1 end,
+		function(x, y, c) DoDriller(x, y, c) end, "rightup", 58) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 14 and c.rot == 0 end,
+		function(x, y, c) DoPuller(x, y, c) end, "upleft", 14) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 14 and c.rot == 2 end,
+		function(x, y, c) DoPuller(x, y, c) end, "upright", 14) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 14 and c.rot == 3 end,
+		function(x, y, c) DoPuller(x, y, c) end, "rightdown", 14) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 14 and c.rot == 1 end,
+		function(x, y, c) DoPuller(x, y, c) end, "rightup", 14) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 71 and c.rot == 0 end,
+		function(x, y, c) DoGrasper(x, y, c) end, "upleft", 71) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 71 and c.rot == 2 end,
+		function(x, y, c) DoGrasper(x, y, c) end, "upright", 71) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 71 and c.rot == 3 end,
+		function(x, y, c) DoGrasper(x, y, c) end, "rightdown", 71) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 71 and c.rot == 1 end,
+		function(x, y, c) DoGrasper(x, y, c) end, "rightup", 71) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 284 and c.rot == 0 end,
+		function(x, y, c) DoSuperPusher(x, y, c) end, "upright", 284) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 284 and c.rot == 2 end,
+		function(x, y, c) DoSuperPusher(x, y, c) end, "upleft", 284) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 284 and c.rot == 3 end,
+		function(x, y, c) DoSuperPusher(x, y, c) end, "rightup", 284) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 284 and c.rot == 1 end,
+		function(x, y, c) DoSuperPusher(x, y, c) end, "rightdown", 284) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 2 and c.rot == 0 end,
+		function(x, y, c) DoPusher(x, y, c) end, "upright", 2) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 2 and c.rot == 2 end,
+		function(x, y, c) DoPusher(x, y, c) end, "upleft", 2) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 2 and c.rot == 3 end,
+		function(x, y, c) DoPusher(x, y, c) end, "rightup", 2) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 2 and c.rot == 1 end,
+		function(x, y, c) DoPusher(x, y, c) end, "rightdown", 2) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 115 and c.rot == 0 end,
+		function(x, y, c) DoSlicer(x, y, c) end, "upleft", 115) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 115 and c.rot == 2 end,
+		function(x, y, c) DoSlicer(x, y, c) end, "upright", 115) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 115 and c.rot == 3 end,
+		function(x, y, c) DoSlicer(x, y, c) end, "rightdown", 115) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 115 and c.rot == 1 end,
+		function(x, y, c) DoSlicer(x, y, c) end, "rightup", 115) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 114 and c.rot == 0 end,
+		function(x, y, c) DoNudger(x, y, c) end, "upleft", 114) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 114 and c.rot == 2 end,
+		function(x, y, c) DoNudger(x, y, c) end, "upright", 114) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 114 and c.rot == 3 end,
+		function(x, y, c) DoNudger(x, y, c) end, "rightdown", 114) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 114 and c.rot == 1 end,
+		function(x, y, c) DoNudger(x, y, c) end, "rightup", 114) end,
+	function() return RunOn(function(c) return c.vars.gravdir == 0 and c.id ~= 232 and not c.gupdated end,
+		function(x, y, c) c.gupdated = true; PushCell(x, y, 0, { force = 1 }) end, "upleft", "gravity") end,
+	function() return RunOn(function(c) return c.vars.gravdir == 2 and c.id ~= 232 and not c.gupdated end,
+		function(x, y, c) c.gupdated = true; PushCell(x, y, 2, { force = 1 }) end, "upright", "gravity") end,
+	function() return RunOn(function(c) return c.vars.gravdir == 3 and c.id ~= 232 and not c.gupdated end,
+		function(x, y, c) c.gupdated = true; PushCell(x, y, 3, { force = 1 }) end, "rightdown", "gravity") end,
+	function() return RunOn(function(c) return c.vars.gravdir == 1 and c.id ~= 232 and not c.gupdated end,
+		function(x, y, c) c.gupdated = true; PushCell(x, y, 1, { force = 1 }) end, "rightup", "gravity") end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 32 and c.rot == 0 end,
+		function(x, y, c) DoGate(x, y, c) end, "upright", 32) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 32 and c.rot == 2 end,
+		function(x, y, c) DoGate(x, y, c) end, "upleft", 32) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 32 and c.rot == 3 end,
+		function(x, y, c) DoGate(x, y, c) end, "rightup", 32) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 32 and c.rot == 1 end,
+		function(x, y, c) DoGate(x, y, c) end, "rightdown", 32) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 230 and c.rot == 0 end,
+		function(x, y, c) DoCoinExtractor(x, y, c) end, "upright", 230) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 230 and c.rot == 2 end,
+		function(x, y, c) DoCoinExtractor(x, y, c) end, "upleft", 230) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 230 and c.rot == 3 end,
+		function(x, y, c) DoCoinExtractor(x, y, c) end, "rightup", 230) end,
+	function() return RunOn(function(c) return not c.updated and c.id == 230 and c.rot == 1 end,
+		function(x, y, c) DoCoinExtractor(x, y, c) end, "rightdown", 230) end,
+	function() return RunOn(function(c) return not c.updated and ConvertId(c.id) == 123 or c.id == 242 or c.id == 243 end,
+		function(x, y, c) DoInfectious(x, y, c) end, "rightup", 123) end,
 	function() freezecam = false;
 		playerpos = {};
-		local success = RunOn(function(c) return not c.updated and ConvertId(c.id) == 239 end, function(x, y, c) DoPlayer(x, y, c) end, held == 0 and "upleft" or held == 2 and "upright" or held == 3 and "rightdown" or "rightup", 239);
+		local success = RunOn(function(c) return not c.updated and ConvertId(c.id) == 239 end,
+			function(x, y, c) DoPlayer(x, y, c) end,
+			held == 0 and "upleft" or held == 2 and "upright" or held == 3 and "rightdown" or "rightup", 239);
 		for i = 1, #playerpos do cam.tarx = cam.tarx + cam.tarzoom * playerpos[i][1] / #playerpos
 			cam.tary = cam.tary + cam.tarzoom * playerpos[i][2] / #playerpos
 		end
@@ -7730,7 +8383,8 @@ function love.update(dt)
 		local y = math.floor((love.mouse.getY() + cam.y - 300 * winym) / cam.zoom)
 		for cy = y - math.ceil(chosen.size * .5) + (chosen.shape == "Square" and 1 or 0), y + math.floor(chosen.size * .5) do
 			for cx = x - math.ceil(chosen.size * .5) + (chosen.shape == "Square" and 1 or 0), x + math.floor(chosen.size * .5) do
-				if (chosen.shape == "Square" or math.distSqr(cx - x, cy - y) <= chosen.size * chosen.size / 4) and (chosen.mode ~= "Or" or GetCell(cx, cy).id == 0) and (chosen.mode ~= "And" or GetCell(cx, cy).id ~= 0) then
+				if (chosen.shape == "Square" or math.distSqr(cx - x, cy - y) <= chosen.size * chosen.size / 4) and
+						(chosen.mode ~= "Or" or GetCell(cx, cy).id == 0) and (chosen.mode ~= "And" or GetCell(cx, cy).id ~= 0) then
 					if chosen.randrot then hudrot = chosen.rot
 						chosen.rot = math.random(0, 3)
 					end
@@ -7830,12 +8484,17 @@ function DrawCell(cell, x, y, ip)
 	local cx, cy, crot
 	local lerp = itime / delay
 	if ip then
-		cx, cy, crot = math.floor(math.graphiclerp(cell.lastvars[1], x, lerp) * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm), math.floor(math.graphiclerp(cell.lastvars[2], y, lerp) * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym), math.graphiclerp(cell.lastvars[3], cell.lastvars[3] + ((cell.rot - cell.lastvars[3] + 2) % 4 - 2), lerp) * math.pi * .5
+		cx, cy, crot = math.floor(math.graphiclerp(cell.lastvars[1], x, lerp) * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm)
+				, math.floor(math.graphiclerp(cell.lastvars[2], y, lerp) * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym),
+				math.graphiclerp(cell.lastvars[3], cell.lastvars[3] + ((cell.rot - cell.lastvars[3] + 2) % 4 - 2), lerp) * math.pi *
+				.5
 	else
-		cx, cy, crot = math.floor(x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm), math.floor(y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym), cell.rot * math.pi * .5
+		cx, cy, crot = math.floor(x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm),
+				math.floor(y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym), cell.rot * math.pi * .5
 	end
 	local fancy = fancy
-	if x == math.floor((love.mouse.getX() + cam.x - 400 * winxm) / cam.zoom) and y == math.floor((love.mouse.getY() + cam.y - 300 * winym) / cam.zoom) then
+	if x == math.floor((love.mouse.getX() + cam.x - 400 * winxm) / cam.zoom) and
+			y == math.floor((love.mouse.getY() + cam.y - 300 * winym) / cam.zoom) then
 		fancy = true
 	end
 	local ctex = cell.id == 206 and tex["lluea" .. cell.vars[1]] or tex[cell.id] or tex.X
@@ -7850,16 +8509,28 @@ function DrawCell(cell, x, y, ip)
 			if ecell.id ~= 0 then
 				local ctex = tex[ecell.id] or tex.X
 				local ctexsize = texsize[ecell.id] or texsize.X
-				love.graphics.draw(ctex, math.lerp(ecell.lastvars[1] * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm, cell.id == 0 and x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm or cx, lerp), math.lerp(ecell.lastvars[2] * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym, cell.id == 0 and y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym or cy, lerp), ecell.lastvars[3] * math.pi * .5, math.lerp(cam.zoom / ctexsize.w, 0, lerp), math.lerp(cam.zoom / ctexsize.w, 0, lerp), ctexsize.w2, ctexsize.h2)
+				love.graphics.draw(ctex,
+					math.lerp(ecell.lastvars[1] * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm,
+						cell.id == 0 and x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm or cx, lerp),
+					math.lerp(ecell.lastvars[2] * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym,
+						cell.id == 0 and y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym or cy, lerp), ecell.lastvars[3] * math.pi * .5
+					, math.lerp(cam.zoom / ctexsize.w, 0, lerp), math.lerp(cam.zoom / ctexsize.w, 0, lerp), ctexsize.w2, ctexsize.h2)
 			end
 		end
 	end
-	if (cell.id == 165 or cell.id == 175 or cell.id == 198 or cell.id == 211 or cell.id == 212 or cell.id == 235) and cell.vars[1] then
-		love.graphics.draw((tex[cell.vars[1]] or tex.X), cx, cy, cell.vars[2] * math.pi * .5, cam.zoom / (texsize[cell.vars[1]] or texsize.X).w * .5, cam.zoom / (texsize[cell.vars[1]] or texsize.X).h * .5, (texsize[cell.vars[1]] or texsize.X).w2, (texsize[cell.vars[1]] or texsize.X).h2)
+	if (cell.id == 165 or cell.id == 175 or cell.id == 198 or cell.id == 211 or cell.id == 212 or cell.id == 235) and
+			cell.vars[1] then
+		love.graphics.draw((tex[cell.vars[1]] or tex.X), cx, cy, cell.vars[2] * math.pi * .5,
+			cam.zoom / (texsize[cell.vars[1]] or texsize.X).w * .5, cam.zoom / (texsize[cell.vars[1]] or texsize.X).h * .5,
+			(texsize[cell.vars[1]] or texsize.X).w2, (texsize[cell.vars[1]] or texsize.X).h2)
 	elseif cell.id == 166 and cell.vars[1] then
-		love.graphics.draw((tex[cell.vars[1]] or tex.X), cx, cy, cell.vars[2] * math.pi * .5, cam.zoom / (texsize[cell.vars[1]] or texsize.X).w * .2, cam.zoom / (texsize[cell.vars[1]] or texsize.X).h * .2, (texsize[cell.vars[1]] or texsize.X).w2, (texsize[cell.vars[1]] or texsize.X).h2)
+		love.graphics.draw((tex[cell.vars[1]] or tex.X), cx, cy, cell.vars[2] * math.pi * .5,
+			cam.zoom / (texsize[cell.vars[1]] or texsize.X).w * .2, cam.zoom / (texsize[cell.vars[1]] or texsize.X).h * .2,
+			(texsize[cell.vars[1]] or texsize.X).w2, (texsize[cell.vars[1]] or texsize.X).h2)
 	elseif cell.id == 233 and cell.vars[1] then
-		love.graphics.draw((tex[cell.vars[1]] or tex.X), cx, cy, 0, cam.zoom / (texsize[cell.vars[1]] or texsize.X).w * .2, cam.zoom / (texsize[cell.vars[1]] or texsize.X).h * .2, (texsize[cell.vars[1]] or texsize.X).w2, (texsize[cell.vars[1]] or texsize.X).h2)
+		love.graphics.draw((tex[cell.vars[1]] or tex.X), cx, cy, 0, cam.zoom / (texsize[cell.vars[1]] or texsize.X).w * .2,
+			cam.zoom / (texsize[cell.vars[1]] or texsize.X).h * .2, (texsize[cell.vars[1]] or texsize.X).w2,
+			(texsize[cell.vars[1]] or texsize.X).h2)
 	elseif cell.id == 206 then
 		local ctex = tex["lluea" .. cell.vars[2] .. "l"]
 		local ctexsize = texsize["lluea" .. cell.vars[2] .. "l"]
@@ -7870,37 +8541,55 @@ function DrawCell(cell, x, y, ip)
 	elseif cell.id == 221 and fancy then
 		local r, g, b, a = love.graphics.getColor()
 		love.graphics.setColor(0, 0, 0, 1)
-		love.graphics.printf(cell.vars[1] .. "\n" .. cell.vars[2], cx - .225 * cam.zoom, cy - .225 * cam.zoom, 20, "center", 0, cam.zoom / 40, cam.zoom / 40)
+		love.graphics.printf(cell.vars[1] .. "\n" .. cell.vars[2], cx - .225 * cam.zoom, cy - .225 * cam.zoom, 20, "center", 0
+			, cam.zoom / 40, cam.zoom / 40)
 		love.graphics.setColor(r, g, b, a)
-		love.graphics.printf(cell.vars[1] .. "\n" .. cell.vars[2], cx - .25 * cam.zoom, cy - .25 * cam.zoom, 20, "center", 0, cam.zoom / 40, cam.zoom / 40)
+		love.graphics.printf(cell.vars[1] .. "\n" .. cell.vars[2], cx - .25 * cam.zoom, cy - .25 * cam.zoom, 20, "center", 0,
+			cam.zoom / 40, cam.zoom / 40)
 	elseif (cell.id == 224 or cell.id == 299) and fancy then
 		local r, g, b, a = love.graphics.getColor()
 		love.graphics.setColor(0, 0, 0, 1)
-		love.graphics.printf(cell.vars[1], cx - .075 * cam.zoom, cy + .225 * cam.zoom, 20, "right", 0, cam.zoom / 40, cam.zoom / 40)
+		love.graphics.printf(cell.vars[1], cx - .075 * cam.zoom, cy + .225 * cam.zoom, 20, "right", 0, cam.zoom / 40,
+			cam.zoom / 40)
 		love.graphics.setColor(r, g, b, a)
 		love.graphics.printf(cell.vars[1], cx - .1 * cam.zoom, cy + .2 * cam.zoom, 20, "right", 0, cam.zoom / 40, cam.zoom / 40)
 	end
 	if fancy then
-		if cell.frozen then love.graphics.draw((tex.frozen), cx, cy, 0, cam.zoom / texsize.frozen.w, cam.zoom / texsize.frozen.h, texsize.frozen.w2, texsize.frozen.h2) end
-		if cell.protected then love.graphics.draw((tex.protected), cx, cy, 0, cam.zoom / texsize.protected.w, cam.zoom / texsize.protected.h, texsize.protected.w2, texsize.protected.h2) end
-		if cell.locked then love.graphics.draw((tex.locked), cx, cy, 0, cam.zoom / texsize.locked.w, cam.zoom / texsize.locked.h, texsize.locked.w2, texsize.locked.h2) end
-		if cell.clamped then love.graphics.draw((tex.clamped), cx, cy, 0, cam.zoom / texsize.clamped.w, cam.zoom / texsize.clamped.h, texsize.clamped.w2, texsize.clamped.h2) end
-		if cell.latched then love.graphics.draw((tex.latched), cx, cy, 0, cam.zoom / texsize.latched.w, cam.zoom / texsize.latched.h, texsize.latched.w2, texsize.latched.h2) end
-		if cell.sealed then love.graphics.draw((tex.sealed), cx, cy, 0, cam.zoom / texsize.sealed.w, cam.zoom / texsize.sealed.h, texsize.sealed.w2, texsize.sealed.h2) end
-		if cell.bolted then love.graphics.draw((tex.bolted), cx, cy, 0, cam.zoom / texsize.bolted.w, cam.zoom / texsize.bolted.h, texsize.bolted.w2, texsize.bolted.h2) end
-		if cell.reinforced then love.graphics.draw((tex.reinforced), cx, cy, 0, cam.zoom / texsize.reinforced.w, cam.zoom / texsize.reinforced.h, texsize.reinforced.w2, texsize.reinforced.h2) end
-		if cell.sticky then love.graphics.draw((tex.sticky), cx, cy, 0, cam.zoom / texsize.sticky.w, cam.zoom / texsize.sticky.h, texsize.sticky.w2, texsize.sticky.h2) end
-		if cell.thawed then love.graphics.draw((tex.thawed), cx, cy, 0, cam.zoom / texsize.thawed.w, cam.zoom / texsize.thawed.h, texsize.thawed.w2, texsize.thawed.h2) end
-		if cell.vars.gravdir then love.graphics.draw((tex["grav" .. cell.vars.gravdir]), cx, cy, 0, cam.zoom / texsize["grav" .. cell.vars.gravdir].w, cam.zoom / texsize["grav" .. cell.vars.gravdir].h, texsize["grav" .. cell.vars.gravdir].w2, texsize["grav" .. cell.vars.gravdir].h2) end
+		if cell.frozen then love.graphics.draw((tex.frozen), cx, cy, 0, cam.zoom / texsize.frozen.w,
+			cam.zoom / texsize.frozen.h, texsize.frozen.w2, texsize.frozen.h2) end
+		if cell.protected then love.graphics.draw((tex.protected), cx, cy, 0, cam.zoom / texsize.protected.w,
+			cam.zoom / texsize.protected.h, texsize.protected.w2, texsize.protected.h2) end
+		if cell.locked then love.graphics.draw((tex.locked), cx, cy, 0, cam.zoom / texsize.locked.w,
+			cam.zoom / texsize.locked.h, texsize.locked.w2, texsize.locked.h2) end
+		if cell.clamped then love.graphics.draw((tex.clamped), cx, cy, 0, cam.zoom / texsize.clamped.w,
+			cam.zoom / texsize.clamped.h, texsize.clamped.w2, texsize.clamped.h2) end
+		if cell.latched then love.graphics.draw((tex.latched), cx, cy, 0, cam.zoom / texsize.latched.w,
+			cam.zoom / texsize.latched.h, texsize.latched.w2, texsize.latched.h2) end
+		if cell.sealed then love.graphics.draw((tex.sealed), cx, cy, 0, cam.zoom / texsize.sealed.w,
+			cam.zoom / texsize.sealed.h, texsize.sealed.w2, texsize.sealed.h2) end
+		if cell.bolted then love.graphics.draw((tex.bolted), cx, cy, 0, cam.zoom / texsize.bolted.w,
+			cam.zoom / texsize.bolted.h, texsize.bolted.w2, texsize.bolted.h2) end
+		if cell.reinforced then love.graphics.draw((tex.reinforced), cx, cy, 0, cam.zoom / texsize.reinforced.w,
+			cam.zoom / texsize.reinforced.h, texsize.reinforced.w2, texsize.reinforced.h2) end
+		if cell.sticky then love.graphics.draw((tex.sticky), cx, cy, 0, cam.zoom / texsize.sticky.w,
+			cam.zoom / texsize.sticky.h, texsize.sticky.w2, texsize.sticky.h2) end
+		if cell.thawed then love.graphics.draw((tex.thawed), cx, cy, 0, cam.zoom / texsize.thawed.w,
+			cam.zoom / texsize.thawed.h, texsize.thawed.w2, texsize.thawed.h2) end
+		if cell.vars.gravdir then love.graphics.draw((tex["grav" .. cell.vars.gravdir]), cx, cy, 0,
+			cam.zoom / texsize["grav" .. cell.vars.gravdir].w, cam.zoom / texsize["grav" .. cell.vars.gravdir].h,
+			texsize["grav" .. cell.vars.gravdir].w2, texsize["grav" .. cell.vars.gravdir].h2) end
 		if cell.vars.coins then
-			love.graphics.draw((tex.coins), cx, cy, 0, cam.zoom / texsize.coins.w, cam.zoom / texsize.coins.h, texsize.coins.w2, texsize.coins.h2)
+			love.graphics.draw((tex.coins), cx, cy, 0, cam.zoom / texsize.coins.w, cam.zoom / texsize.coins.h, texsize.coins.w2,
+				texsize.coins.h2)
 			local r, g, b, a = love.graphics.getColor()
 			love.graphics.setColor(0, 0, 0, 1)
 			love.graphics.print(cell.vars.coins, cx - .175 * cam.zoom, cy - .1125 * cam.zoom, 0, cam.zoom / 40, cam.zoom / 40)
 			love.graphics.setColor(r, g, b, a)
 			love.graphics.print(cell.vars.coins, cx - .2 * cam.zoom, cy - .1375 * cam.zoom, 0, cam.zoom / 40, cam.zoom / 40)
 		end
-		if cell.id ~= 0 and cell.rot ~= 0 and cell.rot ~= 1 and cell.rot ~= 2 and cell.rot ~= 3 then love.graphics.draw((tex.invalidrot), cx, cy, 0, cam.zoom / texsize.invalidrot.w, cam.zoom / texsize.invalidrot.h, texsize.invalidrot.w2, texsize.invalidrot.h2) end
+		if cell.id ~= 0 and cell.rot ~= 0 and cell.rot ~= 1 and cell.rot ~= 2 and cell.rot ~= 3 then love.graphics.draw((
+			tex.invalidrot), cx, cy, 0, cam.zoom / texsize.invalidrot.w, cam.zoom / texsize.invalidrot.h, texsize.invalidrot.w2,
+			texsize.invalidrot.h2) end
 	end
 	if cell.id ~= 0 and ip then
 		if GetPlaceable(x, y) and tex[GetPlaceable(x, y) .. "overlay"] then
@@ -7917,10 +8606,15 @@ function love.draw()
 	if not mainmenu then
 		local cellcanv = love.graphics.newCanvas(love.graphics.getWidth(), love.graphics.getHeight())
 		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.draw(bgsprites, math.floor(cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .49, math.floor(cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .49, 0, cam.zoom / texsize[0].w, cam.zoom / texsize[0].h, texsize[0].w2, texsize[0].h2)
-		for y = math.max(math.floor((cam.y - 300 * winym) / cam.zoom), 0), math.min(math.floor((cam.y + 300 * winym) / cam.zoom) + 1, height - 1) do
-			for x = math.max(math.floor((cam.x - 400 * winxm) / cam.zoom), 0), math.min(math.floor((cam.x + 400 * winxm) / cam.zoom) + 1, width - 1) do
-				local cx, cy = math.floor(x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm), math.floor(y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym)
+		love.graphics.draw(bgsprites, math.floor(cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .49,
+			math.floor(cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .49, 0, cam.zoom / texsize[0].w, cam.zoom / texsize[0].h
+			, texsize[0].w2, texsize[0].h2)
+		for y = math.max(math.floor((cam.y - 300 * winym) / cam.zoom), 0), math.min(math.floor((cam.y + 300 * winym) / cam.zoom)
+			+ 1, height - 1) do
+			for x = math.max(math.floor((cam.x - 400 * winxm) / cam.zoom), 0), math.min(math.floor((cam.x + 400 * winxm) /
+				cam.zoom) + 1, width - 1) do
+				local cx, cy = math.floor(x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm),
+						math.floor(y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym)
 				local p = GetPlaceable(x, y)
 				if p then
 					love.graphics.draw(tex[p], cx, cy, 0, cam.zoom / texsize[p].w, cam.zoom / texsize[p].h, texsize[p].w2, texsize[p].h2)
@@ -7928,9 +8622,12 @@ function love.draw()
 			end
 		end
 		love.graphics.setCanvas(cellcanv)
-		for y = math.max(math.floor((cam.y - 300 * winym) / cam.zoom), 0), math.min(math.floor((cam.y + 300 * winym) / cam.zoom) + 1, height - 1) do
-			for x = math.max(math.floor((cam.x - 400 * winxm) / cam.zoom), 0), math.min(math.floor((cam.x + 400 * winxm) / cam.zoom) + 1, width - 1) do
-				local cx, cy = math.floor(x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm), math.floor(y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym)
+		for y = math.max(math.floor((cam.y - 300 * winym) / cam.zoom), 0), math.min(math.floor((cam.y + 300 * winym) / cam.zoom)
+			+ 1, height - 1) do
+			for x = math.max(math.floor((cam.x - 400 * winxm) / cam.zoom), 0), math.min(math.floor((cam.x + 400 * winxm) /
+				cam.zoom) + 1, width - 1) do
+				local cx, cy = math.floor(x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm),
+						math.floor(y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym)
 				DrawCell(cells[y][x], x, y, true)
 			end
 		end
@@ -7945,7 +8642,9 @@ function love.draw()
 		TriggerEvent("render-grid")
 		if fancy then
 			for i = 1, #particles do
-				love.graphics.draw(particles[i], math.floor(cam.zoom - cam.x + cam.zoom * .5) + 400 * winxm, math.floor(cam.zoom - cam.y + cam.zoom * .5) + 300 * winym, 0, cam.zoom / texsize[0].w, cam.zoom / texsize[0].h, texsize[0].w2, texsize[0].h2)
+				love.graphics.draw(particles[i], math.floor(cam.zoom - cam.x + cam.zoom * .5) + 400 * winxm,
+					math.floor(cam.zoom - cam.y + cam.zoom * .5) + 300 * winym, 0, cam.zoom / texsize[0].w, cam.zoom / texsize[0].h,
+					texsize[0].w2, texsize[0].h2)
 			end
 		end
 		if draggedcell then
@@ -7962,10 +8661,13 @@ function love.draw()
 				end
 			end
 			love.graphics.setColor(1, 1, 1, .25)
-			love.graphics.rectangle("fill", (mx - .5) * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm, (my - .5) * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym, #copied[0] * cam.zoom + cam.zoom, #copied * cam.zoom + cam.zoom)
+			love.graphics.rectangle("fill", (mx - .5) * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm,
+				(my - .5) * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym, #copied[0] * cam.zoom + cam.zoom,
+				#copied * cam.zoom + cam.zoom)
 		elseif selection.on then
 			love.graphics.setColor(1, 1, 1, .25)
-			local cx, cy = math.floor((selection.x - .5) * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm), math.floor((selection.y - .5) * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym)
+			local cx, cy = math.floor((selection.x - .5) * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm),
+					math.floor((selection.y - .5) * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym)
 			love.graphics.rectangle("fill", cx, cy, selection.w * cam.zoom, selection.h * cam.zoom)
 		elseif not hoveredbutton and not puzzle then
 			love.graphics.setColor(1, 1, 1, .25)
@@ -7973,8 +8675,12 @@ function love.draw()
 			local my = math.floor((love.mouse.getY() + cam.y - 300 * winym) / cam.zoom)
 			for y = my - math.ceil(chosen.size * .5) + (chosen.shape == "Square" and 1 or 0), my + math.floor(chosen.size * .5) do
 				for x = mx - math.ceil(chosen.size * .5) + (chosen.shape == "Square" and 1 or 0), mx + math.floor(chosen.size * .5) do
-					if (chosen.shape == "Square" or math.distSqr(x - mx, y - my) <= chosen.size * chosen.size / 4) and (chosen.mode ~= "Or" or GetCell(x, y).id == 0) and (chosen.mode ~= "And" or GetCell(x, y).id ~= 0) then
-						love.graphics.draw(tex[chosen.id] or tex.X, math.floor(x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm), math.floor(y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym), chosen.rot * math.pi * .5, cam.zoom / (texsize[chosen.id] or texsize.X).w, cam.zoom / (texsize[chosen.id] or texsize.X).h, (texsize[chosen.id] or texsize.X).w2, (texsize[chosen.id] or texsize.X).h2)
+					if (chosen.shape == "Square" or math.distSqr(x - mx, y - my) <= chosen.size * chosen.size / 4) and
+							(chosen.mode ~= "Or" or GetCell(x, y).id == 0) and (chosen.mode ~= "And" or GetCell(x, y).id ~= 0) then
+						love.graphics.draw(tex[chosen.id] or tex.X, math.floor(x * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm),
+							math.floor(y * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym), chosen.rot * math.pi * .5,
+							cam.zoom / (texsize[chosen.id] or texsize.X).w, cam.zoom / (texsize[chosen.id] or texsize.X).h,
+							(texsize[chosen.id] or texsize.X).w2, (texsize[chosen.id] or texsize.X).h2)
 					end
 				end
 			end
@@ -7983,8 +8689,14 @@ function love.draw()
 			love.graphics.setColor(1, 0, 0, 1)
 			for y = 0, #chunks do
 				for x = 0, #chunks[0] do
-					love.graphics.line(math.floor((x - .02) * 25 * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .5, math.floor((y - .02) * 25 * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .5, math.floor((x + .98) * 25 * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .5, math.floor((y - .02) * 25 * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .5)
-					love.graphics.line(math.floor((x - .02) * 25 * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .5, math.floor((y - .02) * 25 * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .5, math.floor((x - .02) * 25 * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .5, math.floor((y + .98) * 25 * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .5)
+					love.graphics.line(math.floor((x - .02) * 25 * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .5,
+						math.floor((y - .02) * 25 * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .5,
+						math.floor((x + .98) * 25 * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .5,
+						math.floor((y - .02) * 25 * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .5)
+					love.graphics.line(math.floor((x - .02) * 25 * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .5,
+						math.floor((y - .02) * 25 * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .5,
+						math.floor((x - .02) * 25 * cam.zoom - cam.x + cam.zoom * .5 + 400 * winxm) + .5,
+						math.floor((y + .98) * 25 * cam.zoom - cam.y + cam.zoom * .5 + 300 * winym) + .5)
 				end
 			end
 		end
@@ -7994,12 +8706,16 @@ function love.draw()
 	elseif mainmenu == 1 then
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.draw(menuparticles, centerx, centery)
-		love.graphics.draw(tex.logo, centerx, centery - 100 * uiscale, math.sin(love.timer.getTime()) / 10, uiscale, uiscale, texsize.logo.w2, texsize.logo.h2)
+		love.graphics.draw(tex.logo, centerx, centery - 100 * uiscale, math.sin(love.timer.getTime()) / 10, uiscale, uiscale,
+			texsize.logo.w2, texsize.logo.h2)
 		love.graphics.setColor(0, 0, 0, 1)
-		local t = "Version 2.-1.5 PRE-RELEASE STUPID NOT FUL\nCelLua Modchine version " .. Modchine.version .. "\nCreated by KyYay\nOriginal Cell Machine by Sam Hogan"
-		love.graphics.printf(t, centerx + uiscale, centery - math.sin(love.timer.getTime() / 2) * 10 * uiscale - 24 * uiscale, 400, "center", 0, uiscale, uiscale, 200)
+		local t = "Version 2.-1.5 PRE-RELEASE STUPID NOT FUL\nCelLua Modchine version " ..
+				Modchine.version .. "\nCreated by KyYay\nOriginal Cell Machine by Sam Hogan"
+		love.graphics.printf(t, centerx + uiscale, centery - math.sin(love.timer.getTime() / 2) * 10 * uiscale - 24 * uiscale,
+			400, "center", 0, uiscale, uiscale, 200)
 		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.printf(t, centerx, centery - math.sin(love.timer.getTime() / 2) * 10 * uiscale - 25 * uiscale, 400, "center", 0, uiscale, uiscale, 200)
+		love.graphics.printf(t, centerx, centery - math.sin(love.timer.getTime() / 2) * 10 * uiscale - 25 * uiscale, 400,
+			"center", 0, uiscale, uiscale, 200)
 	else
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.draw(menuparticles, centerx, centery)
@@ -8035,23 +8751,28 @@ function love.draw()
 				y = b.y * uiscale + centery
 			end
 			x, y = math.round(x), math.round(y)
-			love.graphics.draw(tex[b.icon], x, y, type(b.rot) == "function" and b.rot() or b.rot or 0, b.w / texsize[b.icon].w * uiscale, b.h / texsize[b.icon].h * uiscale, texsize[b.icon].w2, texsize[b.icon].h2)
+			love.graphics.draw(tex[b.icon], x, y, type(b.rot) == "function" and b.rot() or b.rot or 0,
+				b.w / texsize[b.icon].w * uiscale, b.h / texsize[b.icon].h * uiscale, texsize[b.icon].w2, texsize[b.icon].h2)
 			if hoveredbutton == b and b.name then
 				stallbtn = b
 			end
 			if buttonorder[i] == "propertybg" then
 				for i = 1, #propertynames do
 					love.graphics.setColor(1, 1, 1, 1)
-					love.graphics.printf(propertynames[i] .. ": " .. chosen.data[i], x, y - (#propertynames - i + 1) * 25 * uiscale + b.h * uiscale * .5 + 5 * uiscale, 100, "center", 0, uiscale, uiscale, 50, 0)
+					love.graphics.printf(propertynames[i] .. ": " .. chosen.data[i], x,
+						y - (#propertynames - i + 1) * 25 * uiscale + b.h * uiscale * .5 + 5 * uiscale, 100, "center", 0, uiscale, uiscale
+						, 50, 0)
 				end
 			elseif buttonorder[i] == "joystick" and hoveredbutton == b and love.mouse.isDown(1) then
-				jx, jy = -love.mouse.getX() + love.graphics.getWidth() - 90 * uiscale, -love.mouse.getY() + love.graphics.getHeight() - 120 * uiscale
+				jx, jy = -love.mouse.getX() + love.graphics.getWidth() - 90 * uiscale,
+						-love.mouse.getY() + love.graphics.getHeight() - 120 * uiscale
 				if jx * jx + jy * jy > 50 * 50 * uiscale * uiscale then
 					jx, jy = 0, 0
 				end
 			elseif string.sub(buttonorder[i], 1, 8) == "topuzzle" then
 				love.graphics.setColor(0, 0, 0, 1)
-				love.graphics.printf(string.sub(buttonorder[i], 9, 99), x + 2 * uiscale, y + 2 * uiscale, 100, "center", 0, 2 * uiscale, 2 * uiscale, 50, 5)
+				love.graphics.printf(string.sub(buttonorder[i], 9, 99), x + 2 * uiscale, y + 2 * uiscale, 100, "center", 0,
+					2 * uiscale, 2 * uiscale, 50, 5)
 				love.graphics.setColor(1, 1, 1, 1)
 				love.graphics.printf(string.sub(buttonorder[i], 9, 99), x, y, 100, "center", 0, 2 * uiscale, 2 * uiscale, 50, 5)
 			end
@@ -8059,47 +8780,71 @@ function love.draw()
 	end
 	love.graphics.setColor(1, 1, 1, 1)
 	if mobile and not mainmenu then
-		love.graphics.draw(tex.joystick, love.graphics.getWidth() - jx - 90 * uiscale, love.graphics.getHeight() - jy - 120 * uiscale, 0, uiscale, uiscale, texsize.joystick.w2, texsize.joystick.h2)
+		love.graphics.draw(tex.joystick, love.graphics.getWidth() - jx - 90 * uiscale,
+			love.graphics.getHeight() - jy - 120 * uiscale, 0, uiscale, uiscale, texsize.joystick.w2, texsize.joystick.h2)
 	end
 	if inmenu and not winscreen and not mainmenu then
 		local skew = math.sin(love.timer.getTime() * 1.3) / 8
 		love.graphics.setColor(rainbow(.25))
 		local scale = math.lerp(2, 2.1, math.sin(love.timer.getTime()) + 1) * uiscale
-		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8, skew)
+		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8,
+			skew)
 		love.graphics.setColor(rainbow(.5))
 		local scale = math.lerp(2, 2.075, math.sin(love.timer.getTime() - .2) + 1) * uiscale
-		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8, skew)
+		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8,
+			skew)
 		love.graphics.setColor(rainbow(.75))
 		local scale = math.lerp(2, 2.05, math.sin(love.timer.getTime() - .4) + 1) * uiscale
-		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8, skew)
+		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8,
+			skew)
 		love.graphics.setColor(1, 1, 1, .5)
 		local scale = math.lerp(2, 2.025, math.sin(love.timer.getTime() - .6) + 1) * uiscale
-		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8, skew)
+		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8,
+			skew)
 		love.graphics.setColor(1, 1, 1, .75)
 		local scale = math.lerp(2, 2.01, math.sin(love.timer.getTime() - .6) + 1) * uiscale
-		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8, skew)
+		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, scale, 2 * uiscale, 50, 8,
+			skew)
 		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, 2 * uiscale, 2 * uiscale, 50, 8, skew)
+		love.graphics.printf("CelLua Machine", centerx, centery - 127 * uiscale, 100, "center", 0, 2 * uiscale, 2 * uiscale, 50
+			, 8, skew)
 		love.graphics.setColor(0.5, 0.5, 0.5, 1)
-		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, delay), centery - 109.5 * uiscale, 4 * uiscale, 10 * uiscale)
-		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, (tpu - 1) / 9), centery - 87.5 * uiscale, 4 * uiscale, 10 * uiscale)
-		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, volume), centery - 65.5 * uiscale, 4 * uiscale, 10 * uiscale)
-		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, svolume), centery - 43.5 * uiscale, 4 * uiscale, 10 * uiscale)
-		if not puzzle then love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, (border - 1) / (#bordercells - 1)), centery - 21.5 * uiscale, 4 * uiscale, 10 * uiscale) end
-		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, (newuiscale - .5) * .66666), centery + .5, 4 * uiscale, 10 * uiscale)
+		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, delay),
+			centery - 109.5 * uiscale, 4 * uiscale, 10 * uiscale)
+		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, (tpu - 1) / 9),
+			centery - 87.5 * uiscale, 4 * uiscale, 10 * uiscale)
+		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, volume),
+			centery - 65.5 * uiscale, 4 * uiscale, 10 * uiscale)
+		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, svolume),
+			centery - 43.5 * uiscale, 4 * uiscale, 10 * uiscale)
+		if not puzzle then love.graphics.rectangle("fill",
+			math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, (border - 1) / (#bordercells - 1)),
+			centery - 21.5 * uiscale, 4 * uiscale, 10 * uiscale) end
+		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, (newuiscale - .5) * .66666)
+			, centery + .5, 4 * uiscale, 10 * uiscale)
 		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.print("Update delay: " .. math.round(delay * 100) / 100 .. "s", centerx - 150 * uiscale, 300 * winym - 120 * uiscale, 0, uiscale, uiscale)
-		love.graphics.print("Ticks per update: " .. tpu, centerx - 150 * uiscale, 300 * winym - 99 * uiscale, 0, uiscale, uiscale)
-		love.graphics.print("Music Volume: " .. volume * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 76 * uiscale, 0, uiscale, uiscale)
-		love.graphics.print("SFX Volume: " .. svolume * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 55 * uiscale, 0, uiscale, uiscale)
+		love.graphics.print("Update delay: " .. math.round(delay * 100) / 100 .. "s", centerx - 150 * uiscale,
+			300 * winym - 120 * uiscale, 0, uiscale, uiscale)
+		love.graphics.print("Ticks per update: " .. tpu, centerx - 150 * uiscale, 300 * winym - 99 * uiscale, 0, uiscale,
+			uiscale)
+		love.graphics.print("Music Volume: " .. volume * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 76 * uiscale, 0,
+			uiscale, uiscale)
+		love.graphics.print("SFX Volume: " .. svolume * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 55 * uiscale, 0,
+			uiscale, uiscale)
 		if not puzzle then
-			love.graphics.print("Border: " .. border .. " (" .. cellinfo[bordercells[border]].name .. ")", centerx - 150 * uiscale, centery - 32 * uiscale, 0, uiscale, uiscale)
+			love.graphics.print("Border: " .. border .. " (" .. cellinfo[bordercells[border]].name .. ")", centerx - 150 * uiscale
+				, centery - 32 * uiscale, 0, uiscale, uiscale)
 			love.graphics.print("Width", centerx - 100 * uiscale, centery + 38 * uiscale, 0, uiscale, uiscale)
 			love.graphics.print("Height", centerx + 50 * uiscale, centery + 38 * uiscale, 0, uiscale, uiscale)
-			if typing == 1 then love.graphics.print(newwidth .. "_", centerx - 95 * uiscale, centery + 52 * uiscale, 0, 2 * uiscale, 2 * uiscale) else love.graphics.print(newwidth, centerx - 95 * uiscale, centery + 52 * uiscale, 0, 2 * uiscale, 2 * uiscale) end
-			if typing == 2 then love.graphics.print(newheight .. "_", centerx + 55 * uiscale, centery + 52 * uiscale, 0, 2 * uiscale, 2 * uiscale) else love.graphics.print(newheight, centerx + 55 * uiscale, centery + 52 * uiscale, 0, 2 * uiscale, 2 * uiscale) end
+			if typing == 1 then love.graphics.print(newwidth .. "_", centerx - 95 * uiscale, centery + 52 * uiscale, 0,
+				2 * uiscale, 2 * uiscale) else love.graphics.print(newwidth, centerx - 95 * uiscale, centery + 52 * uiscale, 0,
+				2 * uiscale, 2 * uiscale) end
+			if typing == 2 then love.graphics.print(newheight .. "_", centerx + 55 * uiscale, centery + 52 * uiscale, 0,
+				2 * uiscale, 2 * uiscale) else love.graphics.print(newheight, centerx + 55 * uiscale, centery + 52 * uiscale, 0,
+				2 * uiscale, 2 * uiscale) end
 		end
-		love.graphics.print("UI Scale: " .. newuiscale * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 10 * uiscale, 0, uiscale, uiscale)
+		love.graphics.print("UI Scale: " .. newuiscale * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 10 * uiscale, 0,
+			uiscale, uiscale)
 	elseif winscreen then
 		local skew = math.sin(love.timer.getTime() * 1.3) / 8
 		love.graphics.setColor(rainbow(.25))
@@ -8121,13 +8866,19 @@ function love.draw()
 		love.graphics.printf("Victory!", centerx, centery - 75, 100, "center", 0, 4, 4, 50, 8, skew)
 	elseif mainmenu == 3 then
 		love.graphics.setColor(0.5, 0.5, 0.5, 1)
-		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, volume), centery - 65.5 * uiscale, 4 * uiscale, 10 * uiscale)
-		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, svolume), centery - 43.5 * uiscale, 4 * uiscale, 10 * uiscale)
-		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, (newuiscale - .5) * .66666), centery + .5, 4 * uiscale, 10 * uiscale)
+		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, volume),
+			centery - 65.5 * uiscale, 4 * uiscale, 10 * uiscale)
+		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, svolume),
+			centery - 43.5 * uiscale, 4 * uiscale, 10 * uiscale)
+		love.graphics.rectangle("fill", math.lerp(centerx - 152 * uiscale, centerx + 148 * uiscale, (newuiscale - .5) * .66666)
+			, centery + .5, 4 * uiscale, 10 * uiscale)
 		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.print("Music Volume: " .. volume * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 76 * uiscale, 0, uiscale, uiscale)
-		love.graphics.print("SFX Volume: " .. svolume * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 55 * uiscale, 0, uiscale, uiscale)
-		love.graphics.print("UI Scale: " .. newuiscale * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 10 * uiscale, 0, uiscale, uiscale)
+		love.graphics.print("Music Volume: " .. volume * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 76 * uiscale, 0,
+			uiscale, uiscale)
+		love.graphics.print("SFX Volume: " .. svolume * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 55 * uiscale, 0,
+			uiscale, uiscale)
+		love.graphics.print("UI Scale: " .. newuiscale * 100 .. "%", centerx - 150 * uiscale, 300 * winym - 10 * uiscale, 0,
+			uiscale, uiscale)
 	elseif mainmenu == 4 then
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.draw(menuparticles, centerx, centery)
@@ -8147,7 +8898,8 @@ function love.draw()
 		love.graphics.rectangle("fill", x + 2 * uiscale, y + 2 * uiscale, 296 * uiscale, high - 4 * uiscale)
 		love.graphics.setColor(1, 1, 1, 1)
 		love.graphics.printf(stallbtn.name, x + 10 * uiscale, y + 10 * uiscale, 9001, nil, nil, 2 * uiscale, 2 * uiscale)
-		if stallbtn.desc then love.graphics.printf(stallbtn.desc, x + 10 * uiscale, y + 30 * uiscale, 280, nil, nil, uiscale, uiscale) end
+		if stallbtn.desc then love.graphics.printf(stallbtn.desc, x + 10 * uiscale, y + 30 * uiscale, 280, nil, nil, uiscale,
+			uiscale) end
 	end
 	love.graphics.setColor(1, 1, 1, 0.5)
 	love.graphics.print("FPS: " .. 1 / delta, 2, 2)
@@ -8234,7 +8986,8 @@ function love.mousepressed(x, y, btn)
 			if isinitial then
 				local p = GetPlaceable(cx, cy)
 				if GetCell(cx, cy).id ~= 0 then
-					if p == "placeable" or p == "placeableR" or p == "placeableY" or p == "placeableG" or p == "placeableC" or p == "placeableB" or p == "placeableP" then
+					if p == "placeable" or p == "placeableR" or p == "placeableY" or p == "placeableG" or p == "placeableC" or
+							p == "placeableB" or p == "placeableP" then
 						draggedcell = GetCell(cx, cy)
 						PlaceCell(cx, cy, getempty())
 					elseif p == "rotatable" then
@@ -8251,7 +9004,8 @@ function love.mousepressed(x, y, btn)
 			undocells.topush.isinitial = isinitial
 			for y = 0, #copied do
 				for x = 0, #copied[0] do
-					if (chosen.mode ~= "Or" or GetCell(x + cx, y + cy).id == 0) and (chosen.mode ~= "And" or GetCell(x + cx, y + cy).id ~= 0) then
+					if (chosen.mode ~= "Or" or GetCell(x + cx, y + cy).id == 0) and
+							(chosen.mode ~= "And" or GetCell(x + cx, y + cy).id ~= 0) then
 						copied[y][x].lastvars = { x + cx, y + cy, copied[y][x].rot }
 						PlaceCell(x + cx, y + cy, table.copy(copied[y][x]))
 					end
@@ -8301,7 +9055,8 @@ function love.mousepressed(x, y, btn)
 			local cx = math.floor((x + cam.x - 400 * winxm) / cam.zoom)
 			local cy = math.floor((y + cam.y - 300 * winym) / cam.zoom)
 			local cell = GetCell(cx, cy)
-			if (cell.id == 165 or cell.id == 166 or cell.id == 175 or cell.id == 198 or cell.id == 233 or cell.id == 235) and cell.vars[1] then
+			if (cell.id == 165 or cell.id == 166 or cell.id == 175 or cell.id == 198 or cell.id == 233 or cell.id == 235) and
+					cell.vars[1] then
 				cell.vars = {}
 				if isinitial then initial[cy][cx].vars = {} end
 				placecells = false
