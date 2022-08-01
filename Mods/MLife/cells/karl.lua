@@ -176,7 +176,7 @@ end
 return {
   id = "ML Karl",
   name = "Karl",
-  desc = "An entity capable of chaning behavior",
+  desc = "An entity capable of changing behavior",
   defaultVars = { vx = 0, vy = 0, pregnancy = 0 },
   update = DoKarl,
   updatetype = "static",

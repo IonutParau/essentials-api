@@ -32,7 +32,8 @@ function MDestruction.DoMine(x, y, size, config)
     for cy = y - size, y + size do
       if cx ~= x or cy ~= y then
         local c = GetCell(cx, cy)
-        if c.id ~= 0 then
+        local d = math.sqrt(math.pow(cx - x, 2) + math.pow(cy - y, 2))
+        if ((c.id ~= 0) and (d < size)) then
           MDestruction.explode(x, y, size, config)
           return true
         end
@@ -42,12 +43,13 @@ function MDestruction.DoMine(x, y, size, config)
   return false
 end
 
-function MDestruction.DoSpecialMine(x, y, eyesight, size, config)
+function MDestruction.DoSmartMine(x, y, eyesight, size, config)
   for cx = x - eyesight, x + eyesight do
     for cy = y - eyesight, y + eyesight do
       if cx ~= x or cy ~= y then
         local c = GetCell(cx, cy)
-        if c.id ~= 0 then
+        local d = math.sqrt(math.pow(cx - x, 2) + math.pow(cy - y, 2))
+        if ((c.id ~= 0) and (d < size) and (d > size)) then
           MDestruction.explode(x, y, size, config)
           return true
         end
@@ -61,8 +63,8 @@ Essentials.AddCustomFix("mine", function(self, size, config)
   MDestruction.DoMine(self:pos().x, self:pos().y, size, config)
 end)
 
-Essentials.AddCustomFix("specialMine", function(self, eyesight, size, config)
-  MDestruction.DoSpecialMine(self:pos().x, self:pos().y, eyesight, size, config)
+Essentials.AddCustomFix("smartMine", function(self, eyesight, size, config)
+  MDestruction.DoSmartMine(self:pos().x, self:pos().y, eyesight, size, config)
 end)
 
 function MDestruction.DoFirework(x, y, dir, vars, size, config)
@@ -75,14 +77,14 @@ Essentials.AddCustomFix("firework", function(self, dir, vars, size, config)
   MDestruction.DoFirework(self:pos().x, self:pos().y, dir, vars, size, config)
 end)
 
-function MDestruction.DoSpecialFirework(x, y, dir, vars, eyesight, size, config)
-  if not MDestruction.DoSpecialMine(x, y, eyesight, size, config) then
+function MDestruction.DoSmartFirework(x, y, dir, vars, eyesight, size, config)
+  if not MDestruction.DoSmartMine(x, y, eyesight, size, config) then
     PushCell(x, y, dir, vars)
   end
 end
 
-Essentials.AddCustomFix("specialFirework", function(self, dir, vars, eyesight, size, config)
-  MDestruction.DoSpecialFirework(self:pos().x, self:pos().y, dir, vars, eyesight, size, config)
+Essentials.AddCustomFix("smartFirework", function(self, dir, vars, eyesight, size, config)
+  MDestruction.DoSmartFirework(self:pos().x, self:pos().y, dir, vars, eyesight, size, config)
 end)
 
 function MDestruction.TimeBomb(x, y, duration, size, vars)
