@@ -943,4 +943,26 @@ end
 FixCell = Quartz.FixCell
 AddCustomFix = Quartz.FixCell
 
+local functionsCache = {}
+local functionsCacheID = 0
+
+---@param fun function
+---@return function
+function Quartz.CacheableFunction(fun)
+  local id = functionsCacheID
+  functionsCacheID = functionsCacheID + 1
+
+  return function(n)
+    if functionsCache[id] == nil then
+      functionsCache[id] = {}
+    end
+
+    if functionsCache[id][n] == nil then
+      functionsCache[id][n] = fun
+    end
+
+    return functionsCache[id][n]
+  end
+end
+
 Quartz.SetupAnimations()
