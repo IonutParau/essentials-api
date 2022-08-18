@@ -643,6 +643,15 @@ function Quartz.GetCategory(name)
       if type(categoryOrCell) == "string" then
         _cellReferenceCache[categoryOrCell]:AddToCategory(catIndex, subIndex)
       end
+      if type(categoryOrCell) == "table" then
+        categoryOrCell = table.copy(categoryOrCell)
+        for _, cell in ipairs(categoryOrCell.cells) do
+          table.insert(categoryOrCell, cell)
+        end
+        categoryOrCell.cells = nil
+        tmpMod.CreateEditorMenu(index or (#(currentCategory.cells) + 1), categoryOrCell.name, categoryOrCell.desc,
+          categoryOrCell)
+      end
       return fns
     end
     if type(currentCategory.cells) == "table" then
