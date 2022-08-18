@@ -35,6 +35,9 @@ end
 Quartz.idPrefix = ""
 Quartz.textureHeader = ""
 
+-- This is used specifically for moddable...
+local _cellReferenceCache = {}
+
 function Quartz.SetIDPrefix(prefix)
   Quartz.idPrefix = prefix
 end
@@ -158,7 +161,7 @@ local nextsub = 118
 local nextid = 65535
 
 ---@alias cellID string|number
----@alias Quartz.CellInfo {id: number|string, types?: table<string>, background?: boolean, bendPath?: function, bias?: number|function, isMarker?: function, isAcidic?: function, isTransparent?: function, isReinforced?: function, generateInto?: string, whenFlipped?: function, chunkID?: string|number, weight?: number|function, defaultVars?: table<number|string|boolean>, properties?: table<string>, push?: function, canMove?: function, nextLifeID?: cellID, nextLifeRot?: number, silent?: boolean, particles?: love.ParticleSystem, sound?: love.SoundData, onDeath?: function, onKill?: function, isDestroyer?: function, update?: function, interval?: number, updatetype?: "static"|"normal"|table, subtick?: number, whenRotated?: function, whenClicked?: function, whenSelected?: function, varsOffset?: number, overrides?: table<function|string|number|boolean>, texture: string, name: string, desc: string, rawPath?: boolean, whenRendered?: function, category: string|table<string>, savePropertiesByName?: boolean|function, animation?: Quartz.Animation}
+---@alias Quartz.CellInfo {id: number|string, types?: table<string>, background?: boolean, bendPath?: function, bias?: number|function, isMarker?: function, isAcidic?: function, isTransparent?: function, isReinforced?: function, generateInto?: string, whenFlipped?: function, chunkID?: string|number, weight?: number|function, defaultVars?: table<number|string|boolean>, properties?: table<string>, push?: function, canMove?: function, nextLifeID?: cellID, nextLifeRot?: number, silent?: boolean, particles?: love.ParticleSystem, sound?: love.SoundData, onDeath?: function, onKill?: function, isDestroyer?: function, update?: function, interval?: number, updatetype?: "static"|"normal"|table, subtick?: number, whenRotated?: function, whenClicked?: function, whenSelected?: function, varsOffset?: number, overrides?: table<function|string|number|boolean>, texture: string, name: string, desc: string, rawPath?: boolean, whenRendered?: function, category: string|table<string>, savePropertiesByName?: boolean|function, animation?: Quartz.Animation, coinValue?: number|function, canGiveCoinWorth?: function}
 
 ---@param cell Quartz.CellInfo
 function Quartz.LoadCell(cell)
@@ -184,11 +187,9 @@ function Quartz.LoadCell(cell)
   local isgrabber = table.contains(types, "grabber")
   local istrash = table.contains(types, "trash")
   local isenemy = table.contains(types, "enemy")
-  local istransparent = table.contains(types, "transparent")
   local isacid = table.contains(types, "acid")
-  local ismarker = table.contains(types, "marker")
-  local isunbreakable = table.contains(types, "reinforced")
   local isdiverter = table.contains(types, "diverter")
+  local iscoin = table.contains(types, "coin")
 
   if isdiverter then
     options.nextCell = cell.bendPath
@@ -197,6 +198,9 @@ function Quartz.LoadCell(cell)
   -- Shortcut types
   local isghost = table.contains(types, "ghost")
   local ismold = table.contains(types, "mold")
+  local ismarker = table.contains(types, "marker")
+  local isunbreakable = table.contains(types, "reinforced")
+  local istransparent = table.contains(types, "transparent")
 
   local bias = cell.bias or 0
 
@@ -217,6 +221,10 @@ function Quartz.LoadCell(cell)
   if isunbreakable then
     options.isUnbreakable = cell.isReinforced or function() return true end
   end
+
+  -- Coin stuff
+  local coinValue = cell.coinValue
+  local canGiveCoinWorth = cell.canGiveCoinWorth
 
   if type(cell.generateInto) ~= "function" then
     options.toGenerate = function(c, dir, x, y, side)
@@ -256,7 +264,8 @@ function Quartz.LoadCell(cell)
     if type(cell.canMove) == "function" then
       local cm = cell.canMove(c, dir, x, y, vars, side, force, t)
 
-      if not cm then return false end
+      if cm == false then return false end
+      if type(cm) == "number" then return cm end
     end
 
     local mass = V(weight, c, dir, x, y, vars, side, force, t)
@@ -488,7 +497,7 @@ function Quartz.LowLevelCreateCell(name, desc, texture, options)
 
   if Quartz.IsEssentials or Quartz.IsModchine then
     return CreateCell(name, desc, texture, options)
-  else
+  elseif Quartz.IsModdable then
     if tmpMod then
       if texture:sub(-4) == ".png" then texture = texture:sub(1, -5) end
       if texture:sub(-4) == ".bmp" then texture = texture:sub(1, -5) end
@@ -533,6 +542,8 @@ function Quartz.LowLevelCreateCell(name, desc, texture, options)
           cell:AddToSubtick { "upright" }
         end
       end
+
+      _cellReferenceCache[options.id] = cell
     end
   end
 
@@ -590,12 +601,17 @@ function Quartz.FetchCategories(category)
   return trueCategories
 end
 
+local catStorageMap = {}
+
 -- Totally not stolen
 function Quartz.GetCategory(name)
   local rootCategory = nil
-  for _, searchCategory in pairs(lists) do
+  local catIndex = nil
+  local subIndex = nil
+  for i, searchCategory in pairs(lists) do
     if searchCategory.name == name then
       rootCategory = searchCategory
+      catIndex = i
       break
     end
   end
@@ -607,10 +623,11 @@ function Quartz.GetCategory(name)
 
   function fns.GetCategory(subname)
     local newCategory = nil
-    for _, searchCategory in pairs(currentCategory.cells) do
+    for i, searchCategory in pairs(currentCategory.cells) do
       if type(searchCategory) == "table" then
         if searchCategory.name == subname then
           newCategory = searchCategory
+          subIndex = i
           break
         end
       end
@@ -622,6 +639,12 @@ function Quartz.GetCategory(name)
   end
 
   function fns.Add(categoryOrCell, index)
+    if Quartz.IsModdable then
+      if type(categoryOrCell) == "string" then
+        _cellReferenceCache[categoryOrCell]:AddToCategory(catIndex, subIndex)
+      end
+      return fns
+    end
     if type(currentCategory.cells) == "table" then
       if type(categoryOrCell) == "table" then
         categoryOrCell = table.copy(categoryOrCell)
@@ -645,7 +668,44 @@ function Quartz.GetCategory(name)
     end
   end
 
+  function fns.Remove(categoryOrCell)
+    if Quartz.IsModdable then
+      if type(categoryOrCell) == "string" then
+        _cellReferenceCache[categoryOrCell]:RemoveFromCategory(catIndex, subIndex)
+      end
+    end
+    if type(currentCategory.cells) == "table" then
+      for k, v in ipairs(currentCategory.cells) do
+        if Quartz.tableEquals(v, categoryOrCell) then
+          currentCategory.cells[k] = nil
+        end
+      end
+    else
+      for k, v in pairs(currentCategory.cells) do
+        if Quartz.tableEquals(v, categoryOrCell) then
+          currentCategory.cells[k] = nil
+        end
+      end
+    end
+    return fns
+  end
+
   return fns
+end
+
+function Quartz.tableEquals(a, b)
+  if type(a) ~= type(b) then return false end
+  if type(a) ~= "table" then return a == b end
+
+  for k, v in pairs(a) do
+    if not Quartz.tableEquals(v, b[k]) then return false end
+  end
+
+  for k, v in pairs(b) do
+    if not Quartz.tableEquals(v, a[k]) then return false end
+  end
+
+  return true
 end
 
 function Quartz.AddCategory(category, index)
