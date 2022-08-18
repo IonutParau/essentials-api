@@ -650,7 +650,7 @@ function Quartz.GetCategory(name)
         end
         categoryOrCell.cells = nil
         tmpMod.CreateEditorMenu(index or (#(currentCategory.cells) + 1), categoryOrCell.name, categoryOrCell.desc,
-          categoryOrCell)
+          (categoryOrCell.icon or categoryOrCell[1] or "push"), categoryOrCell)
       end
       return fns
     end
@@ -700,6 +700,25 @@ function Quartz.GetCategory(name)
   end
 
   return fns
+end
+
+function Quartz.CreateCategory(title, description, max, cells, icon)
+  max = max or 4
+  cells = cells or {}
+
+  title = title or "Untitled"
+  description = description or "No discription given"
+  icon = icon or "mover"
+
+  NewTex(icon, icon)
+
+  return {
+    name = title,
+    desc = description,
+    cells = cells,
+    icon = icon,
+    max = max,
+  }
 end
 
 function Quartz.tableEquals(a, b)
